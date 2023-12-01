@@ -148,7 +148,6 @@ class M_pesanan extends CI_Model
             'status_pesanan' => '0',
         );
 
-        // var_dump($order_data);die;
 
         $this->insertOrder($order_data);
         $id_pesanan = $this->db->insert_id();
