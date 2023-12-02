@@ -190,9 +190,11 @@ class Dashboard extends CI_Controller {
             'content' => 'V_partials/dashboard/monthly_report',
             'js' => 'V_partials/dashboard/js',
             'monthly_orders' => $monthly_orders,
+            'active_tab' => 'monthlyRep'
         ];
         $this->load->view('master', $data);
     }
+
     public function monthlyReport()
     {
         $month = $this->input->post('month'); // Ganti dengan metode yang sesuai
@@ -209,6 +211,7 @@ class Dashboard extends CI_Controller {
             'content' => 'V_partials/dashboard/monthly_report',
             'js' => 'V_partials/dashboard/js',
             'monthly_orders' => $monthly_orders,
+            'active_tab' => 'monthlyReport'
         ];
         $this->load->view('master', $data);
     }
@@ -225,7 +228,8 @@ class Dashboard extends CI_Controller {
             'footer' => 'V_partials/dashboard/footer',
             'content' => 'V_partials/dashboard/pesanan',
             'js' => 'V_partials/dashboard/js',
-            'orders' => $orders
+            'orders' => $orders,
+            'active_tab' => 'OrderList'
         ];
         $this->load->view('master', $data);
     }
