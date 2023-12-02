@@ -21,6 +21,7 @@
                         </tr>
                 </thead>
                 <tbody>
+                    <?php if (isset($customer) && !empty($customer)) ?>
                     <?php $no = 1 ?>
                     <?php foreach ($customer as $key) : ?>
 
@@ -41,11 +42,54 @@
 
                         </tr>
                     <?php endforeach; ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="7">
+                            <?php if (isset($results) && !empty($results)) : ?>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <!-- Kolom-kolom tabel hasil pencarian -->
+
+                                        <th scope="col">ID Pelanggan</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Nama Customer</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Telepon</th>
+                                        <th scope="col">Action</th>
+                                        <!-- ... -->
+                                    </thead>
+                                    <tbody>
+                                        <?php $no = 1; ?>
+                                        <?php foreach ($results as $result) : ?>
+                                            <tr>
+                                                <!-- Data hasil pencarian -->
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $result->id_customer; ?></td>
+                                                <td><?php echo $result->username; ?></td>
+                                                <td><?php echo $result->nama_customer; ?></td>
+                                                <td><?php echo $result->email; ?></td>
+                                                <td><?php echo $result->telepon; ?></td>
+                                                <td>
+                                                    <a href="<?php echo base_url('dashboard/edit/' . $result->id_customer); ?>">
+                                                        <button type="button" class="btn btn-warning"><i class="fa-regular fa-pen-to-square" style="color: #000000;"></i></button>
+                                                    </a>
+                                                    <a href="<?php echo base_url('dashboard/delete_customer/' . $result->id_customer); ?>">
+                                                        <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                                                    </a>
+                                                </td>
+                                                <!-- ... -->
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            <?php else : ?>
+                                <p>Tidak ada data pelanggan yang tersedia.</p>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 </tbody>
             </table>
-        <?php else : ?>
-            <p>Tidak ada data pelanggan yang tersedia.</p>
-        <?php endif; ?>
         </div>
     </div>
 </div>

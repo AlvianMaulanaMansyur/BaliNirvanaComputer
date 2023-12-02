@@ -29,7 +29,7 @@ class Auth extends CI_Controller {
         if ($this->session->userdata('logged_in')) {
             redirect('dashboard/admin');
         } else {
-            redirect('dashboard/login');
+            redirect('auth/login');
         }
     }
 
@@ -50,8 +50,8 @@ class Auth extends CI_Controller {
             redirect('dashboard/admin');
         } else {
             // Tampilkan pesan error jika login gagal
-            $this->session->set_flashdata('error_message', 'Login Gagal');
-            redirect('dashboard/login');
+            $this->session->set_flashdata('error_message', 'Incorrect Username or Password!');
+            redirect('auth/login');
         }
     }
 

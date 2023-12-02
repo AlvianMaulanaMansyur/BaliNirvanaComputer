@@ -71,53 +71,38 @@ class Dashboard extends CI_Controller {
         $this->load->view('master', $data);
     }
 
-    public function update_customer()
-    {
+    public function search()
+{
+    // Ambil data pencarian dari form
+    $keyword = $this->input->post('keyword');
 
-        $id_customer = $this->input->post('id_customer');
-        if ($this->input->post('confirm_update') === '1')
-        {
-            $data = array(
-                'username' => $this->input->post('username'),
-                'password_customer' => $this->input->post('password_customer'),
-                'nama_customer' => $this->input->post('nama_customer'),
-                'email' => $this->input->post('email'),
-                'telepon' => $this->input->post('telepon')
-            );
+    // Inisialisasi data untuk tampilan
+    $data = [
+        'title' => 'Bali Nirvana',
+        'header' => 'V_partials/dashboard/header',
+        'navbar' => 'V_partials/dashboard/navbar',
+        'sidebar' => 'V_partials/dashboard/sidebar',
+        'footer' => 'V_partials/dashboard/footer',
+        'js' => 'V_partials/dashboard/js',
+    ];
 
-            $this->admin_model->update_customer($id_customer, $data);
+    // Jika pencarian tidak kosong, lakukan pencarian
+    if (!empty($keyword)) {
+        $results = $this->admin_model->search_data($keyword);
 
-
-            redirect('dashboard/admin');
-        } else {
-            $data['confirm_update'] = TRUE;
-            $this->load->view('V_partials/admin/edit', $data);
-        }
+        // Kirim hasil pencarian ke tampilan
+        $data['content'] = 'V_partials/dashboard/content';
+        $data['results'] = $results;
+    } else {
+        // Jika pencarian kosong, ambil semua data pelanggan
+        $data['content'] = 'V_partials/dashboard/content';
+        $data['customer'] = $this->admin_model->get_all_customers();
     }
 
-    public function delete_customer($id_customer)
-    {
-        
-        $this->admin_model->delete_customer($id_customer);
-        redirect('dashboard/admin');
-    }
+    // Load tampilan dengan data yang sesuai
+    $this->load->view('master', $data);
+}
 
-    public function Orders()
-    {
-        $orders = $this->M_pesanan->getAllOrderForAdmin();
-        // var_dump($orders);die;
-        $data = [
-            'title' => 'Edit Data',
-            'header' => 'V_partials/dashboard/header',
-            'navbar' => 'V_partials/dashboard/navbar',
-            'sidebar' => 'V_partials/dashboard/sidebar',
-            'footer' => 'V_partials/dashboard/footer',
-            'content' => 'V_partials/dashboard/pesanan',
-            'js' => 'V_partials/dashboard/js',
-            'orders' => $orders
-        ];
-        $this->load->view('master', $data);
-    }
 
     public function logout()
     {

@@ -42,6 +42,12 @@ class Admin_model extends CI_Model {
             $this->db->where('id_customer', $customer_id);
             return $this->db->get('customer')->row();
         }
+
+        public function search_data($keyword) {
+            $this->db->like('username', $keyword);
+            $query = $this->db->get('customer');
+            return $query->result();
+        }
     }
     
     
