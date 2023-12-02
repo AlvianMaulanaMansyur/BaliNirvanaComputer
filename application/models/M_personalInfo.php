@@ -19,6 +19,7 @@ class M_personalInfo extends CI_Model {
         $insert_data = array(
             'alamat' => $this->input->post('alamat'),
             'kodepos' => $this->input->post('kodepos'),
+            'detail_alamat' => $this->input->post('detail_alamat'),
             'id_customer' => $id,
             'id_kecamatan' => $this->input->post('id_kecamatan'),
         );

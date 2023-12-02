@@ -23,6 +23,7 @@ class Auth extends CI_Controller {
         $this->load->view('loginAdmin', $data);
     }
 
+
     public function sess()
     {
 
@@ -32,6 +33,7 @@ class Auth extends CI_Controller {
             redirect('auth/login');
         }
     }
+
 
     public function process_login()
     {

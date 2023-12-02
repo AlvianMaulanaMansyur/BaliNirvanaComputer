@@ -1,6 +1,6 @@
 <!-- monthly_report.php -->
 
-    <form method="post" action="<?php echo base_url('admin/monthlyreport'); ?>">
+    <form method="post" action="<?php echo base_url('dashboard/monthlyReport'); ?>">
         <label for="month">Month:</label>
         <select name="month" id="month">
             <!-- Options for months (1-12) -->
@@ -9,7 +9,7 @@
         <label for="year">Year:</label>
         <input type="text" name="year" id="year" />
 
-        <button type="submit">Generate PDF</button>
+        <button type="submit">Submit</button>
     </form>
 
 

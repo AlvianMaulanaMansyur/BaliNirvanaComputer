@@ -190,6 +190,8 @@ class M_cart extends CI_Model
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');
         $this->db->where('cart.id_customer', $id_customer);
+        $this->db->order_by('cart.create_time', 'asc');
+        
 
         $result = $this->db->get();
 
@@ -225,7 +227,7 @@ class M_cart extends CI_Model
 
     public function getCheckout($id_customer)
     {
-        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk ,produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, customer.nama_customer, customer.email,customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, personal_info.alamat, kota_kab.kota, kota_kab.id_kota_kab, kecamatan.kecamatan');
+        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk ,produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, customer.nama_customer, customer.email,customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, personal_info.alamat,personal_info.detail_alamat, kota_kab.kota, kota_kab.id_kota_kab, kecamatan.kecamatan');
         $this->db->from('cart');
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');

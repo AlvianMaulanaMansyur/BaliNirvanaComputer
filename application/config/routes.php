@@ -55,8 +55,14 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['produk/(:num)'] = 'LandingPage/detailproduk/$1';
 $route['category/(:num)'] = 'LandingPage/detailCategory/$1';
+$route['cart'] = 'user/getcart';
+$route['checkout'] = 'user/checkout';
+$route['orders'] = 'user/orders';
+
 $route['home'] = 'LandingPage/index';
 $route['shop'] = 'LandingPage/shop';
 $route['about'] = 'LandingPage/aboutUs';
 $route['contact'] = 'LandingPage/contactUs';
+
+
 

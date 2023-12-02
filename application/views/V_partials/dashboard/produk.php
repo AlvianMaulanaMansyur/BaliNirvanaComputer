@@ -39,7 +39,7 @@
                                 <!-- Tombol Edit Produk -->
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $key['id_produk']; ?>">Edit</button>
 
-                                <a href="<?php echo base_url('admin/delete/' . $key['id_produk']) ?>" class="btn btn-danger">Delete</a>
+                                <a href="<?php echo base_url('dashboard/delete/' . $key['id_produk']) ?>" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach ?>
@@ -59,7 +59,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('admin/insertProduk') ?>" method="post" enctype="multipart/form-data" class="">
+                <form action="<?php echo base_url('dashboard/insertProduk') ?>" method="post" enctype="multipart/form-data" class="">
                     <div>
                         <input hidden readonly type="text" name="id_admin" class="form-control" id="Id_admin" value="1">
                     </div>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="modal-body">
                     <!-- Form untuk Edit -->
-                    <form action="<?php echo base_url('admin/editProduk'); ?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo base_url('dashboard/editProduk'); ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="id_produk" value="<?php echo $key['id_produk']; ?>">
                         <div class="mb-3">
                             <label for="Id_produk" class="form-label">ID Produk</label>
