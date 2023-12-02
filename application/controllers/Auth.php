@@ -23,16 +23,6 @@ class Auth extends CI_Controller {
         $this->load->view('loginAdmin', $data);
     }
 
-    public function sess()
-    {
-
-        if ($this->session->userdata('logged_in')) {
-            redirect('dashboard/admin');
-        } else {
-            redirect('dashboard/login');
-        }
-    }
-
     public function process_login()
     {
         $username = $this->input->post('username');

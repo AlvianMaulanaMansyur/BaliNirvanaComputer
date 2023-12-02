@@ -18,6 +18,48 @@ class Dashboard extends CI_Controller
         }
     }
 
+    public function insertProduk()
+    {
+        $result =$this->M_produk->insertProduk();
+        var_dump($result);die;
+        redirect('dashboard/getproduk');
+    }
+
+    public function editProduk()
+    {
+        $this->M_produk->editProduk();
+        redirect('dashboard/getproduk');
+
+    }
+
+    public function delete($id)
+    {
+        $this->M_produk->deleteProduk($id);
+        redirect('dashboard/getproduk');
+    }
+
+    public function updateOrder($id_pesanan)
+    {
+        $this->db->select('*');
+        $this->db->from('pesanan');
+        $this->db->where('id_pesanan', $id_pesanan);
+        $result = $this->db->get();
+        $status = $result->result_array();
+
+        if ($status[0]['status_pesanan'] == 0) {
+            $data = [
+                'status_pesanan' => '1',
+            ];
+            $this->db->where('id_pesanan', $id_pesanan);
+            $this->db->update('pesanan', $data);
+            $this->M_produk->updateStok($id_pesanan);
+
+            redirect('dashboard/orders');
+        } else if ($status[0]['status_pesanan'] == 1) {
+            redirect('dashboard/rders');
+        }
+    }    
+
     public function admin()
     {
         $customer = $this->admin_model->get_all_customers();
