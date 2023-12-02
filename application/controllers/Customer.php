@@ -46,13 +46,27 @@ class Customer extends CI_Controller {
     }
 
     public function register() {
-        $this->form_validation->set_rules('username','Username', 'required|trim', array(
-            'required'=>'colom harus di isi'
+        $this->form_validation->set_rules('username','Username', 'required|trim|min_lenght[8]|is_unique[customer.username]', array(
+            'required'=>'username cannot be empty!',
+            'min_lenght' => 'usernae must be at least 8 characters!',
+            'is_unique' => 'username already taken!'
         ));
-        $this->form_validation->set_rules('password_customer','Password Customer', 'required|trim');
-        $this->form_validation->set_rules('nama_customer','Nama Customer', 'required|trim');
-        $this->form_validation->set_rules('email','Email', 'required|trim');
-        $this->form_validation->set_rules('telepon','Telepon', 'required|trim');
+        $this->form_validation->set_rules('password_customer','Password Customer', 'required|trim|min_lenght[8]|regex_match[/[0-9]/]', array(
+            'required' => 'password cannot be empty!',
+            'min_lenght' => 'password must be at least 8 characters!',
+            'regex_match' => 'password must contain at least 1 number'
+        ));
+        $this->form_validation->set_rules('nama_customer','Nama Customer', 'required|trim', array(
+            'required' => 'name cannot be empty!'
+        ));
+
+        $this->form_validation->set_rules('email','Email', 'required|trim|valid_email|is_unique[customer.email]',array(
+            'required' => 'email cannot be empty!',
+            'is_unique' => 'email already taken!'
+        ));
+        $this->form_validation->set_rules('telepon','Telepon', 'required|trim|numeric', array(
+            'required' => 'phone number cannot be empty!'
+        ));
 
         if($this->form_validation->run() == FALSE){
 

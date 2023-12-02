@@ -23,10 +23,10 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password" name="password_customer">
-                    <div class="input-group-append">
+                    <input type="password" class="form-control" placeholder="Password" name="password_customer" id="password_customer">
+                    <div class="input-group-append password-toggle">
                         <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                            <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
                         </div>
                     </div>
                 </div>

@@ -28,16 +28,16 @@
                             Error
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        
+
                     </nav>
                 </div>
                 <div class="sb-sidenav-menu-heading">Report</div>
-                <a style="<?php echo ($active_tab == 'monthlyReport') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>"  class="nav-link" href="<?php echo base_url('dashboard/monthlyReport') ?>">
+                <a style="<?php echo ($active_tab == 'monthlyReport') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/monthlyReport') ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Monthly Report
                 </a>
                 <div class="sb-sidenav-menu-heading">Order List</div>
-                <a style="<?php echo ($active_tab == 'OrderList') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>"  class="nav-link" href="<?php echo base_url('dashboard/orders') ?>">
+                <a style="<?php echo ($active_tab == 'OrderList') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/orders') ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Daftar Pesanan
                 </a>

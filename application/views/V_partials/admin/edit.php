@@ -14,23 +14,23 @@
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" name="username" value="<?php echo $customer->username; ?>">
+                    <input type="text" class="form-control" name="username" value="<?php echo $customer->username; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="text" class="form-control" name="password_customer" value="<?php echo $customer->password_customer; ?>" required|trim>
+                    <input type="text" class="form-control" name="password_customer" value="<?php echo $customer->password_customer; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="nama_customer" class="form-label">Nama Customer</label>
-                    <input type="text" class="form-control" name="nama_customer" value="<?php echo $customer->nama_customer; ?>" required|trim>
+                    <input type="text" class="form-control" name="nama_customer" value="<?php echo $customer->nama_customer; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="Email" class="form-label">Email</label>
-                    <input type="Text" class="form-control" name="email" value="<?php echo $customer->email; ?>" required|trim>
+                    <input type="Text" class="form-control" name="email" value="<?php echo $customer->email; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="Telepon" class="form-label">Telepon</label>
-                    <input type="text" class="form-control" name="telepon" value="<?php echo $customer->telepon; ?>" required|trim>
+                    <input type="text" class="form-control" name="telepon" value="<?php echo $customer->telepon; ?>" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
