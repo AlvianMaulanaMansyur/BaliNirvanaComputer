@@ -35,12 +35,14 @@
                             <td> <?php echo $key['deskripsi_produk'] ?></td>
                             <td> <img src="<?php echo base_url($key['foto_produk']); ?>" alt="Gambar" style="width: 200px;height: auto;"></td>
                             <td>
-                                <!-- <a href="<?php echo base_url('admin/hlmEdit/' . $key['id_produk']) ?>" class="btn btn-warning">Edit</a> -->
-                                <!-- Tombol Edit Produk -->
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $key['id_produk']; ?>">Edit</button>
 
-                                <a href="<?php echo base_url('dashboard/delete/' . $key['id_produk']) ?>" class="btn btn-danger">Delete</a>
+                                <!-- Display alert before deleting -->
+                                <button class="btn btn-danger delete-product-item" data-id="<?php echo $key['id_produk']; ?>" data-name="<?php echo $key['nama_produk']; ?>">
+                                    Delete
+                                </button>
                             </td>
+
                         </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -173,3 +175,44 @@
     </div>
     </div>
 <?php endforeach; ?>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // if (typeof Swal === 'undefined') {
+        //     console.error("SweetAlert library is not loaded.");
+        //     return;
+        // }
+
+        // if (!$('.delete-product-item').length) {
+        //     console.error("No delete-product-item elements found.");
+        //     return;
+        // }
+
+        // Handle click on delete button
+        $('.delete-product-item').on('click', function(e) {
+            e.preventDefault();
+
+            var productId = $(this).data('id');
+            var productName = $(this).data('name');
+
+            Swal.fire({
+                title: "Hapus Produk?",
+                text: "Anda yakin ingin menghapus produk '" + productName + "'?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to delete endpoint
+                    window.location.href = "<?php echo base_url('dashboard/delete/') ?>" + productId;
+                }
+            });
+        });
+    });
+</script>

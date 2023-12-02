@@ -12,8 +12,8 @@
     <link href="<?= base_url('assets/backend/') ?>css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Tambahkan stylesheet SweetAlert -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Tambahkan script SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

@@ -21,7 +21,6 @@ class Dashboard extends CI_Controller
     public function insertProduk()
     {
         $result =$this->M_produk->insertProduk();
-        var_dump($result);die;
         redirect('dashboard/getproduk');
     }
 
@@ -161,7 +160,6 @@ class Dashboard extends CI_Controller
 =======
     public function delete_customer($id_customer)
     {
-
         $this->admin_model->delete_customer($id_customer);
         redirect('dashboard/admin');
     }
