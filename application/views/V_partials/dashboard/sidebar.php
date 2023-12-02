@@ -3,11 +3,11 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link" href="<?= base_url('dashboard/admin'); ?>">
+                <a style="<?php echo ($active_tab == 'admin') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?= base_url('dashboard/admin'); ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Data Customer
                 </a>
-                <a class="nav-link" href="<?php echo base_url('dashboard/getproduk') ?>">
+                <a style="<?php echo ($active_tab == 'getProduk') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/getproduk') ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Data Barang
                 </a>
@@ -29,13 +29,6 @@
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         
-                        <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="401.html">401 Page</a>
-                                <a class="nav-link" href="404.html">404 Page</a>
-                                <a class="nav-link" href="500.html">500 Page</a>
-                            </nav>
-                        </div>
                     </nav>
                 </div>
                 <div class="sb-sidenav-menu-heading">Report</div>
@@ -43,6 +36,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Monthly Report
                 </a>
+                <div class="sb-sidenav-menu-heading">Order List</div>
                 <a class="nav-link" href="<?php echo base_url('dashboard/orders') ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Daftar Pesanan

@@ -10,7 +10,6 @@
                     <?php if (isset($customer) && !empty($customer)) : ?>
                         <tr>
                             <th scope="col">No</th>
-
                             <th scope="col">ID Pelanggan</th>
                             <th scope="col">Username</th>
                             <th scope="col">Nama Customer</th>
@@ -49,7 +48,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <!-- Kolom-kolom tabel hasil pencarian -->
-
+                                        <th scope="col">No</th>
                                         <th scope="col">ID Pelanggan</th>
                                         <th scope="col">Username</th>
                                         <th scope="col">Nama Customer</th>
@@ -77,7 +76,6 @@
                                                         <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
                                                     </a>
                                                 </td>
-                                                <!-- ... -->
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

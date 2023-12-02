@@ -45,6 +45,10 @@ class Admin_model extends CI_Model {
 
         public function search_data($keyword) {
             $this->db->like('username', $keyword);
+            $this->db->or_like('id_customer', $keyword);
+            $this->db->or_like('nama_customer', $keyword);
+            $this->db->or_like('email', $keyword);
+            $this->db->or_like('telepon', $keyword);
             $query = $this->db->get('customer');
             return $query->result();
         }

@@ -86,9 +86,6 @@ class Customer extends CI_Controller {
        
     }
 
-    public function process_register() {
-       
-        
-    }
+
 }
 ?>
