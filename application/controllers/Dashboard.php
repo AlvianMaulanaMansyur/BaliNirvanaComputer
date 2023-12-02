@@ -1,8 +1,9 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CI_Controller
+{
 
     public function __construct()
     {
@@ -12,10 +13,9 @@ class Dashboard extends CI_Controller {
         $this->load->model('M_produk');
         $this->load->model('M_pesanan');
 
-        if (empty( $this->session->userdata('admin_name'))){
+        if (empty($this->session->userdata('admin_name'))) {
             redirect('auth/login');
         }
-        
     }
 
     public function admin()
@@ -40,7 +40,7 @@ class Dashboard extends CI_Controller {
     {
         $produk = $this->M_produk->getProduk();
         $category = $this->M_produk->getCategory();
-        
+
         $data = [
             'header' => 'V_partials/dashboard/header',
             'navbar' => 'V_partials/dashboard/navbar',
@@ -75,8 +75,7 @@ class Dashboard extends CI_Controller {
     {
 
         $id_customer = $this->input->post('id_customer');
-        if ($this->input->post('confirm_update') === '1')
-        {
+        if ($this->input->post('confirm_update') === '1') {
             $data = array(
                 'username' => $this->input->post('username'),
                 'password_customer' => $this->input->post('password_customer'),
@@ -97,9 +96,44 @@ class Dashboard extends CI_Controller {
 
     public function delete_customer($id_customer)
     {
-        
+
         $this->admin_model->delete_customer($id_customer);
         redirect('dashboard/admin');
+    }
+
+    public function monthlyRep() {
+      
+        $monthly_orders = null;
+        $data = [
+            'title' => 'Edit Data',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'content' => 'V_partials/dashboard/monthly_report',
+            'js' => 'V_partials/dashboard/js',
+            'monthly_orders' => $monthly_orders,
+        ];
+        $this->load->view('master', $data);
+    }
+    public function monthlyReport()
+    {
+        $month = $this->input->post('month'); // Ganti dengan metode yang sesuai
+        $year = $this->input->post('year'); 
+        // var_dump($month);die;  // Ganti dengan metode yang sesuai
+        $monthly_orders = $this->M_pesanan->getMonthlyOrders($month, $year);
+        
+        $data = [
+            'title' => 'Edit Data',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'content' => 'V_partials/dashboard/monthly_report',
+            'js' => 'V_partials/dashboard/js',
+            'monthly_orders' => $monthly_orders,
+        ];
+        $this->load->view('master', $data);
     }
 
     public function Orders()
@@ -126,9 +160,6 @@ class Dashboard extends CI_Controller {
         $this->session->unset_userdata('logged_in');
         redirect('auth/login');
     }
-
 }
 
 /* End of file Dashboard.php */
-
-?>

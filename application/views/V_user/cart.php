@@ -6,11 +6,12 @@
 
             <img src="<?php echo base_url($key['foto_produk']); ?>" alt="Foto Produk" style="width: 300px;height: auto;">
             <?php echo $key['nama_produk'] ?>
+
         </div>
 
+        <div class="d-flex" style="align-items:center ;">
 
-        <div class="d-flex" style="align-items: center;">
-        <div class="me-5 d-flex">
+            <div class="me-5 d-flex position-relative">
                 <!-- Tombol Minus -->
                 <a href="" class="quantity-control" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease">
                     <i class="fa-solid fa-minus"></i>
@@ -21,6 +22,8 @@
                 <a href="" class="quantity-control" data-id="<?php echo $key['id_cart']; ?>" data-action="increase">
                     <i class="fa-solid fa-plus"></i>
                 </a>
+            <div id="alert-container"></div>
+
             </div>
             <div class="me-5">
                 <!-- Subtotal -->
@@ -29,6 +32,7 @@
             <div>
                 <a href="<?php echo base_url('user/deleteCart/') . $key['id_cart'] ?>" class="btn btn-danger delete-cart-item"><i class="fa-solid fa-trash"></i></a>
             </div>
+
         </div>
     </div>
 
@@ -37,7 +41,7 @@
 
 <div class="container d-flex flex-column pt-5">
     <h3 id="total_checked_price"></h3>
-    <a href="<?php echo base_url('user/checkout') ?>" class="btn btn-danger col-2">Checkout</a>
+    <a href="<?php echo base_url('checkout') ?>" class="btn btn-danger col-2">Checkout</a>
 </div>
 
 <script>
@@ -86,18 +90,28 @@
         $.ajax({
             url: '<?php echo base_url('user/updateQuantity/'); ?>' + id_cart,
             type: 'POST',
-            data: { action: action },
+            data: {
+                action: action
+            },
             dataType: 'json',
             success: function(response) {
-                // Update jumlah produk pada elemen HTML yang sesuai
-                $('#qty_' + id_cart).text(response.qty_produk);
+                if ('error' in response) {
+                    // Tampilkan alert Bootstrap dengan pesan error
+                    var alertDiv = '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
+                        response.error;
+                    $('#alert-container').html(alertDiv); // Ganti '#alert-container' dengan ID atau kelas sesuai kebutuhan
+                } else {
+                    // Update jumlah produk pada elemen HTML yang sesuai
+                    $('#alert-container').empty();
+                    $('#qty_' + id_cart).text(response.qty_produk);
 
-                // Update subtotal pada elemen HTML yang sesuai
-                var newSubtotal = response.harga_produk * response.qty_produk;
-                $('#subtotal_' + id_cart).text(newSubtotal);
+                    // Update subtotal pada elemen HTML yang sesuai
+                    var newSubtotal = response.harga_produk * response.qty_produk;
+                    $('#subtotal_' + id_cart).text(newSubtotal);
 
-                // Update total harga yang dicentang pada elemen HTML yang sesuai
-                updateTotalCheckedPrice();
+                    // Update total harga yang dicentang pada elemen HTML yang sesuai
+                    updateTotalCheckedPrice();
+                }
             },
             error: function(error) {
                 console.log(error);

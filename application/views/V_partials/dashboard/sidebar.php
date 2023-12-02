@@ -39,7 +39,7 @@
                     </nav>
                 </div>
                 <div class="sb-sidenav-menu-heading">Report</div>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="<?php echo base_url('dashboard/monthlyReport') ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Monthly Report
                 </a>

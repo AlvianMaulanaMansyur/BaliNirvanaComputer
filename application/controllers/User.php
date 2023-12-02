@@ -96,10 +96,14 @@ class User extends CI_Controller
         if (!empty($cart)) {
             $qty_produk = $cart[0]['qty_produk'];
 
-            if ($action == 'increase') {
+            if ($action == 'increase' && $qty_produk < $cart[0]['stok_produk']) {
                 $qty_produk++;
             } else if ($action == 'decrease' && $qty_produk > 1) {
                 $qty_produk--;
+            } else {
+                header('Content-Type: application/json');
+                echo json_encode(['error' => ($action == 'increase' ? 'Qty melebihi stok' : 'Min qty adalah 1')]);
+                return;
             }
 
             $this->M_cart->updateQuantity($id_cart, $qty_produk);

@@ -141,10 +141,12 @@ class M_pesanan extends CI_Model
         $this->M_personalInfo->insertPersonalInfo();
         $personal_info = $this->M_personalInfo->getPersonalInfoByIdCustomer($customer_id);
         $alamat = $this->input->post('alamat');
+        $detail_alamat = $this->input->post('detail_alamat');
         // var_dump($personal_info);die;
         $order_data = array(
             'id_customer' => $customer_id,
             'alamat_pengiriman' => $alamat.', '.$personal_info[0]['kodepos'].', '.$personal_info[0]['kecamatan'].', '.$personal_info[0]['kota'],
+            'detail_alamat_pengiriman' => $detail_alamat,
             'status_pesanan' => '0',
         );
 
@@ -208,8 +210,8 @@ class M_pesanan extends CI_Model
 
     public function getMonthlyOrders($month, $year)
     {
-        $start_date = "$year-$month-01";
-        $end_date = date("Y-m-t", strtotime($start_date));
+        $start_date = date("$year-$month-01 00:00:00");
+        $end_date = date("Y-m-t 23:59:59", strtotime($start_date));
 
         $this->db->select('pesanan.*, customer.nama_customer, detail_pesanan.*, produk.harga_produk, produk.nama_produk');
         $this->db->from('pesanan');
@@ -220,8 +222,8 @@ class M_pesanan extends CI_Model
         $this->db->where('pesanan.create_time >=', $start_date);
         $this->db->where('pesanan.create_time <=', $end_date);
         $query = $this->db->get();
-
-        return $query->result_array();
+        $isi = $query->result_array();
+        return $isi;
     }
 }
 
