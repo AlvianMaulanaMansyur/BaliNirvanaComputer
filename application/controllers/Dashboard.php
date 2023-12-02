@@ -17,6 +17,48 @@ class Dashboard extends CI_Controller {
         }
     }
 
+    public function insertProduk()
+    {
+        $result =$this->M_produk->insertProduk();
+        redirect('dashboard/getproduk');
+    }
+
+    public function editProduk()
+    {
+        $this->M_produk->editProduk();
+        redirect('dashboard/getproduk');
+
+    }
+
+    public function delete($id)
+    {
+        $this->M_produk->deleteProduk($id);
+        redirect('dashboard/getproduk');
+    }
+
+    public function updateOrder($id_pesanan)
+    {
+        $this->db->select('*');
+        $this->db->from('pesanan');
+        $this->db->where('id_pesanan', $id_pesanan);
+        $result = $this->db->get();
+        $status = $result->result_array();
+
+        if ($status[0]['status_pesanan'] == 0) {
+            $data = [
+                'status_pesanan' => '1',
+            ];
+            $this->db->where('id_pesanan', $id_pesanan);
+            $this->db->update('pesanan', $data);
+            $this->M_produk->updateStok($id_pesanan);
+
+            redirect('dashboard/orders');
+        } else if ($status[0]['status_pesanan'] == 1) {
+            redirect('dashboard/rders');
+        }
+    }    
+
+
     public function admin()
     {
         $customer = $this->admin_model->get_all_customers();
@@ -136,6 +178,57 @@ class Dashboard extends CI_Controller {
     // Load tampilan dengan data yang sesuai
     $this->load->view('master', $data);
 }
+    public function monthlyRep() {
+      
+        $monthly_orders = null;
+        $data = [
+            'title' => 'Edit Data',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'content' => 'V_partials/dashboard/monthly_report',
+            'js' => 'V_partials/dashboard/js',
+            'monthly_orders' => $monthly_orders,
+        ];
+        $this->load->view('master', $data);
+    }
+    public function monthlyReport()
+    {
+        $month = $this->input->post('month'); // Ganti dengan metode yang sesuai
+        $year = $this->input->post('year'); 
+        // var_dump($month);die;  // Ganti dengan metode yang sesuai
+        $monthly_orders = $this->M_pesanan->getMonthlyOrders($month, $year);
+        
+        $data = [
+            'title' => 'Edit Data',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'content' => 'V_partials/dashboard/monthly_report',
+            'js' => 'V_partials/dashboard/js',
+            'monthly_orders' => $monthly_orders,
+        ];
+        $this->load->view('master', $data);
+    }
+
+    public function Orders()
+    {
+        $orders = $this->M_pesanan->getAllOrderForAdmin();
+        // var_dump($orders);die;
+        $data = [
+            'title' => 'Edit Data',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'content' => 'V_partials/dashboard/pesanan',
+            'js' => 'V_partials/dashboard/js',
+            'orders' => $orders
+        ];
+        $this->load->view('master', $data);
+    }
 
     public function logout()
     {
