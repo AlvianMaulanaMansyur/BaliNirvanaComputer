@@ -19,7 +19,7 @@ class Dashboard extends CI_Controller {
 
     public function insertProduk()
     {
-        $result =$this->M_produk->insertProduk();
+        $result = $this->M_produk->insertProduk();
         redirect('dashboard/getproduk');
     }
 
@@ -27,7 +27,6 @@ class Dashboard extends CI_Controller {
     {
         $this->M_produk->editProduk();
         redirect('dashboard/getproduk');
-
     }
 
     public function delete($id)
@@ -56,7 +55,7 @@ class Dashboard extends CI_Controller {
         } else if ($status[0]['status_pesanan'] == 1) {
             redirect('dashboard/rders');
         }
-    }    
+    }
 
 
     public function admin()
@@ -116,8 +115,10 @@ class Dashboard extends CI_Controller {
         $this->load->view('master', $data);
     }
 
-    public function update_customer()
+    public function search()
     {
+        // Ambil data pencarian dari form
+        $keyword = $this->input->post('keyword');
 
         $id_customer = $this->input->post('id_customer');
         if ($this->input->post('confirm_update') === '1')
@@ -130,57 +131,33 @@ class Dashboard extends CI_Controller {
                 'telepon' => $this->input->post('telepon')
             );
 
-            $this->admin_model->update_customer($id_customer, $data);
+            // Jika pencarian tidak kosong, lakukan pencarian
+            if (!empty($keyword)) {
+                $results = $this->admin_model->search_data($keyword);
 
+                // Kirim hasil pencarian ke tampilan
+                $data['content'] = 'V_partials/dashboard/content';
+                $data['results'] = $results;
+            } else {
+                // Jika pencarian kosong, ambil semua data pelanggan
+                $data['content'] = 'V_partials/dashboard/content';
+                $data['customer'] = $this->admin_model->get_all_customers();
+            }
 
-            redirect('dashboard/admin');
-        } else {
-            $data['confirm_update'] = TRUE;
-            $this->load->view('V_partials/admin/edit', $data);
+            // Load tampilan dengan data yang sesuai
+            $this->load->view('master', $data);
         }
     }
+
     public function delete_customer($id_customer)
     {
-        
         $this->admin_model->delete_customer($id_customer);
         redirect('dashboard/admin');
     }
 
-    public function search()
-{
-    // Ambil data pencarian dari form
-    $keyword = $this->input->post('keyword');
+    public function monthlyRep()
+    {
 
-    // Inisialisasi data untuk tampilan
-    $data = [
-        'title' => 'search data customer',
-        'header' => 'V_partials/dashboard/header',
-        'navbar' => 'V_partials/dashboard/navbar',
-        'sidebar' => 'V_partials/dashboard/sidebar',
-        'footer' => 'V_partials/dashboard/footer',
-        'js' => 'V_partials/dashboard/js',
-        'active_tab' => 'admin  '
-    ];
-
-    // Jika pencarian tidak kosong, lakukan pencarian
-    if (!empty($keyword)) {
-        $results = $this->admin_model->search_data($keyword);
-
-        // Kirim hasil pencarian ke tampilan
-        $data['content'] = 'V_partials/dashboard/content';
-        $data['results'] = $results;
-    } else {
-
-        // Jika pencarian kosong, ambil semua data pelanggan
-        $data['content'] = 'V_partials/dashboard/content';
-        $data['customer'] = $this->admin_model->get_all_customers();
-    }
-
-    // Load tampilan dengan data yang sesuai
-    $this->load->view('master', $data);
-}
-    public function monthlyRep() {
-      
         $monthly_orders = null;
         $data = [
             'title' => 'Edit Data',
@@ -199,10 +176,10 @@ class Dashboard extends CI_Controller {
     public function monthlyReport()
     {
         $month = $this->input->post('month'); // Ganti dengan metode yang sesuai
-        $year = $this->input->post('year'); 
+        $year = $this->input->post('year');
         // var_dump($month);die;  // Ganti dengan metode yang sesuai
         $monthly_orders = $this->M_pesanan->getMonthlyOrders($month, $year);
-        
+
         $data = [
             'title' => 'Edit Data',
             'header' => 'V_partials/dashboard/header',
