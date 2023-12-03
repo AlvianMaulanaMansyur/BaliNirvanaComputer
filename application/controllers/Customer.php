@@ -46,14 +46,15 @@ class Customer extends CI_Controller {
     }
 
     public function register() {
-        $this->form_validation->set_rules('username','Username', 'required|trim|min_lenght[8]|is_unique[customer.username]', array(
+        $this->form_validation->set_rules('username','Username', 'required|min_length[8]|is_unique[customer.username]|alpha_numeric|trim', array(
             'required'=>'username cannot be empty!',
-            'min_lenght' => 'usernae must be at least 8 characters!',
-            'is_unique' => 'username already taken!'
+            'min_length' => 'username must be at least 8 characters!',
+            'is_unique' => 'username already taken!',
+            'alpha_numeric' => 'usernames can only contain A-Z and 0-9!'
         ));
-        $this->form_validation->set_rules('password_customer','Password Customer', 'required|trim|min_lenght[8]|regex_match[/[0-9]/]', array(
+        $this->form_validation->set_rules('password_customer','Password Customer', 'required|trim|min_length[8]|regex_match[/[0-9]/]', array(
             'required' => 'password cannot be empty!',
-            'min_lenght' => 'password must be at least 8 characters!',
+            'min_length' => 'password must be at least 8 characters!',
             'regex_match' => 'password must contain at least 1 number'
         ));
         $this->form_validation->set_rules('nama_customer','Nama Customer', 'required|trim', array(
@@ -94,7 +95,7 @@ class Customer extends CI_Controller {
                 );
 
                $this->db->insert('customer', $data);
-               redirect('customer/login');
+               redirect('authCustomer/login');
                
         }
        

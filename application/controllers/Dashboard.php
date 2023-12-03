@@ -159,7 +159,7 @@ class Dashboard extends CI_Controller {
         'sidebar' => 'V_partials/dashboard/sidebar',
         'footer' => 'V_partials/dashboard/footer',
         'js' => 'V_partials/dashboard/js',
-        'active_tab' => 'admin  '
+        'active_tab' => 'admin  ' 
     ];
 
     // Jika pencarian tidak kosong, lakukan pencarian

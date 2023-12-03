@@ -4,8 +4,8 @@ class Customer_model extends CI_Model {
         parent::__construct();
     }
 
-    public function login($username, $password) {
-        $query = $this->db->get_where('customer', array('username' => $username, 'password_customer' => $password));
+    public function login($email, $password) {
+        $query = $this->db->get_where('customer', array('email' => $email, 'password_customer' => $password));
         return $query->row();
     }
     
