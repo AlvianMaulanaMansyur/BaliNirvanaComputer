@@ -1,8 +1,9 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CI_Controller
+{
 
     public function __construct()
     {
@@ -11,8 +12,9 @@ class Dashboard extends CI_Controller {
         $this->load->library('session');
         $this->load->model('M_produk');
         $this->load->model('M_pesanan');
+        $this->load->library('form_validation');
 
-        if (empty( $this->session->userdata('admin_name'))){
+        if (empty($this->session->userdata('admin_name'))) {
             redirect('auth/login');
         }
     }
@@ -81,7 +83,7 @@ class Dashboard extends CI_Controller {
     {
         $produk = $this->M_produk->getProduk();
         $category = $this->M_produk->getCategory();
-        
+
         $data = [
             'title' => 'Produck Stock',
             'header' => 'V_partials/dashboard/header',
@@ -101,26 +103,45 @@ class Dashboard extends CI_Controller {
     public function edit($id_customer)
     {
         $customer = $this->admin_model->get_customer($id_customer);
-        $data = [
-            'title' => 'Edit Data',
-            'header' => 'V_partials/dashboard/header',
-            'navbar' => 'V_partials/dashboard/navbar',
-            'sidebar' => 'V_partials/dashboard/sidebar',
-            'footer' => 'V_partials/dashboard/footer',
-            'content' => 'V_partials/admin/edit',
-            'js' => 'V_partials/dashboard/js',
-            'customer' => $customer,
-            'active_tab' => 'admin'
-        ];
-        $this->load->view('master', $data);
+
+        $this->form_validation->set_rules('username', 'Username', 'required|min_length[8]|alpha_numeric');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+        if ($this->form_validation->run() == FALSE) {
+
+            $data = [
+                'title' => 'Edit Data',
+                'header' => 'V_partials/dashboard/header',
+                'navbar' => 'V_partials/dashboard/navbar',
+                'sidebar' => 'V_partials/dashboard/sidebar',
+                'footer' => 'V_partials/dashboard/footer',
+                'content' => 'V_partials/admin/edit',
+                'js' => 'V_partials/dashboard/js',
+                'customer' => $customer,
+                'active_tab' => 'admin'
+            ];
+            $this->load->view('master', $data);
+        } else {
+            $data_to_save = [
+                'username' => $this->input->post('username'),
+                'password_customer' => $this->input->post('password_customer'),
+                'nama_customer' => $this->input->post('nama_customer'),
+                'email' => $this->input->post('email'),
+                'telepon' => $this->input->post('telepon'),
+
+            ];
+            $this->admin_model->update_customer($id_customer, $data_to_save);
+            }
+        
     }
+
 
     public function update_customer()
     {
 
         $id_customer = $this->input->post('id_customer');
-        if ($this->input->post('confirm_update') === '1')
-        {
+        if ($this->input->post('confirm_update') === '1') {
             $data = array(
                 'username' => $this->input->post('username'),
                 'password_customer' => $this->input->post('password_customer'),
@@ -142,33 +163,32 @@ class Dashboard extends CI_Controller {
     {
         // Ambil data pencarian dari form
         $keyword = $this->input->post('keyword');
-       
-            $data = [
-                'title' => 'Bali Nirvana',
-                'header' => 'V_partials/dashboard/header',
-                'navbar' => 'V_partials/dashboard/navbar',
-                'sidebar' => 'V_partials/dashboard/sidebar',
-                'footer' => 'V_partials/dashboard/footer',
-                'js' => 'V_partials/dashboard/js',
-                'active_tab' => 'admin'
-            ];
 
-            // Jika pencarian tidak kosong, lakukan pencarian
-            if (!empty($keyword)) {
-                $results = $this->admin_model->search_data($keyword);
+        $data = [
+            'title' => 'Bali Nirvana',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'js' => 'V_partials/dashboard/js',
+            'active_tab' => 'admin'
+        ];
 
-                // Kirim hasil pencarian ke tampilan
-                $data['content'] = 'V_partials/dashboard/content';
-                $data['results'] = $results;
-            } else {
-                // Jika pencarian kosong, ambil semua data pelanggan
-                $data['content'] = 'V_partials/dashboard/content';
-                $data['customer'] = $this->admin_model->get_all_customers();
-            }
+        // Jika pencarian tidak kosong, lakukan pencarian
+        if (!empty($keyword)) {
+            $results = $this->admin_model->search_data($keyword);
 
-            // Load tampilan dengan data yang sesuai
-            $this->load->view('master', $data);
-        
+            // Kirim hasil pencarian ke tampilan
+            $data['content'] = 'V_partials/dashboard/content';
+            $data['results'] = $results;
+        } else {
+            // Jika pencarian kosong, ambil semua data pelanggan
+            $data['content'] = 'V_partials/dashboard/content';
+            $data['customer'] = $this->admin_model->get_all_customers();
+        }
+
+        // Load tampilan dengan data yang sesuai
+        $this->load->view('master', $data);
     }
 
     public function delete_customer($id_customer)
@@ -244,5 +264,3 @@ class Dashboard extends CI_Controller {
 }
 
 /* End of file Dashboard.php */
-
-?>

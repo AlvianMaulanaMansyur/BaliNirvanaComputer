@@ -33,9 +33,9 @@ class Admin_model extends CI_Model {
             $this->db->where('id_customer', $id_customer);
             $this->db->update('customer', $data);
         }
-        public function update_customer($customer_id, $data) {
+        public function update_customer($customer_id, $data_to_save) {
             $this->db->where('id_customer', $customer_id);
-            $this->db->update('customer', $data);
+            $this->db->update('customer', $data_to_save);
         }
         
         public function get_customer($customer_id) {

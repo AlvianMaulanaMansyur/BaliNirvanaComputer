@@ -46,6 +46,15 @@ class AuthCustomer extends CI_Controller {
         }
 
     }
+    public function sess()
+    {
+
+        if ($this->session->userdata('logged_in')) {
+            redirect('home');
+        } else {
+            redirect('authCustomer/login');
+        }
+    }
 
     public function logout() {
         $this->session->unset_userdata('customer_id');
