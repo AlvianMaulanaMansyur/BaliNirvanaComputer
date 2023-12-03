@@ -115,10 +115,8 @@ class Dashboard extends CI_Controller {
         $this->load->view('master', $data);
     }
 
-    public function search()
+    public function update_customer()
     {
-        // Ambil data pencarian dari form
-        $keyword = $this->input->post('keyword');
 
         $id_customer = $this->input->post('id_customer');
         if ($this->input->post('confirm_update') === '1')
@@ -130,6 +128,30 @@ class Dashboard extends CI_Controller {
                 'email' => $this->input->post('email'),
                 'telepon' => $this->input->post('telepon')
             );
+
+            $this->admin_model->update_customer($id_customer, $data);
+
+
+            redirect('dashboard/admin');
+        } else {
+            $data['confirm_update'] = TRUE;
+            $this->load->view('V_partials/admin/edit', $data);
+        }
+    }
+    public function search()
+    {
+        // Ambil data pencarian dari form
+        $keyword = $this->input->post('keyword');
+       
+            $data = [
+                'title' => 'Bali Nirvana',
+                'header' => 'V_partials/dashboard/header',
+                'navbar' => 'V_partials/dashboard/navbar',
+                'sidebar' => 'V_partials/dashboard/sidebar',
+                'footer' => 'V_partials/dashboard/footer',
+                'js' => 'V_partials/dashboard/js',
+                'active_tab' => 'admin'
+            ];
 
             // Jika pencarian tidak kosong, lakukan pencarian
             if (!empty($keyword)) {
@@ -146,7 +168,7 @@ class Dashboard extends CI_Controller {
 
             // Load tampilan dengan data yang sesuai
             $this->load->view('master', $data);
-        }
+        
     }
 
     public function delete_customer($id_customer)

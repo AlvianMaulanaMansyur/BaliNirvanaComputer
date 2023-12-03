@@ -80,7 +80,7 @@ class AuthCustomer extends CI_Controller {
 
         if($this->form_validation->run() == FALSE){
 
-            $data = [
+            $data = [ 
                 'header' => 'V_partials/loginRegister/header',
                 'content' => 'V_partials/loginRegister/register',
                 'js' => 'V_partials/loginRegister/js'
