@@ -13,16 +13,16 @@
 
             <div class="me-5 d-flex position-relative">
                 <!-- Tombol Minus -->
-                <a href="" class="quantity-control" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease">
-                    <i class="fa-solid fa-minus"></i>
-                </a>
-                <!-- Jumlah Produk -->
+                <button class="quantity-control button-qty" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease" <?php echo ($key['qty_produk'] == 1) ? 'disabled' : ''; ?>>
+                    <i class="fas fa-minus"></i>
+                </button>
+
+
                 <h4 id="qty_<?php echo $key['id_cart']; ?>" class="mx-2"><?php echo $key['qty_produk']; ?></h4>
-                <!-- Tombol Plus -->
-                <a href="" class="quantity-control" data-id="<?php echo $key['id_cart']; ?>" data-action="increase">
+
+                <button class="quantity-control button-qty" data-id="<?php echo $key['id_cart']; ?>" data-action="increase" <?php echo ($key['qty_produk'] == $key['stok_produk']) ? 'disabled' : ''; ?>>
                     <i class="fa-solid fa-plus"></i>
-                </a>
-            <div id="alert-container"></div>
+                </button>
 
             </div>
             <div class="me-5">
@@ -36,13 +36,13 @@
         </div>
     </div>
 
-
 <?php } ?>
 
 <div class="container d-flex flex-column pt-5">
     <h3 id="total_checked_price"></h3>
     <a href="<?php echo base_url('checkout') ?>" class="btn btn-danger col-2">Checkout</a>
 </div>
+
 
 <script>
     $(document).ready(function() {
@@ -75,11 +75,8 @@
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    parentContainer.addClass('animate__animated animate__fadeOutUp faster');
 
-                    parentContainer.on('animationend webkitAnimationEnd oAnimationEnd', function() {
-                        window.location.href = deleteUrl;
-                    });
+                    window.location.href = deleteUrl;
                 }
             });
         });
@@ -96,21 +93,17 @@
             dataType: 'json',
             success: function(response) {
                 if ('error' in response) {
-                    // Tampilkan alert Bootstrap dengan pesan error
-                    var alertDiv = '<div class="alert alert-warning alert-dismissible fade show" role="alert">' +
-                        response.error;
-                    $('#alert-container').html(alertDiv); // Ganti '#alert-container' dengan ID atau kelas sesuai kebutuhan
+
                 } else {
-                    // Update jumlah produk pada elemen HTML yang sesuai
-                    $('#alert-container').empty();
                     $('#qty_' + id_cart).text(response.qty_produk);
 
-                    // Update subtotal pada elemen HTML yang sesuai
                     var newSubtotal = response.harga_produk * response.qty_produk;
                     $('#subtotal_' + id_cart).text(newSubtotal);
 
-                    // Update total harga yang dicentang pada elemen HTML yang sesuai
-                    updateTotalCheckedPrice();
+                    // Update the button states with a callback for updateTotalCheckedPrice
+                    updateButtonStates(id_cart, response.qty_produk, response.stok_produk, function() {
+                        updateTotalCheckedPrice();
+                    });
                 }
             },
             error: function(error) {
@@ -119,11 +112,33 @@
         });
     }
 
+    function updateButtonStates(id_cart, qty_produk, stok_produk, callback) {
+        var decreaseButton = $('.quantity-control[data-id="' + id_cart + '"][data-action="decrease"]');
+        var increaseButton = $('.quantity-control[data-id="' + id_cart + '"][data-action="increase"]');
+
+        // Enable or disable the buttons based on the quantity and stock
+        if (qty_produk <= 1) {
+            decreaseButton.attr('disabled', 'disabled');
+        } else {
+            decreaseButton.removeAttr('disabled');
+        }
+
+        if (qty_produk >= stok_produk) {
+            increaseButton.attr('disabled', 'disabled');
+        } else {
+            increaseButton.removeAttr('disabled');
+        }
+
+        // // Execute the callback if provided
+        if (callback && typeof callback === 'function') {
+            callback();
+        }
+    }
+
     function updateIsCheck(checkbox) {
         var id_cart = $(checkbox).data('id');
         var is_check = checkbox.checked ? 1 : 0;
 
-        // Kirim permintaan AJAX untuk menyimpan perubahan
         $.ajax({
             url: '<?php echo base_url('user/updateIsCheck/'); ?>' + id_cart,
             type: 'POST',
@@ -131,7 +146,6 @@
                 is_check: is_check
             },
             success: function(response) {
-                // Update total harga yang dicentang pada elemen HTML yang sesuai
                 updateTotalCheckedPrice();
             },
             error: function(error) {
