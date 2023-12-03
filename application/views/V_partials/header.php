@@ -28,5 +28,13 @@
             padding: 0;
             min-height: 100vh;
         }
+
+        .button-qty {
+            border: none;
+            height: 20px;
+            padding-left: 5px;
+            padding-right: 5px;
+            border-radius: 5px;
+        }
     </style>
 </head>

@@ -13,13 +13,14 @@
 
             <div class="me-5 d-flex position-relative">
                 <!-- Tombol Minus -->
-                <button class="quantity-control" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease" <?php echo ($key['qty_produk'] == 1) ? 'disabled' : ''; ?>>
-                    <i class="fa-solid fa-minus"></i>
+                <button class="quantity-control button-qty" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease" <?php echo ($key['qty_produk'] == 1) ? 'disabled' : ''; ?>>
+                    <i class="fas fa-minus"></i>
                 </button>
+
 
                 <h4 id="qty_<?php echo $key['id_cart']; ?>" class="mx-2"><?php echo $key['qty_produk']; ?></h4>
 
-                <button class="quantity-control" data-id="<?php echo $key['id_cart']; ?>" data-action="increase" <?php echo ($key['qty_produk'] == $key['stok_produk']) ? 'disabled' : ''; ?>>
+                <button class="quantity-control button-qty" data-id="<?php echo $key['id_cart']; ?>" data-action="increase" <?php echo ($key['qty_produk'] == $key['stok_produk']) ? 'disabled' : ''; ?>>
                     <i class="fa-solid fa-plus"></i>
                 </button>
 
@@ -74,11 +75,8 @@
                 cancelButtonText: "Batal"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    parentContainer.addClass('animate__animated animate__fadeOutUp faster');
 
-                    parentContainer.on('animationend webkitAnimationEnd oAnimationEnd', function() {
-                        window.location.href = deleteUrl;
-                    });
+                    window.location.href = deleteUrl;
                 }
             });
         });
