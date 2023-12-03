@@ -61,7 +61,14 @@
                 Jumlah melebihi stok yang tersedia.
             </div>
             `;
-        } else {
+        } else if (parseInt(qtyProduk) < 1) {
+            // Tampilkan alert warning menggunakan Bootstrap
+            document.getElementById('alertContainer').innerHTML = `
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Jumlah pembelian minimal 1 
+            </div>
+            `;
+        } else  {
             document.getElementById('alertContainer').innerHTML = '';
 
             $.ajax({
