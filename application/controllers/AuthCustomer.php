@@ -12,15 +12,22 @@ class AuthCustomer extends CI_Controller {
         $this->load->library('form_validation');  
     }
 
+  
     public function login() {
-        $data = [
-            'header' => 'V_partials/loginRegister/header',
-            'content' => 'V_partials/loginRegister/login2',
-            'js' => 'V_partials/loginRegister/js'
-
-        ];
-
+        if (empty($this->session->userdata('email'))){
+            $data = [
+                'header' => 'V_partials/loginRegister/header',
+                'content' => 'V_partials/loginRegister/login2',
+                'js' => 'V_partials/loginRegister/js'
+    
+            ];
         $this->load->view('customer/loginView', $data);
+
+        } else {
+            redirect('home');
+        }
+       
+
     }
 
 

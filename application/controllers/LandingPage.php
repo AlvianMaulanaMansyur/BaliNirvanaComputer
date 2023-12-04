@@ -14,9 +14,7 @@ class LandingPage extends CI_Controller {
         $this->load->model('Customer_model');
         $this->load->library('form_validation');
 
-        if (empty($this->session->userdata('email'))) {
-            redirect('authCustomer/login');
-        }
+       
     }
 
     public function index()

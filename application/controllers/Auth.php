@@ -1,8 +1,9 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends CI_Controller
+{
 
     public function __construct()
     {
@@ -10,17 +11,20 @@ class Auth extends CI_Controller {
         $this->load->model('admin_model');
         $this->load->library('session');
         $this->load->model('M_produk');
-        
     }
 
     public function login()
     {
-        $data = [
-            'header' => 'V_partials/loginRegister/header',
-            'content' => 'V_partials/loginRegister/login',
-            'js' => 'V_partials/loginRegister/js'
-        ];
-        $this->load->view('loginAdmin', $data);
+        if (empty($this->session->userdata('admin_name'))) {
+            $data = [
+                'header' => 'V_partials/loginRegister/header',
+                'content' => 'V_partials/loginRegister/login',
+                'js' => 'V_partials/loginRegister/js'
+            ];
+            $this->load->view('loginAdmin', $data);
+        } else {
+            redirect('dashboard/admin');
+        }
     }
 
 
@@ -56,9 +60,6 @@ class Auth extends CI_Controller {
             redirect('auth/login');
         }
     }
-
 }
 
 /* End of file Auth.php */
-
-?>
