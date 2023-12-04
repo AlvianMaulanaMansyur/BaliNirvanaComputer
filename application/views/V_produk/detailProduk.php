@@ -103,7 +103,7 @@
                             // Aksi yang diambil setelah tombol "OK" diklik
                             if (result.isConfirmed) {
                                 // Redirect ke landing page atau controller user
-                                window.location.href = '<?php echo base_url("home"); ?>';
+                                window.location.href = '<?php echo base_url("cart"); ?>';
                             }
                         });
 

@@ -185,7 +185,7 @@ class User extends CI_Controller
     public function transaksi()
     {
         $id_pesanan = $this->M_pesanan->createOrder();
-        redirect('User/hlmTransaksi/' . $id_pesanan);
+        redirect('transaksi/' . $id_pesanan);
     }
 
     public function hlmTransaksi($id_pesanan)

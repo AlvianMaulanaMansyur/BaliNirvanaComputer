@@ -7,7 +7,7 @@
                 <h3>Personal Info</h3>
             </div>
 
-            <form action="<?php echo base_url('user/transaksi') ?>" method="post" enctype="multipart/form-data" class="">
+            <form action="<?php echo base_url('user/transaksi/') ?>" method="post" enctype="multipart/form-data" class="">
 
                 <div class="row d-flex px-3 pt-2">
 
