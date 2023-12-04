@@ -26,10 +26,7 @@ class AuthCustomer extends CI_Controller {
         } else {
             redirect('home');
         }
-       
-
     }
-
 
     public function process_login() {
 
@@ -53,6 +50,7 @@ class AuthCustomer extends CI_Controller {
         }
 
     }
+    
     public function sess()
     {
 

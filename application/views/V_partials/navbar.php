@@ -3,8 +3,8 @@
     <ul class="links">
         <li><a href="<?php echo base_url('home') ?>">Home</a></li>
         <li><a href="shop">Shop</a></li>
-        <li><a href="about">About Us</a></li>
-        <li><a href="contact">Contact Us</a></li>
+        <li><a href="<?php echo base_url('about') ?>">About Us</a></li>
+        <li><a href="<?php echo base_url('contact') ?>">Contact Us</a></li>
     </ul>
 
     <form action="#" class="form-search col-5 col-sm-4 col-lg-3 ">

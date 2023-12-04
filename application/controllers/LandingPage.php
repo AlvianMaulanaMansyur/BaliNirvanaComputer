@@ -13,8 +13,6 @@ class LandingPage extends CI_Controller {
         $this->load->model('M_pesanan');
         $this->load->model('Customer_model');
         $this->load->library('form_validation');
-
-       
     }
 
     public function index()
@@ -60,6 +58,24 @@ class LandingPage extends CI_Controller {
             ];
         }
         $this->load->view('template', $data);
+    }
+
+    public function contactUs() {
+        $data = [
+            'content' => 'customer/contact',
+            'title' => 'Contact Us',
+        ];
+        $this->load->view('template', $data);
+        
+    }
+
+    public function aboutUs() {
+        $data = [
+            'content' => 'customer/about',
+            'title' => 'Contact Us',
+        ];
+        $this->load->view('template', $data);
+        
     }
     
 }
