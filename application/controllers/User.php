@@ -45,7 +45,7 @@ class User extends CI_Controller
         if (!empty($cart['cart'])) {
             $data = array(
                 'content' => 'V_user/cart',
-                'title' => 'Cartt',
+                'title' => 'Cart',
                 'cart' => $cart['cart'],
             );
         } else {
