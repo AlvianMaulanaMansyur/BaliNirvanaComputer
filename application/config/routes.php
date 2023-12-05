@@ -63,6 +63,7 @@ $route['home'] = 'LandingPage/index';
 $route['shop'] = 'LandingPage/shop';
 $route['about'] = 'LandingPage/aboutUs';
 $route['contact'] = 'LandingPage/contactUs';
+$route['transaksi/(:num)'] = 'user/hlmtransaksi/$1';
 
 
 

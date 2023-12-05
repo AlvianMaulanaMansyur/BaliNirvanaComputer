@@ -33,7 +33,7 @@
                     <?php }else { 
                         echo 'Belum Berhasil';
                         ?>
-                        <a href="<?php echo base_url('user/hlmtransaksi/').$invoice_number ?>" class="btn btn-success">Lanjutkan Transaksi</a>
+                        <a href="<?php echo base_url('transaksi/').$invoice_number ?>" class="btn btn-success">Lanjutkan Transaksi</a>
                     <?php } ?>
                      </h4>
                     <h4>Total : <?php echo $order['total'] ?></h4>

@@ -15,6 +15,8 @@
     
     <link rel="stylesheet" href="<?php echo base_url('assets/css/navbar.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/contact.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/about.css') ?>">
 
     <style>
         * {

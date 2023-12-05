@@ -14,7 +14,7 @@ class AuthCustomer extends CI_Controller {
 
   
     public function login() {
-        if (empty($this->session->userdata('email'))){
+        if (($this->session->userdata('customer_id')) == null){
             $data = [
                 'header' => 'V_partials/loginRegister/header',
                 'content' => 'V_partials/loginRegister/login2',
@@ -22,14 +22,10 @@ class AuthCustomer extends CI_Controller {
     
             ];
         $this->load->view('customer/loginView', $data);
-
         } else {
             redirect('home');
         }
-
-        
     }
-
 
     public function process_login() {
 
@@ -53,6 +49,7 @@ class AuthCustomer extends CI_Controller {
         }
 
     }
+    
     public function sess()
     {
 

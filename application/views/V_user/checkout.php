@@ -7,7 +7,7 @@
                 <h3>Personal Info</h3>
             </div>
 
-            <form action="<?php echo base_url('user/transaksi') ?>" method="post" enctype="multipart/form-data" class="">
+            <form action="<?php echo base_url('user/transaksi/') ?>" method="post" enctype="multipart/form-data" class="">
 
                 <div class="row d-flex px-3 pt-2">
 
@@ -33,7 +33,7 @@
 
                         <div class="mb-4">
                             <label for="alamat" class="form-label">Alamat</label>
-                            <input type="text" name="alamat" class="form-control" id="alamat" value="" placeholder="Alamat Pengiriman">
+                            <input type="text" name="alamat" class="form-control" id="alamat" value="" placeholder="Alamat Pengiriman" required>
                             <input type="text" name="detail_alamat" class="form-control" id="" placeholder="Detail Alamat, contoh: Di dekat pura">
                         </div>
 

@@ -15,7 +15,7 @@ class Auth extends CI_Controller
 
     public function login()
     {
-        if (empty($this->session->userdata('admin_name'))) {
+        if (($this->session->userdata('admin_id')) == null){
             $data = [
                 'header' => 'V_partials/loginRegister/header',
                 'content' => 'V_partials/loginRegister/login',

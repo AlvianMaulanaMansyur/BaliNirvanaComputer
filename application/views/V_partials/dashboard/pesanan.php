@@ -82,7 +82,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // Redirect ke halaman updateOrder jika konfirmasi diterima
-                window.location.href = '<?php echo base_url("admin/updateOrder/"); ?>' + orderId;
+                window.location.href = '<?php echo base_url("dashboard/updateOrder/"); ?>' + orderId;
             }
         });
     }
