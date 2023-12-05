@@ -4,9 +4,18 @@
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800 ">Data Customer</h1>
             </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            
+            <button type="button" class="btn btn-primary " style="margin-bottom:30px ;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Tambah Produk
             </button>
+
+            <!-- search -->
+            <?php echo form_open('Dashboard/search_produk', 'class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3  my-2 my-md-0 "'); ?>
+            <div class="input-group d-flex" style="float:right">
+                <?php echo form_input('keyword', '', 'class="form-control" placeholder="Search for..." aria-label="Search for..."'); ?>
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            <?php echo form_close(); ?>
 
             <table class="table table-striped">
                 <thead>

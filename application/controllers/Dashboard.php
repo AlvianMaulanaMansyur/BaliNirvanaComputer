@@ -15,7 +15,7 @@ class Dashboard extends CI_Controller
         $this->load->library('form_validation');
 
         if (empty($this->session->userdata('admin_name'))) {
-            redirect('auth/login');
+            redirect('auth/login'); 
         }
     }
 
@@ -159,7 +159,7 @@ class Dashboard extends CI_Controller
             $this->load->view('V_partials/admin/edit', $data);
         }
     }
-    public function search()
+    public function search_Customer()
     {
         // Ambil data pencarian dari form
         $keyword = $this->input->post('keyword');
@@ -190,6 +190,43 @@ class Dashboard extends CI_Controller
         // Load tampilan dengan data yang sesuai
         $this->load->view('master', $data);
     }
+
+    public function search_produk()
+    {
+        // Ambil data pencarian dari form
+        $keyword = $this->input->post('keyword');
+        $produk = $this->M_produk->getProduk();
+        $category = $this->M_produk->getCategory();
+
+        $data = [
+            'title' => 'Produck Stock',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'content' => 'V_partials/dashboard/produk',
+            'js' => 'V_partials/dashboard/js',
+            'produk' => $produk,
+            'category' => $category,
+            'active_tab' => 'getProduk'
+        ];
+
+        // Jika pencarian tidak kosong, lakukan pencarian
+        if (!empty($keyword)) {
+            $results = $this->admin_model->search_produk($keyword);
+
+            // Kirim hasil pencarian ke tampilan
+            $data['content'] = 'V_partials/dashboard/content';
+            $data['results'] = $results;
+        } else {
+            // Jika pencarian kosong, ambil semua data pelanggan
+            $data['content'] = 'V_partials/dashboard/content';
+            $data['customer'] = $this->admin_model->get_all_customers();
+        }
+
+        // Load tampilan dengan data yang sesuai
+        $this->load->view('master', $data);
+    }    
 
     public function delete_customer($id_customer)
     {

@@ -4,6 +4,15 @@
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800 ">Data Customer</h1>
             </div>
+
+            <!-- search -->
+            <?php echo form_open('Dashboard/search_Customer', 'class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3  my-2 my-md-0"'); ?>
+            <div class="input-group d-flex" style="float:right">
+                <?php echo form_input('keyword', '', 'class="form-control" placeholder="Search for..." aria-label="Search for..."'); ?>
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            <?php echo form_close(); ?>
+
             <table class="table table-striped">
 
                 <thead>

@@ -26,8 +26,8 @@ class AuthCustomer extends CI_Controller {
         } else {
             redirect('home');
         }
-       
 
+        
     }
 
 

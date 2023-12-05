@@ -52,6 +52,11 @@ class Admin_model extends CI_Model {
             $query = $this->db->get('customer');
             return $query->result();
         }
+
+        public function search_data_produk($keyword){
+            
+            $this->db->like('');
+        } 
     }
     
     
