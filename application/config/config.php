@@ -25,10 +25,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 // $config['base_url'] = 'http://localhost/PBL';
 
-$config['base_url'] = 'http://localhost/CodeIgniter/pbl/';
-// $root = "http://".$_SERVER['HTTP_HOST'];
-// $root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-// $config['base_url']    = "$root";
+// $config['base_url'] = 'http://localhost/CodeIgniter/pbl/';
+$root = "http://".$_SERVER['HTTP_HOST'];
+$root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+$config['base_url']    = "$root";
 
 /*
 |--------------------------------------------------------------------------
@@ -391,7 +391,13 @@ $config['encryption_key'] = '';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
-$config['sess_expiration'] = 7200;
+// $config['sess_expiration'] = 7200;
+
+$config['sess_expiration'] = 0; // Sesuai dengan 0, sesi tidak akan kedaluwarsa ketika browser ditutup
+$config['sess_expiration_on_close'] = false;
+$config['sess_cookie_lifetime'] = 60 * 60 * 24 * 365;
+
+
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;

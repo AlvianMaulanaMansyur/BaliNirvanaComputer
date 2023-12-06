@@ -9,7 +9,7 @@ class AuthCustomer extends CI_Controller {
         parent::__construct();
         $this->load->model('Customer_model');
         $this->load->library('session');      
-        $this->load->library('form_validation');  
+        $this->load->library('form_validation');    
     }
 
   
