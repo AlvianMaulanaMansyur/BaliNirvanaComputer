@@ -4,7 +4,7 @@
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800 ">Data Customer</h1>
             </div>
-            
+
             <button type="button" class="btn btn-primary " style="margin-bottom:30px ;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Tambah Produk
             </button>
@@ -19,45 +19,93 @@
 
             <table class="table table-striped">
                 <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>ID Produk</th>
-                        <th>Category</th>
-                        <th>Nama Produk</th>
-                        <th>Stok</th>
-                        <th>Harga</th>
-                        <th>Deskripsi Produk</th>
-                        <th>Foto Produk</th>
-                        <th>Action</th>
-                    </tr>
+                    <?php if (isset($produk) && !empty($produk)) : ?>
+                        <tr>
+                            <th>No</th>
+                            <th>ID Produk</th>
+                            <th>Category</th>
+                            <th>Nama Produk</th>
+                            <th>Stok</th>
+                            <th>Harga</th>
+                            <th>Deskripsi Produk</th>
+                            <th>Foto Produk</th>
+                            <th>Action</th>
+                        </tr>
                 </thead>
                 <tbody class="table-group-divider">
+                    <?php if (isset($produk) && !empty($produk)) ?>
                     <?php $no = 1 ?>
-                    <?php foreach ($produk as $key) : ?>
+                    <?php foreach ($produk as $product) : ?>
                         <tr>
                             <td><?php echo $no++ ?></td>
-                            <td scope="row"> <?php echo $key['id_produk'] ?></td>
-                            <td> <?php echo $key['nama_category'] ?></td>
-                            <td><?php echo $key['nama_produk'] ?></td>
-                            <td><?php echo $key['stok_produk'] ?></td>
-                            <td> <?php echo $key['harga_produk'] ?></td>
-                            <td> <?php echo $key['deskripsi_produk'] ?></td>
-                            <td> <img src="<?php echo base_url($key['foto_produk']); ?>" alt="Gambar" style="width: 200px;height: auto;"></td>
+                            <td scope="row"> <?php echo $product['id_produk'] ?></td>
+                            <td> <?php echo $product ['nama_category'] ?></td>
+                            <td><?php echo $product ['nama_produk'] ?></td>
+                            <td><?php echo $product ['stok_produk'] ?></td>
+                            <td> <?php echo $product ['harga_produk'] ?></td>
+                            <td> <?php echo $product ['deskripsi_produk'] ?></td>
+                            <td> <img src="<?php echo base_url($product ['foto_produk']); ?>" alt="Gambar" style="width: 200px;height: auto;"></td>
                             <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $key['id_produk']; ?>">Edit</button>
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $product['id_produk']; ?>">Edit</button>
 
                                 <!-- Display alert before deleting -->
-                                <button class="btn btn-danger delete-product-item" data-id="<?php echo $key['id_produk']; ?>" data-name="<?php echo $key['nama_produk']; ?>">
+                                <button class="btn btn-danger delete-product-item" data-id="<?php echo $product['id_produk']; ?>" data-name="<?php echo $product['nama_produk']; ?>">
                                     Delete
                                 </button>
                             </td>
-
                         </tr>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="10">
+                            <?php if (isset($results) && !empty($results)) : ?>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>No</th>
+                                        <th>ID Produk</th>
+                                        <th>Category</th>
+                                        <th>Nama Produk</th>
+                                        <th>Stok</th>
+                                        <th>Harga</th>
+                                        <th>Deskripsi Produk</th>
+                                        <th>Foto Produk</th>
+                                        <th>Action</th>
+                                    </thead>
+                                    <tbody>
+                                        <?php $no = 1 ?>
+                                        <?php foreach ($results as $result) : ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $result->id_produk ?></td>
+                                                <td><?php echo $result->nama_category ?></td>
+                                                <td><?php echo $result->nama_produk ?></td>
+                                                <td><?php echo $result->stok_produk ?></td>
+                                                <td><?php echo $result->harga_produk ?></td>
+                                                <td><?php echo $result->deskripsi_produk ?></td>
+                                                <td><img src="<?php echo base_url($result->foto_produk); ?>" alt="Gambar" style="width: 200px;height: auto;"></td>
+
+                                                <td>
+                                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>">Edit</button>
+
+                                                    <!-- Display alert before deleting -->
+                                                    <button class="btn btn-danger delete-product-item" data-id="<?php echo $result->id_produk; ?>" data-name="<?php echo $result->nama_produk; ?>">
+                                                        Delete
+                                                    </button>
+                                                </td>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
+        <?php else : ?>
+            <p>Tidak Ada data Barang yang tersedia</p>
+        <?php endif; ?>
+        </td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+    </table>
         </div>
-
     </div>
 </div>
 
@@ -66,7 +114,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Produk</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -118,7 +166,8 @@
     </div>
 </div>
 
-<?php foreach ($produk as $key) : ?>
+<?php if (isset($produk) && !empty($produk)) : ?>
+<?php foreach ($produk as $key  ) : ?>
     <!-- Modal untuk Edit -->
     <div class="modal fade" id="editModal<?php echo $key['id_produk']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog">
@@ -184,7 +233,8 @@
     </div>
     </div>
 <?php endforeach; ?>
-
+<?php endif; ?>
+  
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -224,4 +274,5 @@
             });
         });
     });
+
 </script>

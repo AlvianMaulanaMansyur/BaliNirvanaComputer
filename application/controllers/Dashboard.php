@@ -195,8 +195,7 @@ class Dashboard extends CI_Controller
     {
         // Ambil data pencarian dari form
         $keyword = $this->input->post('keyword');
-        $produk = $this->M_produk->getProduk();
-        $category = $this->M_produk->getCategory();
+   
 
         $data = [
             'title' => 'Produck Stock',
@@ -204,24 +203,22 @@ class Dashboard extends CI_Controller
             'navbar' => 'V_partials/dashboard/navbar',
             'sidebar' => 'V_partials/dashboard/sidebar',
             'footer' => 'V_partials/dashboard/footer',
-            'content' => 'V_partials/dashboard/produk',
             'js' => 'V_partials/dashboard/js',
-            'produk' => $produk,
-            'category' => $category,
             'active_tab' => 'getProduk'
         ];
 
         // Jika pencarian tidak kosong, lakukan pencarian
         if (!empty($keyword)) {
-            $results = $this->admin_model->search_produk($keyword);
+            $results = $this->M_produk->search_data_produk($keyword);
 
             // Kirim hasil pencarian ke tampilan
-            $data['content'] = 'V_partials/dashboard/content';
+            $data['content'] = 'V_partials/dashboard/produk';
             $data['results'] = $results;
         } else {
             // Jika pencarian kosong, ambil semua data pelanggan
-            $data['content'] = 'V_partials/dashboard/content';
-            $data['customer'] = $this->admin_model->get_all_customers();
+            $data['content'] = 'V_partials/dashboard/produk';
+            $data['produk'] = $this->M_produk->getProduk();
+            $data['category'] = $this->M_produk->getCategory();
         }
 
         // Load tampilan dengan data yang sesuai
