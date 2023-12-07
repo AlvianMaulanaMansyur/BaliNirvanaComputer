@@ -127,6 +127,7 @@ class M_produk extends CI_Model
         $this->db->from('produk');
         $this->db->join('category', 'produk.id_category = category.id_category');
         $this->db->where('produk.id_category', $id);
+        $this->db->where('produk.stok_produk != ', 0);
         $result = $this->db->get()->result_array();
         return $result;
     }
@@ -147,18 +148,6 @@ class M_produk extends CI_Model
             $this->db->update('produk', array('stok_produk' => $kurang));
         }
     }
-
-    public function search_data_produk($keyword){
-            
-        $this->db->select('produk. *, category.nama_category');
-        $this->db->from('produk');
-        $this->db->join('category', 'produk.id_category = category.id_category');
-        $this->db->like('produk.nama_produk', $keyword);
-        $this->db->or_like('produk.id_produk', $keyword);
-        $this->db->or_like('category.nama_category', $keyword);
-        $query = $this->db->get();
-        return $query->result();
-    } 
     
 }
 

@@ -28,6 +28,20 @@ class LandingPage extends CI_Controller {
         $this->load->view('template', $data);
     }
 
+    public function shop()
+    {
+        $produk = $this->M_produk->getProdukForCustomer();
+        $category = $this->M_produk->getCategory();
+        $data = array(
+            'content' => 'customer/shop',
+            'title' => 'Home',
+            'produk' => $produk,
+            'category' => $category,
+            'kosong' => false,
+        );
+        $this->load->view('template', $data);
+    }
+
     public function detailProduk($id)
     {
         $produk = $this->M_produk->getDetailProduk($id);
@@ -45,16 +59,18 @@ class LandingPage extends CI_Controller {
         $category = $this->M_produk->getCategory();
         if (!empty($produk)) {
             $data = [
-                'content' => 'V_user/category',
+                'content' => 'customer/shop',
                 'title' => $category[0]['nama_category'],
                 'produk' => $produk,
                 'category' => $category,
+                'kosong' => false,
             ];
         } else {
             $data = [
-                'content' => 'V_user/category_kosong',
+                'content' => 'customer/shop',
                 'title' => $category[0]['nama_category'],
                 'category' => $category,
+                'kosong' => true,
             ];
         }
         $this->load->view('template', $data);

@@ -2,7 +2,7 @@
     <div class="logo"><a href="<?php echo base_url('home') ?>">Bali Nirvana <span>Computer</span></a></div>
     <ul class="links">
         <li><a href="<?php echo base_url('home') ?>">Home</a></li>
-        <li><a href="shop">Shop</a></li>
+        <li><a href="<?php echo base_url('shop') ?>">Shop</a></li>
         <li><a href="<?php echo base_url('about') ?>">About Us</a></li>
         <li><a href="<?php echo base_url('contact') ?>">Contact Us</a></li>
     </ul>
