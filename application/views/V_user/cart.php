@@ -27,7 +27,11 @@
             </div>
             <div class="me-5">
                 <!-- Subtotal -->
-                Subtotal : <span id="subtotal_<?php echo $key['id_cart']; ?>"><?php echo $key['harga_produk'] * $key['qty_produk']; ?></span>
+
+                <div class="me-5 format">
+                    Subtotal: <span id="subtotal_<?php echo $key['id_cart']; ?>"><?php echo $key['harga_produk'] * $key['qty_produk']; ?></span>
+                </div>
+
             </div>
             <div>
                 <a href="<?php echo base_url('user/deleteCart/') . $key['id_cart'] ?>" class="btn btn-danger delete-cart-item"><i class="fa-solid fa-trash"></i></a>
@@ -39,13 +43,20 @@
 <?php } ?>
 
 <div class="container d-flex flex-column pt-5">
-    <h3 id="total_checked_price"></h3>
+
+    <div>
+        <h3 id="total_checked_price" class="format"></h3>
+    </div>
     <a href="<?php echo base_url('checkout') ?>" class="btn btn-danger col-2">Checkout</a>
 </div>
 
 
 <script>
     $(document).ready(function() {
+
+        $.each(<?php echo json_encode($cart); ?>, function(index, cartItem) {
+            updateCurrencyFormat(cartItem);
+        });
 
         $('.quantity-control').on('click', function(e) {
             e.preventDefault();
@@ -98,7 +109,7 @@
                     $('#qty_' + id_cart).text(response.qty_produk);
 
                     var newSubtotal = response.harga_produk * response.qty_produk;
-                    $('#subtotal_' + id_cart).text(newSubtotal);
+                    $('#subtotal_' + id_cart).text(formatCurrency(newSubtotal));
 
                     // Update the button states with a callback for updateTotalCheckedPrice
                     updateButtonStates(id_cart, response.qty_produk, response.stok_produk, function() {
@@ -161,11 +172,26 @@
             dataType: 'json',
             success: function(response) {
                 // Update total harga yang dicentang pada elemen HTML yang sesuai
-                $('#total_checked_price').text('Total: ' + response.total_checked_price);
+                $('#total_checked_price').text('Total: ' + formatCurrency(response.total_checked_price));
+
             },
             error: function(error) {
                 console.log(error);
             }
         });
+    }
+
+    // function formatCurrency(amount) {
+    //     // Format number as currency
+    //     const formatter = new Intl.NumberFormat('id-ID', {
+    //         style: 'currency',
+    //         currency: 'IDR'
+    //     });
+    //     return formatter.format(amount);
+    // }
+
+    function updateCurrencyFormat(cartItem) {
+        var newSubtotal = cartItem.harga_produk * cartItem.qty_produk;
+        $('#subtotal_' + cartItem.id_cart).text(formatCurrency(newSubtotal));
     }
 </script>

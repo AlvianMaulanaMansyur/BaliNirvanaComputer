@@ -6,7 +6,7 @@
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
 
-    <div class="carousel-item active">
+      <div class="carousel-item active">
         <img src="<?php echo base_url('assets/foto/gambarCarosel.jpeg') ?>" class="d-block w-100 rounded" alt="..." style="height: auto;">
       </div>
       <div class="carousel-item">
@@ -74,9 +74,6 @@
   </div>
 </div>
 
-
-
-
 <div class="container py-5">
   <div data-aos="fade-up">
     <div class="box1">
@@ -85,42 +82,44 @@
   </div>
 
   <div class=" row row-cols-2 row-cols-md-3 g-3 py-3">
-  <?php $i = 1; $cards_per_page = 9;  ?>
-        <?php foreach ($produk as $product) : ?>
-            <?php $i++ ?>
-            <?php if ($i < $cards_per_page) { ?>
-                <div data-aos="fade-up">
-                    <div class="rkp card">
-                        <img src="<?php echo base_url($product['foto_produk']); ?>" class="card-img-top" alt="Gambar">
-                        <div class="rkp_body card-body">
+    <?php $i = 1;
+    $cards_per_page = 9;  ?>
+    <?php foreach ($produk as $product) : ?>
+      <?php $i++ ?>
+      <?php if ($i < $cards_per_page) { ?>
+        <div data-aos="fade-up">
+          <div class="rkp card">
+            <img src="<?php echo base_url($product['foto_produk']); ?>" class="card-img-top" alt="Gambar">
+            <div class="rkp_body card-body">
 
-                            <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
-                        </div>
-                        <div class="rkp_ket  mb-3">
-                            <h5 class="" style="margin-left: 15px;">Rp. <?php echo $product['harga_produk'] ?></h5>
-                            <div class="d-flex justify-content-end pe-1">
-                                <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>
-                            </div>
-                        </div>
+              <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
+            </div>
+            <div class="rkp_ket  mb-3">
+              <h5 class="format" style="margin-left: 15px;">Rp. <?php echo '<span id="price_' . $product['id_produk'] . '">' . number_format($product['harga_produk']) . '</span>'; ?></h5>
 
-                    </div>
-                </div>
-            <?php } else {
-                if ($i % $cards_per_page === 0) {
-                    echo '</div>'; // Menutup div row-cols-2 row-cols-md-3 g-3 py-3
-                    echo '<div class="d-flex justify-content-between mt-3">';
-                    if ($i > $cards_per_page) {
-                        echo '<a href="?page=' . ($i / $cards_per_page) . '" class="btn btn-primary mx-1">&lt; Back</a>';
-                    }
-                    if ($i < $jumlah_card - $cards_per_page) {
-                        echo '<a href="?page=' . ($i / $cards_per_page + 2) . '" class="btn btn-primary ml-auto mx-1">Next &gt;</a>';
-                    }
-                    echo '</div>';
-                    echo '<div class="row row-cols-2 row-cols-md-3 g-3 py-3">';
-                }
-            }
-            ?>
-        <?php endforeach ?>
+              <div class="d-flex justify-content-end pe-1">
+                <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      <?php } else {
+        if ($i % $cards_per_page === 0) {
+          echo '</div>'; // Menutup div row-cols-2 row-cols-md-3 g-3 py-3
+          echo '<div class="d-flex justify-content-between mt-3">';
+          if ($i > $cards_per_page) {
+            echo '<a href="?page=' . ($i / $cards_per_page) . '" class="btn btn-primary mx-1">&lt; Back</a>';
+          }
+          if ($i < $jumlah_card - $cards_per_page) {
+            echo '<a href="?page=' . ($i / $cards_per_page + 2) . '" class="btn btn-primary ml-auto mx-1">Next &gt;</a>';
+          }
+          echo '</div>';
+          echo '<div class="row row-cols-2 row-cols-md-3 g-3 py-3">';
+        }
+      }
+      ?>
+    <?php endforeach ?>
 
   </div>
 </div>

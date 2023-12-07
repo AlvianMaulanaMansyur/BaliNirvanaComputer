@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css">
 
+    <script src="<?php echo base_url('assets/js/formatRp.js')?>"></script>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/navbar.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/contact.css') ?>">

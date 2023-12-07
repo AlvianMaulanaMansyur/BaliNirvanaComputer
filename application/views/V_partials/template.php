@@ -46,7 +46,8 @@
             <?php $this->load->view('V_partials/footer'); ?>
         </div>
     </div>
-
+<?php $this->load->view('V_partials/script');
+ ?>
 </body>
 
 </html>
