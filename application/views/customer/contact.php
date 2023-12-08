@@ -32,9 +32,9 @@
     </div>
     <div data-aos="fade-up">
     <div class="icon_kontak ">
-        <li><a href="email"><i class="fa-regular fa-envelope"></i> Email : balinirvanacomputer@gmail.com</a></li>
-        <li><a href="telepon"><i class="fa-solid fa-phone"></i> Telepon : +6258888888888</a></li>
-        <li><a href="<?php echo base_url('https://www.instagram.com/quintessential.03/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA==') ?>"><i class="fa-brands fa-instagram"></i> Instagram : balinirvanacomputer</a></li>
+        <li><a href=""><i class="fa-regular fa-envelope"></i> Email : balinirvanacomputer@gmail.com</a></li>
+        <li><a href="https://wa.me/6287762722287/?text= Hai"><i class="fa-solid fa-phone"></i> Telepon : +6287762722287</a></li>
+        <li><a href="https://www.instagram.com/quintessential.03/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA=="><i class="fa-brands fa-instagram"></i> Instagram : balinirvanacomputer</a></li>
     </div>
     </div>
 </div>

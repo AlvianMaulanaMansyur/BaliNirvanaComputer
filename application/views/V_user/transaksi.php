@@ -69,4 +69,4 @@
 
 
 <h5>Hubungi Wa Berikut Untuk Melakukan Pembayaran</h5>
-        <a hreaf="https://wa.me/6285858401102?text= Hai" class="" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i></a>
+        <a hreaf="https://wa.me/628?text= Hai" class="" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i></a>

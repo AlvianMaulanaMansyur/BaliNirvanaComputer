@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="container py-4 animate_animated animate_fadeInUp">
+    <div class="container py-4 animate__animated animate__fadeInUp">
         <div class="box_shop">
             <h3 class="kategori_shop text-center">Kategori Produk</h3>
         </div>
@@ -11,7 +11,6 @@
 
                 <?php foreach ($category as $key) : ?>
                     <div class="col_kategori">
-
                         <div class="card">
                             <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top" alt="">
                             <div class="card-body">
@@ -27,7 +26,7 @@
     </div>
 </div>
 
-<div class="container py-4 animate_animated animate_fadeInUp">
+<div class="container py-4 animate__animated animate__fadeInUp">
     <div class="box_shop">
         <h3 class="kategori_shop text-center">Produk - Produk</h3>
     </div>
@@ -83,16 +82,5 @@
     <?php endif ?>
 </div>
 
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get all elements with the class 'rkp_ket' (assuming it's unique for each product)
-        const priceElements = document.querySelectorAll('.rkp_ket h5');
 
-        // Loop through each element and format the currency
-        priceElements.forEach(function (element) {
-            const amount = parseFloat(element.textContent.replace('Rp. ', '').replace(',', ''));
-            element.textContent = 'Rp. ' + formatCurrency(amount);
-        });
-    });
-</script> -->
 

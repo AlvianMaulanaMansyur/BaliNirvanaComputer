@@ -1,7 +1,7 @@
 <!-- <div class="container">
     <h1 class="">halo?</h1>
 </div> -->
-<div class="col-12 h-50 mb-5 animate_animated animate_fadeInUp" style="border: rounded; margin-top: 
+<div class="col-12 h-50 mb-5 animate__animated animate__fadeInUp" style="border: rounded; margin-top: 
 20px;">
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -25,8 +25,8 @@
 </div>
 
 
-<div class="box2 animate_animated animate_fadeInDown">
-  <p class="bnc animate_animated animate_fadeInUp">Bali Nirvana <span>Computer</span></p>
+<div class="box2 animate__animated animate__fadeInDown">
+  <p class="bnc animate__animated animate__fadeInUp">Bali Nirvana <span>Computer</span></p>
   <p class="pelanggan animate_animated animate_fadeInRight">
     Bali Nirvana Computer telah dibuka sejak tahun 2014,<br>
     merupakan salah satu toko aksesoris elektronik dan serta menjual laptop, pc. <br>
@@ -38,7 +38,7 @@
 </div>
 
 
-<div class="container py-4 animate_animated animate_fadeInUp">
+<div class="container py-4 animate__animated animate__fadeInUp">
   <div class="box1">
     <h1 class="rekomendasi text-center">Kategori Produk</h1>
   </div>
