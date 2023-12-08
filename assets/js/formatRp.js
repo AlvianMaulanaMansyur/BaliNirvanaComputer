@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Loop through each element and format the currency
     priceElements.forEach(function (element) {
-        const amount = parseFloat(element.textContent.replace('Rp. ', '').replace(',', ''));
-        element.textContent = formatCurrency(amount);
+        const amount = parseFloat(element.textContent.replace('Rp','').replace(',', ''));
+        element.textContent = formatCurrency(amount).replace(/\s/g, ''); // Menghilangkan spasi setelah "Rp"
     });
 });
 
