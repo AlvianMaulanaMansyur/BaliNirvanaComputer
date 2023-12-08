@@ -16,7 +16,7 @@
             </div>
 
             <div class="mb-3">
-                Harga : <?php echo $produk['harga_produk'] ?>
+                Harga : <span class="format"><?php echo $produk['harga_produk'] ?></span>
             </div>
 
             <div class="mb-3">
