@@ -43,14 +43,14 @@
                     <td><?php echo $order['nama_produk']; ?></td>
                     <td><?php echo $order['qty_produk']; ?></td>
                     <?php $sub = $order['harga_produk']*$order['qty_produk']; ?>
-                    <td><?php echo $sub ?></td>
+                    <td class="format"><?php echo $sub ?></td>
                     <td><?php echo $dateWithoutTime; ?></td>
                 </tr>
                 <?php $total += $sub; ?>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <h5>Total Penjualan : <?php echo $total ?></h5>
+    <h5>Total Penjualan : <span class="format"><?php echo $total ?></span></h5>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 

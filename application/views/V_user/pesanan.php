@@ -18,9 +18,9 @@
                         <?php foreach ($order['details'] as $detail) { ?>
                             <tr>
                                 <td><?php echo $detail['nama_produk'] ?></td>
-                                <td><?php echo $detail['harga_produk'] ?></td>
+                                <td class="format"><?php echo $detail['harga_produk'] ?></td>
                                 <td><?php echo $detail['qty_produk'] ?></td>
-                                <td><?php echo $detail['subtotal'] ?></td>
+                                <td class="format"><?php echo $detail['subtotal'] ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -36,7 +36,7 @@
                         <a href="<?php echo base_url('transaksi/').$invoice_number ?>" class="btn btn-success">Lanjutkan Transaksi</a>
                     <?php } ?>
                      </h4>
-                    <h4>Total : <?php echo $order['total'] ?></h4>
+                    <h4>Total : <span class="format"><?php echo $order['total'] ?></span></h4>
                 </div>
             </div>
         </div>

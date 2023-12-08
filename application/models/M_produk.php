@@ -17,8 +17,15 @@ class M_produk extends CI_Model
         $this->db->join('category', 'produk.id_category = category.id_category');
         $result = $this->db->get();
         $produk = $result->result_array();
+    
+        // Format harga_produk ke format uang Rupiah
+        // foreach ($produk as &$item) {
+        //     $item['harga_produk'] = 'Rp ' . number_format($item['harga_produk'], 0, ',', '.');
+        // }
+    
         return $produk;
     }
+    
 
     public function getProdukForCustomer()
     {

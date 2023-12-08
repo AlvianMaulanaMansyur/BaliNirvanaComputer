@@ -28,8 +28,8 @@
             <div class="me-5">
                 <!-- Subtotal -->
 
-                <div class="me-5 format">
-                    Subtotal: <span id="subtotal_<?php echo $key['id_cart']; ?>"><?php echo $key['harga_produk'] * $key['qty_produk']; ?></span>
+                <div class="me-5">
+                    Subtotal: <span class="format" id="subtotal_<?php echo $key['id_cart']; ?>"><?php echo $key['harga_produk'] * $key['qty_produk']; ?></span>
                 </div>
 
             </div>

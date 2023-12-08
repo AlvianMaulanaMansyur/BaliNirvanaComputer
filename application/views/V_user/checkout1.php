@@ -114,9 +114,11 @@
 
                                 <tr>
                                     <td class="col-5"><?php echo $key['nama_produk'] ?></th>
-                                    <td><?php echo $key['harga_produk'] ?></td>
+                                    <td class="format"><?php echo $key['harga_produk'] ?></td>
+
                                     <td><?php echo $key['qty_produk'] ?></td>
-                                    <td><?php echo $key['harga_produk'] * $key['qty_produk'] ?></td>
+                                    <td class="format"><?php echo $key['harga_produk'] * $key['qty_produk'] ?></td>
+
                                 </tr>
 
                                 <?php $total += $key['harga_produk'] * $key['qty_produk'] ?>
@@ -124,7 +126,7 @@
                         </tbody>
                     </table>
                     <div class="d-flex" style="justify-content: end;">
-                        <h4 style="font-weight: 800;">Total : <?php echo $total ?></h4>
+                        <h4  style="font-weight: 800;">Total : <span class="format"><?php echo $total ?></span></h4>
                     </div>
                     <div class="d-flex" style="justify-content: end;">
                         <button type="submit" class="btn btn-warning col-lg-2 col-sm-4">Order</button>

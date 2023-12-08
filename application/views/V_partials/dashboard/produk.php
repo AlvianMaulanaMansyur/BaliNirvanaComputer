@@ -42,7 +42,7 @@
                             <td> <?php echo $product ['nama_category'] ?></td>
                             <td><?php echo $product ['nama_produk'] ?></td>
                             <td><?php echo $product ['stok_produk'] ?></td>
-                            <td> <?php echo $product ['harga_produk'] ?></td>
+                            <td class="format"> <?php echo $product ['harga_produk'] ?></td>
                             <td> <?php echo $product ['deskripsi_produk'] ?></td>
                             <td> <img src="<?php echo base_url($product ['foto_produk']); ?>" alt="Gambar" style="width: 200px;height: auto;"></td>
                             <td>

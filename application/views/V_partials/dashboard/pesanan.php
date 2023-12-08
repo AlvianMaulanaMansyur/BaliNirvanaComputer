@@ -25,15 +25,15 @@
                                 <?php foreach ($order['details'] as $detail) { ?>
                                     <tr>
                                         <td><?php echo $detail['nama_produk'] ?></td>
-                                        <td><?php echo $detail['harga_produk'] ?></td>
+                                        <td class="format"><?php echo $detail['harga_produk'] ?></td>
                                         <td><?php echo $detail['qty_produk'] ?></td>
-                                        <td><?php echo $detail['subtotal'] ?></td>
+                                        <td class="format"><?php echo $detail['subtotal'] ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
                         <div class="d-flex flex-column" style="align-items: end;">
-                            <h4 class="">Total : <?php echo $order['total'] ?></h4>
+                            <h4 class="">Total : <span class="format"><?php echo $order['total'] ?></span></h4>
                             <a href="javascript:void(0);" class="btn <?php echo ($order['status'] == 0) ? 'btn-warning' : 'btn-success'; ?> col-2 <?php echo ($order['status'] == 1) ? 'disabled-link' : ''; ?>" style="display: flex; justify-content: center; align-items: center;" onclick="confirmUpdateOrder(<?php echo $order['id_pesanan']; ?>, <?php echo $order['status']; ?>)">
                                 <h5>
                                     <?php

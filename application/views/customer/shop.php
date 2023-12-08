@@ -48,8 +48,7 @@
                                 <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
                             </div>
                             <div class="rkp_ket  mb-3">
-                                <!-- <h5 class="" style="margin-left: 15px;">Rp. <?php echo $product['harga_produk'] ?></h5> -->
-                                <h5 class="format" style="margin-left: 15px;">Rp. <?php echo '<span id="price_' . $product['id_produk'] . '">' . number_format($product['harga_produk']) . '</span>'; ?></h5>
+                                <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '">' . number_format($product['harga_produk']) . '</span>'; ?></h5>
 
                                 <div class="d-flex justify-content-end pe-1">
                                     <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>

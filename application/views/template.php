@@ -46,7 +46,8 @@
         </div>
     </div>
 
-
+    <?php $this->load->view('V_partials/script');
+    ?>
     <script>
         const toggleBtn = document.querySelector('.toggle_btn')
         const toggleBtnIcon = document.querySelector('.toggle_btn i')
@@ -112,8 +113,7 @@
 
     <!-- testimoni -->
 
-    <?php $this->load->view('V_partials/script');
-    ?>
+    
 </body>
 
 
