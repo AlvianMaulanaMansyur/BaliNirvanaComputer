@@ -207,23 +207,34 @@ class M_pesanan extends CI_Model
 
     // M_pesanan.php
 
-    public function getMonthlyOrders($month, $year)
-    {
-        $start_date = date("$year-$month-01 00:00:00");
-        $end_date = date("Y-m-t 23:59:59", strtotime($start_date));
+    public function getMonthlyOrders($monthYear) {
+        $dateParts = explode('-', $monthYear);
 
-        $this->db->select('pesanan.*, customer.nama_customer, detail_pesanan.*, produk.harga_produk, produk.nama_produk');
-        $this->db->from('pesanan');
-        $this->db->join('customer', 'pesanan.id_customer = customer.id_customer', 'left');
-        $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
-        $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
-        $this->db->where('status_pesanan', '1');
-        $this->db->where('pesanan.create_time >=', $start_date);
-        $this->db->where('pesanan.create_time <=', $end_date);
-        $query = $this->db->get();
-        $isi = $query->result_array();
-        return $isi;
+        if (count($dateParts) >= 2) {
+            $month = $dateParts[1];
+            $year = $dateParts[0];
+
+            $start_date = date("$year-$month-01 00:00:00");
+            $end_date = date("Y-m-t 23:59:59", strtotime($start_date));
+
+            $this->db->select('pesanan.*, customer.nama_customer, detail_pesanan.*, produk.harga_produk, produk.nama_produk');
+            $this->db->from('pesanan');
+            $this->db->join('customer', 'pesanan.id_customer = customer.id_customer', 'left');
+            $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
+            $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
+            $this->db->where('status_pesanan', '1');
+            $this->db->where('pesanan.create_time >=', $start_date);
+            $this->db->where('pesanan.create_time <=', $end_date);
+
+            $query = $this->db->get();
+
+            return $query->result_array();
+        } else {
+            return [];
+        }
     }
+    
+    
 }
 
 /* End of file M_pesanan.php */

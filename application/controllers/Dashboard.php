@@ -15,7 +15,7 @@ class Dashboard extends CI_Controller
         $this->load->library('form_validation');
 
         if (empty($this->session->userdata('admin_name'))) {
-            redirect('auth/login'); 
+            redirect('auth/login');
         }
     }
 
@@ -132,8 +132,7 @@ class Dashboard extends CI_Controller
 
             ];
             $this->admin_model->update_customer($id_customer, $data_to_save);
-            }
-        
+        }
     }
 
 
@@ -195,7 +194,7 @@ class Dashboard extends CI_Controller
     {
         // Ambil data pencarian dari form
         $keyword = $this->input->post('keyword');
-   
+
 
         $data = [
             'title' => 'Produck Stock',
@@ -223,7 +222,7 @@ class Dashboard extends CI_Controller
 
         // Load tampilan dengan data yang sesuai
         $this->load->view('master', $data);
-    }    
+    }
 
     public function delete_customer($id_customer)
     {
@@ -231,12 +230,41 @@ class Dashboard extends CI_Controller
         redirect('dashboard/admin');
     }
 
-    public function monthlyRep()
-    {
+    // public function monthlyRep()
+    // {
 
-        $monthly_orders = null;
+    //     $monthly_orders = null;
+    //     $data = [
+    //         'title' => 'Edit Data',
+    //         'header' => 'V_partials/dashboard/header',
+    //         'navbar' => 'V_partials/dashboard/navbar',
+    //         'sidebar' => 'V_partials/dashboard/sidebar',
+    //         'footer' => 'V_partials/dashboard/footer',
+    //         'content' => 'V_partials/dashboard/monthly_report',
+    //         'js' => 'V_partials/dashboard/js',
+    //         'monthly_orders' => $monthly_orders,
+    //         'active_tab' => 'monthlyRep'
+    //     ];
+    //     $this->load->view('master', $data);
+    // }
+
+    public function monthlyReport() {
+        if ($this->input->post()) {
+            $monthYear = $this->input->post('month');
+        } else {
+            $monthYear = date('Y-m');
+            
+        }    
+
+        $this->report($monthYear);
+        // echo json_encode(['monthYear' => $monthYear]);
+
+    }
+    
+    public function report($monthYear) {
+        $monthly_orders = $this->M_pesanan->getMonthlyOrders($monthYear);
         $data = [
-            'title' => 'Edit Data',
+            'title' => 'Monthly Report',
             'header' => 'V_partials/dashboard/header',
             'navbar' => 'V_partials/dashboard/navbar',
             'sidebar' => 'V_partials/dashboard/sidebar',
@@ -244,31 +272,13 @@ class Dashboard extends CI_Controller
             'content' => 'V_partials/dashboard/monthly_report',
             'js' => 'V_partials/dashboard/js',
             'monthly_orders' => $monthly_orders,
-            'active_tab' => 'monthlyRep'
+            'active_tab' => 'monthlyReport',
+            'selected_month' => $monthYear  // Untuk menunjukkan bulan yang dipilih di form
         ];
         $this->load->view('master', $data);
     }
+    
 
-    public function monthlyReport()
-    {
-        $month = $this->input->post('month'); // Ganti dengan metode yang sesuai
-        $year = $this->input->post('year');
-        // var_dump($month);die;  // Ganti dengan metode yang sesuai
-        $monthly_orders = $this->M_pesanan->getMonthlyOrders($month, $year);
-
-        $data = [
-            'title' => 'Edit Data',
-            'header' => 'V_partials/dashboard/header',
-            'navbar' => 'V_partials/dashboard/navbar',
-            'sidebar' => 'V_partials/dashboard/sidebar',
-            'footer' => 'V_partials/dashboard/footer',
-            'content' => 'V_partials/dashboard/monthly_report',
-            'js' => 'V_partials/dashboard/js',
-            'monthly_orders' => $monthly_orders,
-            'active_tab' => 'monthlyReport'
-        ];
-        $this->load->view('master', $data);
-    }
 
     public function Orders()
     {
