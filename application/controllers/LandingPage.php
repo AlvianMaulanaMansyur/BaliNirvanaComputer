@@ -93,6 +93,26 @@ class LandingPage extends CI_Controller {
         $this->load->view('template', $data);
         
     }
+
+    public function search(){
+        $keyword = $this->input->get('search');
+
+        $data = array(
+            'content' => 'customer/shop',
+            'title' => 'Home',
+            'produk' => $this->M_produk->getProduk(), // Ini adalah contoh fungsi yang mengambil semua produk, pastikan model Anda memiliki fungsi yang sesuai
+            'category' => $this->M_produk->getCategory(),
+            'kosong' => false,
+        );
+        // Jika kata kunci null atau kosong, ambil semua barang
+        if (empty($keyword)) {
+            $data['results'] = $this->M_produk->getProduk();
+        } else {
+            // Jika ada kata kunci, lakukan pencarian
+            $data['results'] = $this->M_produk->searchProduk($keyword);
+        }
+        $this->load->view('template', $data);
+    }
     
 }
 

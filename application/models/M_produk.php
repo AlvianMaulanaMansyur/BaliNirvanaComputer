@@ -8,6 +8,7 @@ class M_produk extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        
     }
 
     public function getProduk()
@@ -167,6 +168,15 @@ class M_produk extends CI_Model
         $query = $this->db->get();
         return $query->result();
     } 
+
+    public function searchProduk($keyword){
+        $this->db->like('nama_produk', $keyword);
+        $query = $this->db->get('produk');
+
+        return $query->result_array();
+    }
+
+
     
 }
 
