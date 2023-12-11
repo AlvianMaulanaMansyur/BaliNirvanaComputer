@@ -13,7 +13,7 @@ a{
 a:hover{
     color:#D21312;
 }
-/* Header */
+
 header{
     position: relative;
     padding: 0 2rem;
@@ -114,15 +114,7 @@ header{
     color: #fff;
     border-radius: 2px;
 }
-/* .navbar .search-bar{
-    width: 20%;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    padding-inline: 2px;
-    display: flex;
-} */
 
-/* dropdown menu */
 .dropdown_menu{
     position: absolute;
     right: 2rem;
@@ -198,7 +190,6 @@ header{
     }
     .navbar .icon{
         display: flex;
-        /* gap: 1.5rem; */
         font-size: 18px;
         margin-right: 10px;
     }

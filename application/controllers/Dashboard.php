@@ -255,7 +255,7 @@ class Dashboard extends CI_Controller
             $monthYear = date('Y-m');
             
         }    
-
+        
         $this->report($monthYear);
         // echo json_encode(['monthYear' => $monthYear]);
 
