@@ -13,12 +13,14 @@ $results = isset($results) ? $results : null;
             <div class="row row-cols-1 row-cols-md-5 g-2 py-5 ">
                 <?php foreach ($category as $key) : ?>
                     <div class="col_kategori">
+                    <a href="<?php echo base_url('category/') . $key['id_category'] ?>">
                         <div class="card">
                             <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top" alt="">
                             <div class="card-body">
                                 <h5 class="card-title text-center"><a href="<?php echo base_url('category/') . $key['id_category'] ?>"><?php echo $key['nama_category'] ?></a></h5>
                             </div>
                         </div>
+                        </a>
                     </div>
                 <?php endforeach ?>
             </div>
@@ -43,10 +45,6 @@ $results = isset($results) ? $results : null;
 
 <div class="container">
     <?php if ($kosong) : ?>
-        <!-- Konten Khusus jika hasil pencarian kosong -->
-        <div class="container d-flex" style="justify-content: center;">
-            <h1>Produk Tidak di temukan</h1>
-        </div>
     <?php elseif (!empty($results) && is_iterable($results)) : ?>
         <!-- Tampilkan hasil pencarian jika ditemukan -->
         <div class="row row-cols-2 row-cols-md-3 g-3 py-3">

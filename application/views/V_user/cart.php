@@ -1,26 +1,47 @@
 <?php foreach ($cart as $key) { ?>
+    <?php
+    // Add these lines inside your foreach loop
+    $isStockEmpty = $key['stok_produk'] == 0;
+    $disableCheckbox = $isStockEmpty ? 'disabled' : '';
+    $disableQuantityButtons = $isStockEmpty ? 'disabled' : '';
+    ?>
 
-    <div class="container d-flex" style="justify-content: space-between;">
+    <div class="container d-flex <?php echo $isStockEmpty ? 'blur-effect' : ''; ?>" style="justify-content: space-between;">
+
         <div>
-            <input type="checkbox" data-id="<?php echo $key['id_cart']; ?>" <?php echo $key['is_check'] == 1 ? 'checked' : ''; ?> onchange="updateIsCheck(this)">
+            <?php
+            // Update is_check to 0 if the stock is 0
+            if ($key['stok_produk'] == 0) {
+                $this->M_cart->updateIsCheck($key['id_cart'], 0);
+            }
+            ?>
+              <?php if ($key['qty_produk'] > $key['stok_produk']): ?>
+                <?php $this->M_cart->updateIsCheck($key['id_cart'], 0); ?>
+            <?php endif; ?>
+            
+            <input type="checkbox" data-id="<?php echo $key['id_cart']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
 
             <img src="<?php echo base_url($key['foto_produk']); ?>" alt="Foto Produk" style="width: 300px;height: auto;">
             <?php echo $key['nama_produk'] ?>
 
+            <?php if ($key['qty_produk'] > $key['stok_produk']): ?>
+                <p class="stock-warning">Jumlah melebihi stok! Tidak bisa dicheckout.</p>
+            <?php endif; ?>
+
+          
         </div>
 
         <div class="d-flex" style="align-items:center ;">
 
             <div class="me-5 d-flex position-relative">
                 <!-- Tombol Minus -->
-                <button class="quantity-control button-qty" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease" <?php echo ($key['qty_produk'] == 1) ? 'disabled' : ''; ?>>
+                <button class="quantity-control button-qty" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease" <?php echo ($key['qty_produk'] == 1 || $key['stok_produk'] == 0) ? 'disabled' : ''; ?>>
                     <i class="fas fa-minus"></i>
                 </button>
 
-
                 <h4 id="qty_<?php echo $key['id_cart']; ?>" class="mx-2"><?php echo $key['qty_produk']; ?></h4>
 
-                <button class="quantity-control button-qty" data-id="<?php echo $key['id_cart']; ?>" data-action="increase" <?php echo ($key['qty_produk'] == $key['stok_produk']) ? 'disabled' : ''; ?>>
+                <button class="quantity-control button-qty" data-id="<?php echo $key['id_cart']; ?>" data-action="increase" <?php echo ($key['qty_produk'] == $key['stok_produk'] || $key['stok_produk'] == 0) ? 'disabled' : ''; ?>>
                     <i class="fa-solid fa-plus"></i>
                 </button>
 
@@ -47,6 +68,7 @@
     </div>
     <a href="<?php echo base_url('checkout') ?>" class="btn btn-danger col-2">Checkout</a>
 </div>
+
 
 
 <script>
@@ -93,33 +115,49 @@
     });
 
     function updateQuantity(id_cart, action) {
-        $.ajax({
-            url: '<?php echo base_url('user/updateQuantity/'); ?>' + id_cart,
-            type: 'POST',
-            data: {
-                action: action
-            },
-            dataType: 'json',
-            success: function(response) {
-                if ('error' in response) {
+    $.ajax({
+        url: '<?php echo base_url('user/updateQuantity/'); ?>' + id_cart,
+        type: 'POST',
+        data: {
+            action: action
+        },
+        dataType: 'json',
+        success: function (response) {
+            if ('error' in response) {
+                // Handle error (jika diperlukan)
+            } else {
+                $('#qty_' + id_cart).text(response.qty_produk);
 
+                var newSubtotal = response.harga_produk * response.qty_produk;
+                $('#subtotal_' + id_cart).text(formatCurrency(newSubtotal));
+
+                // Update the button states with a callback for updateTotalCheckedPrice
+                updateButtonStates(id_cart, response.qty_produk, response.stok_produk, function () {
+                    updateTotalCheckedPrice();
+                });
+
+                // Periksa dan atur kembali status checkbox
+                var checkbox = $('.container[data-id="' + id_cart + '"] input[type="checkbox"]');
+                var stockWarning = $('.container[data-id="' + id_cart + '"] .stock-warning');
+
+                console.log(response.qty_produk);
+                console.log(response.stok_produk);
+                if (response.qty_produk > response.stok_produk) {
+                    checkbox.prop('checked', false);
+                    checkbox.prop('disabled', true);
+                    stockWarning.show();
                 } else {
-                    $('#qty_' + id_cart).text(response.qty_produk);
-
-                    var newSubtotal = response.harga_produk * response.qty_produk;
-                    $('#subtotal_' + id_cart).text(formatCurrency(newSubtotal));
-
-                    // Update the button states with a callback for updateTotalCheckedPrice
-                    updateButtonStates(id_cart, response.qty_produk, response.stok_produk, function() {
-                        updateTotalCheckedPrice();
-                    });
+                    checkbox.prop('disabled', false);
+                    stockWarning.hide();
                 }
-            },
-            error: function(error) {
-                console.log(error);
             }
-        });
-    }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
 
     function updateButtonStates(id_cart, qty_produk, stok_produk, callback) {
         var decreaseButton = $('.quantity-control[data-id="' + id_cart + '"][data-action="decrease"]');
@@ -178,6 +216,7 @@
             }
         });
     }
+
     function updateCurrencyFormat(cartItem) {
         var newSubtotal = cartItem.harga_produk * cartItem.qty_produk;
         $('#subtotal_' + cartItem.id_cart).text(formatCurrency(newSubtotal));

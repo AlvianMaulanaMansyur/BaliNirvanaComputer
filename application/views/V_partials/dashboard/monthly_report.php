@@ -1,11 +1,11 @@
 <!-- monthly_report.php -->
-<div id="monthlyReportContainer">
+
     <div>
         <label for="month"></label>
         <input type="month" name="month" id="month" value="<?php echo $selected_month ?>" required onchange="updateMonthlyReport(this.value)">
     </div>
+    <div id="monthlyReportContainer">
     <h2>Monthly Report <?php echo $formatMY ?></h2>
-
     <table class="table table-secondary">
         <thead>
             <tr>

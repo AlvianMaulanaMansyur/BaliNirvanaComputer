@@ -1,4 +1,4 @@
-<h2>Monthly Report <?php echo $selected_month ?></h2>
+<h2>Monthly Report <?php echo $formatMY ?></h2>
 <table class="table table-secondary">
     <thead>
         <tr>
@@ -32,4 +32,3 @@
     </tbody>
 </table>
 <h5>Total Penjualan : <span class="format"><?php echo $this->pdf->formatCurrency($total) ?></span></h5>
-

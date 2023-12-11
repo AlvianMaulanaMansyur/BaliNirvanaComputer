@@ -269,7 +269,7 @@ class Dashboard extends CI_Controller
         $monthly_orders = $this->M_pesanan->getMonthlyOrders($monthYear);
 
         $data = [
-            'monthlyReport' => $this->load->view('V_partials/dashboard/monthly_report', ['monthly_orders' => $monthly_orders, 'selected_month' => $monthYear, 'formatMY' => $formattedMonthYear,], true),
+            'monthlyReport' => $this->load->view('V_partials/dashboard/monthly_report_table', ['monthly_orders' => $monthly_orders, 'selected_month' => $monthYear, 'formatMY' => $formattedMonthYear], true),
         ];
         echo json_encode($data);
     }
