@@ -26,8 +26,6 @@
 
             </div>
             <div class="me-5">
-                <!-- Subtotal -->
-
                 <div class="me-5">
                     Subtotal: <span class="format" id="subtotal_<?php echo $key['id_cart']; ?>"><?php echo $key['harga_produk'] * $key['qty_produk']; ?></span>
                 </div>
@@ -180,16 +178,6 @@
             }
         });
     }
-
-    // function formatCurrency(amount) {
-    //     // Format number as currency
-    //     const formatter = new Intl.NumberFormat('id-ID', {
-    //         style: 'currency',
-    //         currency: 'IDR'
-    //     });
-    //     return formatter.format(amount);
-    // }
-
     function updateCurrencyFormat(cartItem) {
         var newSubtotal = cartItem.harga_produk * cartItem.qty_produk;
         $('#subtotal_' + cartItem.id_cart).text(formatCurrency(newSubtotal));

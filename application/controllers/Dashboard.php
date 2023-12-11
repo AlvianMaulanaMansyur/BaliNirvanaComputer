@@ -13,6 +13,7 @@ class Dashboard extends CI_Controller
         $this->load->model('M_produk');
         $this->load->model('M_pesanan');
         $this->load->library('form_validation');
+        $this->load->library('PDF');
 
         if (empty($this->session->userdata('admin_name'))) {
             redirect('auth/login');
@@ -21,7 +22,7 @@ class Dashboard extends CI_Controller
 
     public function insertProduk()
     {
-        $result = $this->M_produk->insertProduk();
+        $this->M_produk->insertProduk();
         redirect('dashboard/getproduk');
     }
 
@@ -58,7 +59,6 @@ class Dashboard extends CI_Controller
             redirect('dashboard/rders');
         }
     }
-
 
     public function admin()
     {
@@ -230,39 +230,20 @@ class Dashboard extends CI_Controller
         redirect('dashboard/admin');
     }
 
-    // public function monthlyRep()
-    // {
-
-    //     $monthly_orders = null;
-    //     $data = [
-    //         'title' => 'Edit Data',
-    //         'header' => 'V_partials/dashboard/header',
-    //         'navbar' => 'V_partials/dashboard/navbar',
-    //         'sidebar' => 'V_partials/dashboard/sidebar',
-    //         'footer' => 'V_partials/dashboard/footer',
-    //         'content' => 'V_partials/dashboard/monthly_report',
-    //         'js' => 'V_partials/dashboard/js',
-    //         'monthly_orders' => $monthly_orders,
-    //         'active_tab' => 'monthlyRep'
-    //     ];
-    //     $this->load->view('master', $data);
-    // }
-
-    public function monthlyReport() {
-        if ($this->input->post()) {
-            $monthYear = $this->input->post('month');
-        } else {
+    public function monthlyReport()
+    {
+        $monthYear = $this->session->userdata('selected_month');
+        if (empty($monthYear)) {
             $monthYear = date('Y-m');
-            
-        }    
-        
+            $this->session->set_userdata('selected_month', $monthYear);
+        }
         $this->report($monthYear);
-        // echo json_encode(['monthYear' => $monthYear]);
-
     }
-    
-    public function report($monthYear) {
+
+    public function report($monthYear)
+    {
         $monthly_orders = $this->M_pesanan->getMonthlyOrders($monthYear);
+        $formattedMonthYear = date("F Y", strtotime($monthYear));
         $data = [
             'title' => 'Monthly Report',
             'header' => 'V_partials/dashboard/header',
@@ -273,17 +254,54 @@ class Dashboard extends CI_Controller
             'js' => 'V_partials/dashboard/js',
             'monthly_orders' => $monthly_orders,
             'active_tab' => 'monthlyReport',
-            'selected_month' => $monthYear  // Untuk menunjukkan bulan yang dipilih di form
+            'selected_month' => $monthYear,
+            'formatMY' => $formattedMonthYear,  // Untuk menunjukkan bulan yang dipilih di form
         ];
         $this->load->view('master', $data);
     }
-    
 
+    public function update_monthly_report()
+    {
+        $monthYear = $this->input->post('month');
+        $formattedMonthYear = date("F Y", strtotime($monthYear));
+
+        $this->session->set_userdata('selected_month', $monthYear);
+        $monthly_orders = $this->M_pesanan->getMonthlyOrders($monthYear);
+
+        $data = [
+            'monthlyReport' => $this->load->view('V_partials/dashboard/monthly_report', ['monthly_orders' => $monthly_orders, 'selected_month' => $monthYear, 'formatMY' => $formattedMonthYear,], true),
+        ];
+        echo json_encode($data);
+    }
+
+    public function saveAsPDF()
+    {
+        $data['title'] = 'Laporan Bulanan';
+        $monthYear = $this->session->userdata('selected_month');
+
+        $formattedMonthYear = date("F Y", strtotime($monthYear));
+
+        $data['title'] = 'Laporan Bulanan ' . $formattedMonthYear;
+        $monthly_orders = $this->M_pesanan->getMonthlyOrders($monthYear);
+
+        $data = [
+            'monthly_orders' => $monthly_orders,
+            'selected_month' => $formattedMonthYear, // Menggunakan format yang baru
+        ];
+
+        $data['formatCurrency'] = array($this->pdf, 'formatCurrency');
+
+        $filename = 'LaporanBulanan';
+        $paper = 'A4';
+        $orientation = 'portrait';
+        $view = $this->load->view('V_partials/dashboard/monthly_report_pdf', $data, true);
+
+        $this->pdf->generate($view, $filename, $paper, $orientation);
+    }
 
     public function Orders()
     {
         $orders = $this->M_pesanan->getAllOrderForAdmin();
-        // var_dump($orders);die;
         $data = [
             'title' => 'Edit Data',
             'header' => 'V_partials/dashboard/header',

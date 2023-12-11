@@ -1,43 +1,115 @@
-<div class="container d-flex">
-    <img src="<?php echo base_url($produk['foto_produk']); ?>" alt="Foto Produk" style="width: 500px;height: auto;">
+<!-- detail barang -->
+<section class="py-5">
+    <div class="container">
+        <div class="row gx-5">
+            <aside class="col-lg-6">
+                <div class="border rounded-4 mb-3 d-flex justify-content-center">
+                    <img src="<?php echo base_url($produk['foto_produk']); ?>" alt="Foto Produk" style="width: 500px;height: auto;">
 
-    <div class="">
-        <form action="<?php echo base_url('user/insertcart/') . $produk['id_produk'] ?>" method="post" onsubmit="return validateAndSubmit()">
-            <div class="mb-3">
-                <?php echo $produk['nama_produk'] ?>
-            </div>
+                    </a>
+                </div>
+                <!-- gallery-wrap .end// -->
+            </aside>
+            <main class="col-lg-6">
 
-            <div class="mb-3">
-                Category : <?php echo $produk['nama_category'] ?>
-            </div>
+                <form action="<?php echo base_url('user/insertcart/') . $produk['id_produk'] ?>" method="post" onsubmit="return validateAndSubmit()">
+                    <div class="ps-lg-3">
+                        <h3 class="title text-dark">
+                            <?php echo $produk['nama_produk'] ?>
+                        </h3>
 
-            <div class="mb-3">
-                Stok : <?php echo $produk['stok_produk'] ?>
-            </div>
+                        <div class="mb-3">
+                            <span class="format"><?php echo $produk['harga_produk'] ?></span>
+                            <span class="text-muted">/per unit</span>
+                        </div>
 
-            <div class="mb-3">
-                Harga : <span class="format"><?php echo $produk['harga_produk'] ?></span>
-            </div>
+                        <div class="mb-3">
+                            Category : <?php echo $produk['nama_category'] ?>
+                        </div>
 
-            <div class="mb-3">
-                Qty : <input type="number" class="form-input" name="qty_produk" id="Qty_produk" onkeypress="handleKeyPress(event)" value="1">
-            </div>
+                        <div class="mb-3">
+                            Stok : <?php echo $produk['stok_produk'] ?>
+                        </div>
 
-            <div id="alertContainer"></div>
+                        <p>
+                            <?php echo $produk['deskripsi_produk'] ?>
+                        </p>
 
-            <div class="mb-3">
-                Deskripsi : <?php echo $produk['deskripsi_produk'] ?>
-            </div>
+                        <div class="col-md-4 col-6 mb-3">
+                            <label class="mb-2 d-block">Jumlah</label>
+                            <div class="input-group mb-3" style="width: 170px;">
+                                <button class="btn btn-white border border-secondary px-3" type="button" id="decrementButton" data-mdb-ripple-color="dark" onclick="decrementQty()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="text" id="Qty_produk" class="form-control text-center border border-secondary" name="qty_produk" value="1" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                <button class="btn btn-white border border-secondary px-3" type="button" id="incrementButton" data-mdb-ripple-color="dark" onclick="incrementQty()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div id="alertContainer"></div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-warning shadow-0"> Beli </a>
+                    <button type="button" class="btn btn-primary shadow-0" onclick="validateAndSubmit()"><i class="me-1 fa fa-shopping-basket"></i> Keranjang</button>
+                </form>
+            </main>
 
-            <button type="button" class="btn btn-success" onclick="validateAndSubmit()">Tambah Keranjang</button>
+        </div>
 
-            <!-- Alert div -->
-        </form>
     </div>
-</div>
+    </div>
+</section>
+<!-- end detail barang -->
 
 <script>
+    $(document).ready(function() {
+        updateButtonState();
+    });
+    var qtyInput = document.getElementById('Qty_produk');
+    var incrementButton = document.getElementById('incrementButton');
+    var decrementButton = document.getElementById('decrementButton');
+
+    function incrementQty() {
+        var currentQty = parseInt(qtyInput.value);
+        qtyInput.value = currentQty + 1;
+        updateButtonState();
+        document.getElementById('alertContainer').innerHTML = '';
+
+    }
+
+    function decrementQty() {
+        var currentQty = parseInt(qtyInput.value);
+        if (currentQty > 1) {
+            qtyInput.value = currentQty - 1;
+        }
+        updateButtonState();
+        document.getElementById('alertContainer').innerHTML = '';
+
+    }
+
+    function updateButtonState() {
+        var currentQty = parseInt(qtyInput.value);
+        var stokProduk = <?php echo $produk['stok_produk']; ?>;
+
+        // Disable incrementButton if the quantity reaches the stock limit
+        if (currentQty >= stokProduk) {
+            incrementButton.disabled = true;
+        } else {
+            incrementButton.disabled = false;
+        }
+
+        // Disable decrementButton if the quantity is 1
+        if (currentQty <= 1) {
+            decrementButton.disabled = true;
+        } else {
+            decrementButton.disabled = false;
+        }
+    }
+
     document.getElementById('Qty_produk').oninput = function() {
+
+        var qtyInput = document.getElementById('Qty_produk');
+
         var value = this.value;
 
         // Remove any non-numeric characters, including '-'
@@ -50,13 +122,12 @@
         document.getElementById('alertContainer').innerHTML = '';
     };
 
-    function handleKeyPress(event) {
+    document.getElementById('Qty_produk').addEventListener('keydown', function(event) {
         if (event.keyCode === 13) {
-            // Jika tombol yang ditekan adalah "Enter"
-            event.preventDefault(); // Mencegah aksi default (pengiriman formulir)
-            validateAndSubmit(); // Panggil fungsi validasi dan pengiriman AJAX
+            event.preventDefault(); // Prevent default form submission
+            validateAndSubmit(); // Call the validation and submission function
         }
-    }
+    });
 
     function validateAndSubmit() {
         var qtyProduk = document.getElementById('Qty_produk').value;
@@ -127,8 +198,14 @@
                         }
                     }
                 },
-                error: function() {
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
                     // Handle errors if any
+                    document.getElementById('alertContainer').innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Terjadi kesalahan saat menambahkan produk ke keranjang.
+                </div>
+                `;
                 }
             });
         }
