@@ -65,5 +65,8 @@ $route['about'] = 'LandingPage/aboutUs';
 $route['contact'] = 'LandingPage/contactUs';
 $route['transaksi/(:num)'] = 'user/hlmtransaksi/$1';
 
+// $route['dashboard/update_monthly_report'] = 'dashboard/update_monthly_report';
+
+
 
 

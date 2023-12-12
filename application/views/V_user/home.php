@@ -49,7 +49,7 @@
 
       <?php foreach ($category as $key) : ?>
         <div class="col_kategori">
-
+        <a href="<?php echo base_url('category/') . $key['id_category'] ?>">
           <div class="card">
             <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top" alt="">
             <div class="card-body">
@@ -57,6 +57,7 @@
               <h5 class="card-title text-center"><a href="<?php echo base_url('category/') . $key['id_category'] ?>"><?php echo $key['nama_category'] ?></a></h5>
             </div>
           </div>
+          </a>
         </div>
       <?php endforeach ?>
     </div>

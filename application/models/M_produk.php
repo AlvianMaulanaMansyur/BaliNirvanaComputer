@@ -59,7 +59,7 @@ class M_produk extends CI_Model
 
         if (!$this->upload->do_upload('foto_produk')) {
             $error = array('error' => $this->upload->display_errors());
-            echo $error['error'];
+            echo $error['error'];die;
         } else {
             $data = array('upload_data' => $this->upload->data());
 
@@ -74,6 +74,7 @@ class M_produk extends CI_Model
                 'deskripsi_produk' => $this->input->post('deskripsi_produk'),
                 'foto_produk' => 'assets/foto/' . $gambar_path,
             );
+            // var_dump($insert_data);die;
             $result = $this->db->insert('produk', $insert_data);
             return $result;
         }

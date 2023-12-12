@@ -17,6 +17,12 @@
             background-color: #f8f8f8;
             margin-top: auto;
         }
+
+        .blur-effect {
+            filter: blur(1px);
+            /* pointer-events: none; */
+            /* Adjust the blur effect as needed */
+        }
     </style>
 </head>
 
@@ -33,17 +39,17 @@
 
         <!-- <a href="https://wa.me/?text= Hai" class="position-fixed" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i></a> -->
 
-    <a href="https://wa.me/6287762722287/?text= Hai" class="position-fixed" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i>
+        <a href="https://wa.me/6287762722287/?text= Hai" class="position-fixed" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i>
 
 
-        <!-- <div id="invoice"> -->
-        <!-- Informasi invoice di sini -->
-        <!-- ajdfadf -->
-        <!-- </div>
+            <!-- <div id="invoice"> -->
+            <!-- Informasi invoice di sini -->
+            <!-- ajdfadf -->
+            <!-- </div>
         <button id="downloadAsImage" class="col-1">Download sebagai Gambar</button> -->
-        <div class="footer">
-            <?php $this->load->view('V_partials/footer'); ?>
-        </div>
+            <div class="footer">
+                <?php $this->load->view('V_partials/footer'); ?>
+            </div>
     </div>
 
     <?php $this->load->view('V_partials/script');
@@ -109,11 +115,10 @@
     <script>
         AOS.init();
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <!-- testimoni -->
 
-    
+
 </body>
 
 

@@ -118,7 +118,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('dashboard/insertProduk') ?>" method="post" enctype="multipart/form-data" class="">
+                <form action="<?php echo base_url('dashboard/insertProduk') ?>" method="post" enctype="multipart/form-data">
                     <div>
                         <input hidden readonly type="text" name="id_admin" class="form-control" id="Id_admin" value="1">
                     </div>
@@ -147,10 +147,12 @@
                         <label for="Harga" class="form-label">Harga Produk</label>
                         <input type="number" name="harga_produk" class="form-control" id="Harga" required>
                     </div>
+
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Deskripsi Produk</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="deskripsi_produk" required></textarea>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="Foto_produk" class="form-label">Foto Produk</label>
                         <input type="file" name="foto_produk" class="form-control" id="Foto_produk" required>
@@ -240,15 +242,6 @@
 
 <script>
     $(document).ready(function() {
-        // if (typeof Swal === 'undefined') {
-        //     console.error("SweetAlert library is not loaded.");
-        //     return;
-        // }
-
-        // if (!$('.delete-product-item').length) {
-        //     console.error("No delete-product-item elements found.");
-        //     return;
-        // }
 
         // Handle click on delete button
         $('.delete-product-item').on('click', function(e) {

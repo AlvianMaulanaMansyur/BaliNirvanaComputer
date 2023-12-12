@@ -87,6 +87,7 @@ class User extends CI_Controller
         echo json_encode(['total_checked_price' => $total_checked_price]);
     }
 
+    // Controller
     public function updateQuantity($id_cart)
     {
         $action = $this->input->post('action');
@@ -95,8 +96,9 @@ class User extends CI_Controller
 
         if (!empty($cart)) {
             $qty_produk = $cart[0]['qty_produk'];
-
-            if ($action == 'increase' && $qty_produk < $cart[0]['stok_produk']) {
+            $result = $this->M_produk->getDetailProduk($cart[0]['id_produk']);
+            $stok_produk = $result['stok_produk'];
+            if ($action == 'increase' && $qty_produk < $stok_produk) {
                 $qty_produk++;
             } else if ($action == 'decrease' && $qty_produk > 1) {
                 $qty_produk--;
@@ -118,18 +120,6 @@ class User extends CI_Controller
         }
     }
 
-
-    public function increaseQty($id_cart)
-    {
-        $this->M_cart->increaseQty($id_cart, '+1');
-        redirect('user/getCart');
-    }
-
-    public function decreaseQty($id_cart)
-    {
-        $this->M_cart->increaseQty($id_cart, '-1');
-        redirect('user/getCart');
-    }
 
     public function deleteCart($id_cart)
     {
@@ -165,11 +155,24 @@ class User extends CI_Controller
         $personal_info = $this->M_personalInfo->getPersonalInfoByIdCustomer($id);
 
         if (!empty($checkout)) {
+            // Lakukan validasi untuk setiap item dalam keranjang
+            foreach ($checkout as $item) {
+                $stockAvailable = $item['stok_produk'];
+
+                if ($item['qty_produk'] > $stockAvailable) {
+                    // Jika qty melebihi stok, tampilkan pesan kesalahan dan arahkan kembali ke halaman keranjang
+                    $this->session->set_flashdata('error', 'Jumlah produk dalam keranjang melebihi stok yang tersedia.');
+                    redirect('user/getcart');
+                }
+            }
+
+            // Lanjutkan ke proses checkout jika validasi berhasil
             if (!empty($personal_info)) {
                 $content = 'V_user/checkout1';
             } else {
                 $content = 'V_user/checkout';
             }
+
             $data = [
                 'content' => $content,
                 'title' => 'Checkout',
@@ -181,6 +184,7 @@ class User extends CI_Controller
             redirect('home');
         }
     }
+
 
     public function transaksi()
     {

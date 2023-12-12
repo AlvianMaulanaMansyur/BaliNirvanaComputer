@@ -17,6 +17,7 @@
         <div class="search-icon"><i class="fa-solid fa-search"></i></div>
         <li><a href="<?php echo base_url('cart') ?>"><i class="fa-solid fa-cart-shopping"></i></a></li>
         <li><a href="<?php echo base_url('orders') ?>"><i class="fa-regular fa-bell"></i></a></li>
+       
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
