@@ -12,7 +12,6 @@
         border-collapse: collapse;
         margin-top: 20px;
     }
-
     th,
     td {
         padding: 12px;

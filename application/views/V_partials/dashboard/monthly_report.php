@@ -1,10 +1,10 @@
 <!-- monthly_report.php -->
 
-    <div>
-        <label for="month"></label>
-        <input type="month" name="month" id="month" value="<?php echo $selected_month ?>" required onchange="updateMonthlyReport(this.value)">
-    </div>
-    <div id="monthlyReportContainer">
+<div>
+    <label for="month"></label>
+    <input type="month" name="month" id="month" value="<?php echo $selected_month ?>" required onchange="updateMonthlyReport(this.value)">
+</div>
+<div id="monthlyReportContainer">
     <h2>Monthly Report <?php echo $formatMY ?></h2>
     <table class="table table-secondary">
         <thead>
@@ -41,9 +41,10 @@
         </tbody>
     </table>
     <h5>Total Penjualan : <span class="format"><?php echo $total ?></span></h5>
-    <div>
-        <a href="<?php echo base_url('dashboard/saveaspdf'); ?>" class="btn btn-primary">Save as PDF</a>
-    </div>
+
+</div>
+<div>
+    <a href="<?php echo base_url('dashboard/saveaspdf'); ?>" class="btn btn-primary">Save as PDF</a>
 </div>
 
 <script>
