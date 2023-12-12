@@ -77,7 +77,7 @@
                                             <tr>
                                                 <td><?php echo $no++; ?></td>
                                                 <td><?php echo $result->id_produk ?></td>
-                                                <td><?php echo $result->nama_category ?></td>
+                                                <td><?php echo $result->nama_category ?></td>   
                                                 <td><?php echo $result->nama_produk ?></td>
                                                 <td><?php echo $result->stok_produk ?></td>
                                                 <td><?php echo $result->harga_produk ?></td>

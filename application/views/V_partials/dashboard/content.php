@@ -7,7 +7,7 @@
 
             <!-- search -->
             <?php echo form_open('Dashboard/search_Customer', 'class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3  my-2 my-md-0"'); ?>
-            <div class="input-group d-flex" style="float:right">
+            <div class="input-group d-flex">
                 <?php echo form_input('keyword', '', 'class="form-control" placeholder="Search for..." aria-label="Search for..."'); ?>
                 <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
             </div>
@@ -44,8 +44,6 @@
                                 <a href="<?php echo base_url('dashboard/edit/' . $key['id_customer']); ?>">
                                     <button type="button" class="btn btn-warning"><i class="fa-regular fa-pen-to-square" style="color: #000000;"></i></button></a>
 
-                                <a href="<?php echo base_url('dashboard/delete_customer/' . $key['id_customer']); ?>">
-                                    <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button></a>
                             </td>
 
                         </tr>

@@ -157,6 +157,7 @@ class M_produk extends CI_Model
         }
     }
 
+    //search untuk mencari data barang di admin dashboard
     public function search_data_produk($keyword){
 
         $this->db->select('produk. *, category.nama_category');
@@ -169,6 +170,8 @@ class M_produk extends CI_Model
         return $query->result();
     } 
 
+
+    //search untuk main menu
     public function searchProduk($keyword){
         $this->db->like('nama_produk', $keyword);
         $query = $this->db->get('produk');

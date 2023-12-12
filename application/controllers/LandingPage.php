@@ -100,15 +100,15 @@ class LandingPage extends CI_Controller {
         $data = array(
             'content' => 'customer/shop',
             'title' => 'Home',
-            'produk' => $this->M_produk->getProduk(), // Ini adalah contoh fungsi yang mengambil semua produk, pastikan model Anda memiliki fungsi yang sesuai
+            'produk' => $this->M_produk->getProduk(), 
             'category' => $this->M_produk->getCategory(),
             'kosong' => false,
         );
-        // Jika kata kunci null atau kosong, ambil semua barang
+        // Jika kata kunci null atau kosong, tampilkan seluruh produk
         if (empty($keyword)) {
             $data['results'] = $this->M_produk->getProduk();
         } else {
-            // Jika ada kata kunci, lakukan pencarian
+            // Jika search dilakukan
             $data['results'] = $this->M_produk->searchProduk($keyword);
         }
         $this->load->view('template', $data);

@@ -4,6 +4,14 @@
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800 ">Data Customer</h1>
             </div>
+
+            <?php echo form_open('Dashboard/search_Customer', 'class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3  my-2 my-md-0"'); ?>
+            <div class="input-group d-flex">
+                <?php echo form_input('keyword', '', 'class="form-control" placeholder="Search for..." aria-label="Search for..."'); ?>
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            <?php echo form_close(); ?>
+            
             <?php $no = 1; ?>
             <?php foreach ($orders as $invoice_number => $order) { ?>
                 <div class="row d-flex">
@@ -12,7 +20,7 @@
                         <h5>Nama : <?php echo $order['details'][0]['nama_customer']; ?></h5>
                         <h5>Alamat : <?php echo $order['details'][0]['alamat_pengiriman']; ?></h5>
                         <h5>No. Telepon : <?php echo $order['details'][0]['telepon']; ?></h5>
-                        <table class="table table-secondary">
+                        <table class="table table-secondary">   
                             <thead>
                                 <tr>
                                     <th scope="col">Nama Produk</th>
@@ -45,7 +53,7 @@
                                     }
                                     ?>
                                 </h5>
-                                </a>
+                            </a>
 
                         </div>
                     </div>
