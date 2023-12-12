@@ -232,18 +232,27 @@ class Dashboard extends CI_Controller
 
     public function monthlyReport()
     {
-        $monthYear = $this->session->userdata('selected_month');
-        if (empty($monthYear)) {
-            $monthYear = date('Y-m');
-            $this->session->set_userdata('selected_month', $monthYear);
-        }
-        $this->report($monthYear);
-    }
+        // Ambil nilai bulan dari query string
+        $selectedMonth = $this->input->get('month');
+        // var_dump($selectedMonth);die;
+        // Cek apakah ada data GET
+        if ($selectedMonth) {
+            $selectedYear = $this->input->get('year');
 
-    public function report($monthYear)
-    {
-        $monthly_orders = $this->M_pesanan->getMonthlyOrders($monthYear);
-        $formattedMonthYear = date("F Y", strtotime($monthYear));
+            $monthYear = "$selectedYear-$selectedMonth";
+
+            // Simpan nilai bulan ke dalam session
+            $this->session->set_userdata('selected_month', $monthYear);
+            $formattedMonthYear = date("F Y", strtotime($this->session->userdata('selected_month')));
+        } else {
+            $monthYear = "";
+            $this->session->set_userdata('selected_month', $monthYear);
+            $monthYear = $this->session->userdata('selected_month');
+            $formattedMonthYear = "";
+        }
+
+        $monthly_orders = $this->M_pesanan->getMonthlyOrders($this->session->userdata('selected_month'));
+
         $data = [
             'title' => 'Monthly Report',
             'header' => 'V_partials/dashboard/header',
@@ -254,24 +263,10 @@ class Dashboard extends CI_Controller
             'js' => 'V_partials/dashboard/js',
             'monthly_orders' => $monthly_orders,
             'active_tab' => 'monthlyReport',
-            'selected_month' => $monthYear,
-            'formatMY' => $formattedMonthYear,  // Untuk menunjukkan bulan yang dipilih di form
+            'selected_month' => $formattedMonthYear,
         ];
+
         $this->load->view('master', $data);
-    }
-
-    public function update_monthly_report()
-    {
-        $monthYear = $this->input->post('month');
-        $formattedMonthYear = date("F Y", strtotime($monthYear));
-
-        $this->session->set_userdata('selected_month', $monthYear);
-        $monthly_orders = $this->M_pesanan->getMonthlyOrders($monthYear);
-
-        $data = [
-            'monthlyReport' => $this->load->view('V_partials/dashboard/monthly_report_table', ['monthly_orders' => $monthly_orders, 'selected_month' => $monthYear, 'formatMY' => $formattedMonthYear], true),
-        ];
-        echo json_encode($data);
     }
 
     public function saveAsPDF()

@@ -185,10 +185,11 @@ class M_cart extends CI_Model
 
     public function getCart($id_customer)
     {
-        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, produk.foto_produk, produk.stok_produk');
+        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, produk.foto_produk, produk.stok_produk, category.nama_category');
         $this->db->from('cart');
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');
+        $this->db->join('category', 'produk.id_category = category.id_category', 'left');
         $this->db->where('cart.id_customer', $id_customer);
         $this->db->order_by('cart.create_time', 'asc');
         

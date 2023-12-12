@@ -1,11 +1,37 @@
 <!-- monthly_report.php -->
 
 <div>
-    <label for="month"></label>
-    <input type="month" name="month" id="month" value="<?php echo $selected_month ?>" required onchange="updateMonthlyReport(this.value)">
+    <form method="get" action="<?php echo base_url('dashboard/MonthlyReport'); ?>">
+        <label for="month">Bulan:</label>
+        <select name="month" id="month" required>
+            <?php
+            for ($i = 1; $i <= 12; $i++) {
+                $monthValue = sprintf("%02d", $i);
+                $monthLabel = date("F", strtotime("2023-$monthValue-01"));
+                $selected = ($monthValue == $this->input->get('month')) ? 'selected' : '';
+                echo "<option value='$monthValue' $selected>$monthLabel</option>";
+            }
+            ?>
+        </select>
+
+        <label for="year">Tahun:</label>
+        <select name="year" id="year" required>
+            <?php
+            $currentYear = date("Y");
+            for ($i = $currentYear; $i >= ($currentYear - 5); $i--) {
+                $selected = ($i == $this->input->get('year')) ? 'selected' : '';
+                echo "<option value='$i' $selected>$i</option>";
+            }
+            ?>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
-<div id="monthlyReportContainer">
-    <h2>Monthly Report <?php echo $formatMY ?></h2>
+
+
+<div id="monthlyReportContent">
+    <h2>Monthly Report <?php echo $selected_month ?></h2>
     <table class="table table-secondary">
         <thead>
             <tr>
@@ -46,19 +72,3 @@
 <div>
     <a href="<?php echo base_url('dashboard/saveaspdf'); ?>" class="btn btn-primary">Save as PDF</a>
 </div>
-
-<script>
-    function updateMonthlyReport(selectedMonth) {
-        $.ajax({
-            url: "<?php echo base_url('dashboard/update_monthly_report') ?>",
-            type: "POST",
-            data: {
-                month: selectedMonth
-            },
-            success: function(data) {
-                var result = JSON.parse(data);
-                $("#monthlyReportContainer").html(result.monthlyReport);
-            }
-        });
-    }
-</script>
