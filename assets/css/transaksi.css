@@ -1,0 +1,23 @@
+.halaman_transaksi .hlmn{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-left: 2rem;
+}
+.halaman_transaksi .brand{
+    color: #D21312;
+}
+.halaman_transaksi .brand .span{
+    color: black;
+    font-weight: 400;
+}
+.deskripsi_pembayaran{
+    margin-left: 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.deskripsi_pembayaran .wa_pembayaran{
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+}

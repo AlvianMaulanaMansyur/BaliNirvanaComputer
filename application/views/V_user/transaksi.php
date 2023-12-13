@@ -1,11 +1,15 @@
-<h1>Halaman Transaksi</h1>
+<div class="halaman_transaksi">
+<h2 class="hlmn">Halaman Transaksi</h2>
+</div>
+
+
 
 <div id="invoice">
 
-    <div class="container col-sm-12 col-md-7 col-lg-5 border border-1 border-dark p-4">
-        <div class="d-flex border-bottom mb-2" style="justify-content: space-between;">
-            <h1>INVOICE</h1>
-            <h1>Bali Nirvana Computer</h1>
+    <div class="container col-sm-12 col-md-7 col-lg-5 border border-2 border-dark p-4" style="border-radius: 15px;">
+        <div class="d-flex border-bottom mb-2" style="justify-content: space-between; border-radius: 10px;">
+            <h2 style="font-family: 'Poppins', sans-serif; font-weight: 400;">INVOICE</h2>
+            <h2 class="brand" style="font-family: 'Poppins', sans-serif; font-weight: 500;">Bali Nirvana <span style="font-weight: 500;"> Computer</span></h2>
         </div>
 
         <div class="d-flex" style="justify-content: space-between;">
@@ -28,7 +32,7 @@
 
             <!-- Start Product Info -->
             <div class="col">
-                <h3>Detail</h3>
+                <h5 style="margin-bottom: 1.2rem; margin-top: 1rem; font-family: 'Poppins', sans-serif;">Detail</h5>
                 <?php $total = 0; ?>
                 <table class="table table-secondary">
                     <thead>
@@ -55,7 +59,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex" style="justify-content: right;">
-                    <h4>Total : <span class="format"><?php echo $total ?></span></h1>
+                    <h5>Total : <span class="format"><?php echo $total ?></span></h1>
                 </div>
             </div>
         </div>
@@ -67,6 +71,9 @@
     <button id="downloadAsImage" class="col-4 btn btn-primary">Download Invoice</button>
 </div>
 
-
-<h5>Hubungi Wa Berikut Untuk Melakukan Pembayaran</h5>
+<div class="deskripsi_pembayaran" style="margin-top: 5px;">
+    silahkan download invoice untuk melakukan pembayaran!
+<span></span>
+<h5 class="wa_pembayaran">Hubungi Wa Berikut Untuk Melakukan Pembayaran</h5>
 <a hreaf="https://wa.me/628?text= Hai" class="" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i></a>
+</div>
