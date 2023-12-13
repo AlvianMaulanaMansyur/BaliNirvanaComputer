@@ -1,3 +1,6 @@
+<!-- checkout -->
+
+<section class="bg-light py-5">
 <div class="d-flex row" style="justify-content: center;">
 <h1 class="col-10 pt-4">Checkout</h1>
     <div class="pt-3 pb-2 px-3 col-lg-4 col-sm-10">
@@ -13,6 +16,7 @@
 
                     <!-- Input Personal Info -->
                     <div class="">
+                    <h5 class="card-title pt-2">PEMBAYARAN</h5>
 
                         <fieldset disabled>
                             <div class="mb-4">
@@ -91,6 +95,8 @@
                 <h3>Product Info</h3>
             </div>
             <div class="card-body">
+            <h5 class="card-title pt-">RINGKASAN</h5>
+
                 <div class="">
                     <?php $total = 0; ?>
                     <table class="table">
@@ -131,6 +137,7 @@
     <!-- End Product Info -->
     </form>
 </div>
+</section>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
