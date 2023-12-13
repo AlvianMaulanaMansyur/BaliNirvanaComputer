@@ -274,7 +274,12 @@ class Dashboard extends CI_Controller
         $data['title'] = 'Laporan Bulanan';
         $monthYear = $this->session->userdata('selected_month');
 
-        $formattedMonthYear = date("F Y", strtotime($monthYear));
+        if($monthYear == null) {
+            $formattedMonthYear = "";
+
+        } else {
+            $formattedMonthYear = date("F Y", strtotime($monthYear));
+        }
 
         $data['title'] = 'Laporan Bulanan ' . $formattedMonthYear;
         $monthly_orders = $this->M_pesanan->getMonthlyOrders($monthYear);

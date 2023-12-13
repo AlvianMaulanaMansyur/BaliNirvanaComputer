@@ -1,33 +1,35 @@
 <!-- cart -->
 
-<?php foreach ($cart as $key) { ?>
-    <?php
-    // Add these lines inside your foreach loop
-    $isStockEmpty = $key['stok_produk'] == 0;
-    $disableCheckbox = $isStockEmpty ? 'disabled' : '';
-    $disableQuantityButtons = $isStockEmpty ? 'disabled' : '';
-    ?>
 
-    <?php
-    // Update is_check to 0 if the stock is 0
-    if ($key['stok_produk'] == 0) {
-        $this->M_cart->updateIsCheck($key['id_cart'], 0);
-    }
-    ?>
-    <?php if ($key['qty_produk'] > $key['stok_produk']) : ?>
-        <?php $this->M_cart->updateIsCheck($key['id_cart'], 0); ?>
-    <?php endif; ?>
 
-    <div class="row d-flex pt-5" style="justify-content: center;align-items: center;">
+<div class="row d-flex pt-5" style="justify-content: center;">
 
-        <div class="col-lg-8 col-md-10 col-sm-12 card border shadow-0">
-            <div class="m-4">
-                <h4 class="card-title mb-4">Keranjang Anda</h4>
+    <div class="col-lg-8 col-md-10 col-sm-12 card border shadow-0">
+        <div class="m-4">
+            <h4 class="card-title mb-4">Keranjang Anda</h4>
+            <?php foreach ($cart as $key) { ?>
+                <?php
+                // Add these lines inside your foreach loop
+                $isStockEmpty = $key['stok_produk'] == 0;
+                $disableCheckbox = $isStockEmpty ? 'disabled' : '';
+                $disableQuantityButtons = $isStockEmpty ? 'disabled' : '';
+                ?>
+
+                <?php
+                // Update is_check to 0 if the stock is 0
+                if ($key['stok_produk'] == 0) {
+                    $this->M_cart->updateIsCheck($key['id_cart'], 0);
+                }
+                ?>
+                <?php if ($key['qty_produk'] > $key['stok_produk']) : ?>
+                    <?php $this->M_cart->updateIsCheck($key['id_cart'], 0); ?>
+                <?php endif; ?>
                 <div class="row gy-3 mb-4">
                     <div class="col-lg-5">
                         <div class="me-lg-5">
-                            <div class="d-flex">
-                                <input type="checkbox" data-id="<?php echo $key['id_cart']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
+                            <div class="d-flex" style="align-items: center;">
+                                <input class="me-3" type="checkbox" data-id="<?php echo $key['id_cart']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
+                                
                                 <img src="<?php echo base_url($key['foto_produk']) ?>" class="border rounded me-3" style="width: 96px; height: 96px;" />
                                 <div class="">
                                     <a href="#" class="nav-link"><?php echo $key['nama_produk'] ?></a>
@@ -41,7 +43,7 @@
                     </div>
 
                     <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                        <div class="d-flex" style="justify-content: center;text-align: center;">
+                        <div class="d-flex me-5" style="justify-content: center;text-align: center;">
                             <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease" <?php echo ($key['qty_produk'] == 1 || $key['stok_produk'] == 0) ? 'disabled' : ''; ?> style="height: 40px;width: 50px;text-align: center;">
                                 <i class="fas fa-minus"></i>
                             </button>
@@ -67,9 +69,9 @@
 
                 <span id="subtotal_<?php echo $key['id_cart']; ?>"><?php $key['harga_produk'] * $key['qty_produk']; ?></span>
 
-                <?php } ?>
+            <?php } ?>
 
-                
+
 
             <div class="border-top pt-4 mx-4 mb-4">
                 <p><i class="fas fa-truck text-muted fa-lg"></i> Pengiriman Akan Dilakukan 1-2 Hari Setelah Pembayaran</p>
@@ -79,13 +81,13 @@
             </div>
         </div>
     </div>
-  
+
     <div class="col-3">
-        
+
         <div class="card shadow-0 border">
             <div class="d-flex justify-content-between pt-3 px-2">
                 <p class="mb-2 fw-bold format" id="total_checked_price"></p>
-               
+
             </div>
 
             <div class="mt-3">
@@ -95,8 +97,8 @@
         </div>
     </div>
 
-    </div>
-    <!-- end cart -->
+</div>
+<!-- end cart -->
 
 <script>
     $(document).ready(function() {

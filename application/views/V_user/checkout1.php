@@ -1,145 +1,146 @@
-<div class="d-flex row" style="justify-content: center;">
-    <h1 class="col-10 pt-4">Checkout</h1>
-    <div class="pt-3 pb-2 px-3 col-lg-4 col-sm-10">
+<!-- checkout -->
 
-        <div class="card">
-            <div class="card-header">
-                <h3>Personal Info</h3>
-            </div>
+<section class="bg-light py-4">
+    <div class="d-flex row" style="justify-content: center;">
+        <h1 class="col-10 pt-4">Checkout</h1>
+        <div class="pt-3 pb-2 px-3 col-lg-4 col-sm-10">
 
-            <form action="<?php echo base_url('user/transaksi') ?>" method="post" enctype="multipart/form-data" class="">
+            <div class="card">
 
-                <div class="row d-flex px-3 pt-2">
+                <form action="<?php echo base_url('user/transaksi') ?>" method="post" enctype="multipart/form-data" class="">
 
-                    <!-- Input Personal Info -->
-                    <div class="">
+                    <div class="row d-flex px-3 pt-2">
 
-                        <fieldset disabled>
+                        <!-- Input Personal Info -->
+                        <div class="">
+                            <h5 class="card-title pt-2">PEMBAYARAN</h5>
+
+                            <fieldset disabled>
+                                <div class="mb-4">
+                                    <label for="alamat" class="form-label">Nama</label>
+                                    <input type="text" name="nama_customer" class="form-control" id="alamat" value="<?php echo $cart[0]['nama_customer'] ?>">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="alamat" class="form-label">No. Telepon</label>
+                                    <input type="text" name="telepon" class="form-control" id="alamat" value="<?php echo $cart[0]['telepon'] ?>">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="alamat" class="form-label">Email</label>
+                                    <input type="text" name="email" class="form-control" id="alamat" value="<?php echo $cart[0]['email'] ?>">
+                                </div>
+                            </fieldset>
+
                             <div class="mb-4">
-                                <label for="alamat" class="form-label">Nama</label>
-                                <input type="text" name="nama_customer" class="form-control" id="alamat" value="<?php echo $cart[0]['nama_customer'] ?>">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Alamat Pengiriman" value="<?php echo $cart[0]['alamat'] ?>" required>
+                                <input type="text" name="detail_alamat" class="form-control" id="" placeholder="Detail Alamat, contoh: Di dekat pura" value="<?php echo $cart[0]['detail_alamat'] ?>">
                             </div>
 
-                            <div class="mb-4">
-                                <label for="alamat" class="form-label">No. Telepon</label>
-                                <input type="text" name="telepon" class="form-control" id="alamat" value="<?php echo $cart[0]['telepon'] ?>">
-                            </div>
 
-                            <div class="mb-4">
-                                <label for="alamat" class="form-label">Email</label>
-                                <input type="text" name="email" class="form-control" id="alamat" value="<?php echo $cart[0]['email'] ?>">
-                            </div>
-                        </fieldset>
+                            <div class="row mb-4">
+                                <div class="mb-3 me-4 col-5">
+                                    <label for="Category" class="form-label">Kabupaten</label>
+                                    <?php
+                                    $selectedKotaKab = (!empty($cart)) ? $cart[0]['id_kota_kab'] : ''; // Variabel untuk menyimpan id_kota_kab yang ingin dipilih
+                                    $selectedKecamatan = (!empty($cart)) ? $cart[0]['id_kecamatan'] : ''; // Variabel untuk menyimpan id_kecamatan yang ingin dipilih
 
-                        <div class="mb-4">
-                            <label for="alamat" class="form-label">Alamat</label>
-                            <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Alamat Pengiriman" value="<?php echo $cart[0]['alamat'] ?>" required>
-                            <input type="text" name="detail_alamat" class="form-control" id="" placeholder="Detail Alamat, contoh: Di dekat pura" value="<?php echo $cart[0]['detail_alamat'] ?>">
-                        </div>
+                                    $kotaOptions = array(); // Array asosiatif untuk menyimpan kabupaten unik
+                                    $kecamatanOptions = array(); // Array asosiatif untuk menyimpan kecamatan unik berdasarkan kabupaten yang dipilih
 
+                                    foreach ($kota as $city) {
+                                        $kotaOptions[$city['id_kota_kab']] = $city['kota'];
 
-                        <div class="row mb-4">
-                            <div class="mb-3 me-4 col-5">
-                                <label for="Category" class="form-label">Kabupaten</label>
-                                <?php
-                                $selectedKotaKab = (!empty($cart)) ? $cart[0]['id_kota_kab'] : ''; // Variabel untuk menyimpan id_kota_kab yang ingin dipilih
-                                $selectedKecamatan = (!empty($cart)) ? $cart[0]['id_kecamatan'] : ''; // Variabel untuk menyimpan id_kecamatan yang ingin dipilih
-
-                                $kotaOptions = array(); // Array asosiatif untuk menyimpan kabupaten unik
-                                $kecamatanOptions = array(); // Array asosiatif untuk menyimpan kecamatan unik berdasarkan kabupaten yang dipilih
-
-                                foreach ($kota as $city) {
-                                    $kotaOptions[$city['id_kota_kab']] = $city['kota'];
-
-                                    if ($city['id_kota_kab'] == $selectedKotaKab) {
-                                        $kecamatanOptions[$city['id_kecamatan']] = $city['kecamatan'];
+                                        if ($city['id_kota_kab'] == $selectedKotaKab) {
+                                            $kecamatanOptions[$city['id_kecamatan']] = $city['kecamatan'];
+                                        }
                                     }
-                                }
-                                ?>
+                                    ?>
 
-                                <select name="kota" id="Kota" class="form-select">
-                                    <?php foreach ($kotaOptions as $id => $kotaOption) { ?>
-                                        <option value="<?php echo $id; ?>" <?php echo ($id == $selectedKotaKab) ? 'selected' : ''; ?>>
-                                            <?php echo $kotaOption; ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
+                                    <select name="kota" id="Kota" class="form-select">
+                                        <?php foreach ($kotaOptions as $id => $kotaOption) { ?>
+                                            <option value="<?php echo $id; ?>" <?php echo ($id == $selectedKotaKab) ? 'selected' : ''; ?>>
+                                                <?php echo $kotaOption; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
 
-                            <div class="mb-3 col-5">
-                                <label for="Category" class="form-label">Kecamatan</label>
-                                <select name="id_kecamatan" class="form-select" id="kecamatan">
-                                    <?php foreach ($kecamatanOptions as $id => $kecamatanOption) { ?>
-                                        <option value="<?php echo $id; ?>" <?php echo ($id == $selectedKecamatan) ? 'selected' : ''; ?>>
-                                            <?php echo $kecamatanOption; ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
+                                <div class="mb-3 col-5">
+                                    <label for="Category" class="form-label">Kecamatan</label>
+                                    <select name="id_kecamatan" class="form-select" id="kecamatan">
+                                        <?php foreach ($kecamatanOptions as $id => $kecamatanOption) { ?>
+                                            <option value="<?php echo $id; ?>" <?php echo ($id == $selectedKecamatan) ? 'selected' : ''; ?>>
+                                                <?php echo $kecamatanOption; ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
 
-                            <div class="mb-4 col-5">
-                                <label for="alamat" class="form-label">Kodepos</label>
-                                <input type="number" name="kodepos" pattern="[0-9]{5}" class="form-control" value="<?php echo $cart[0]['kodepos'] ?>" required>
+                                <div class="mb-4 col-5">
+                                    <label for="alamat" class="form-label">Kodepos</label>
+                                    <input type="number" name="kodepos" pattern="[0-9]{5}" class="form-control" value="<?php echo $cart[0]['kodepos'] ?>" required>
+                                </div>
+
                             </div>
 
                         </div>
-
                     </div>
-                </div>
-        </div>
-    </div>
-    <!-- Akhir Input Personal Info -->
-
-    <!-- Start Product Info -->
-    <div class="py-3 px-3 col-lg-4 col-sm-10">
-        <div class="card">
-            <div class="card-header">
-                <h3>Product Info</h3>
             </div>
-            <div class="card-body">
-                <div class="">
-                    <?php $total = 0; ?>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col-4">Nama Produk</th>
-                                <th scope="col">Harga</th>
-                                <th scope="col">Qty</th>
-                                <th scope="col">Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
+        </div>
+        <!-- Akhir Input Personal Info -->
 
-                            <?php foreach ($cart as $key) { ?>
+        <!-- Start Product Info -->
+        <div class="py-3 px-3 col-lg-4 col-sm-10">
+            <div class="card">
 
+                <div class="card-body">
+                    <h5 class="card-title pt-">RINGKASAN</h5>
+
+                    <div class="">
+                        <?php $total = 0; ?>
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td class="col-5"><?php echo $key['nama_produk'] ?></th>
-                                    <td class="format"><?php echo $key['harga_produk'] ?></td>
-
-                                    <td><?php echo $key['qty_produk'] ?></td>
-                                    <td class="format"><?php echo $key['harga_produk'] * $key['qty_produk'] ?></td>
-
+                                    <th scope="col-4">Nama Produk</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Subtotal</th>
                                 </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
 
-                                <?php $total += $key['harga_produk'] * $key['qty_produk'] ?>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                    <div class="d-flex" style="justify-content: end;">
-                        <h4  style="font-weight: 800;">Total : <span class="format"><?php echo $total ?></span></h4>
-                    </div>
-                    <div class="d-flex" style="justify-content: end;">
-                        <button type="submit" class="btn btn-warning col-lg-2 col-sm-4">Order</button>
+                                <?php foreach ($cart as $key) { ?>
+
+                                    <tr>
+                                        <td class="col-5"><?php echo $key['nama_produk'] ?></th>
+                                        <td class="format"><?php echo $key['harga_produk'] ?></td>
+
+                                        <td><?php echo $key['qty_produk'] ?></td>
+                                        <td class="format"><?php echo $key['harga_produk'] * $key['qty_produk'] ?></td>
+
+                                    </tr>
+
+                                    <?php $total += $key['harga_produk'] * $key['qty_produk'] ?>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        <div class="d-flex" style="justify-content: end;">
+                            <h4 style="font-weight: 800;">Total : <span class="format"><?php echo $total ?></span></h4>
+                        </div>
+                        <div class="d-flex" style="justify-content: end;">
+                            <button type="submit" class="btn btn-warning col-lg-2 col-sm-4">Order</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-
+        <!-- End Product Info -->
+        </form>
     </div>
-    <!-- End Product Info -->
-    </form>
-</div>
-
+</section>
 
 <!-- Script JavaScript -->
 <script>
