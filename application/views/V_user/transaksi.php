@@ -6,7 +6,7 @@
 
 <div id="invoice">
 
-    <div class="container col-sm-12 col-md-7 col-lg-5 border border-2 border-dark p-4" style="border-radius: 15px;">
+    <div class="container col-sm-12 col-md-7 col-lg-5 border border-1 border-dark p-4" style="border-radius: 15px;">
         <div class="d-flex border-bottom mb-2" style="justify-content: space-between; border-radius: 10px;">
             <h2 style="font-family: 'Poppins', sans-serif; font-weight: 400;">INVOICE</h2>
             <h2 class="brand" style="font-family: 'Poppins', sans-serif; font-weight: 500;">Bali Nirvana <span style="font-weight: 500;"> Computer</span></h2>
