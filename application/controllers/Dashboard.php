@@ -259,13 +259,18 @@ class Dashboard extends CI_Controller
             'navbar' => 'V_partials/dashboard/navbar',
             'sidebar' => 'V_partials/dashboard/sidebar',
             'footer' => 'V_partials/dashboard/footer',
-            'content' => 'V_partials/dashboard/monthly_report',
             'js' => 'V_partials/dashboard/js',
             'monthly_orders' => $monthly_orders,
             'active_tab' => 'monthlyReport',
             'selected_month' => $formattedMonthYear,
         ];
 
+        if($selectedMonth == '') {
+            $data['content'] = 'V_partials/dashboard/monthly_report';
+        } else {
+            $data['content'] = 'V_partials/dashboard/monthly_report_table';
+            
+        }
         $this->load->view('master', $data);
     }
 
@@ -274,9 +279,8 @@ class Dashboard extends CI_Controller
         $data['title'] = 'Laporan Bulanan';
         $monthYear = $this->session->userdata('selected_month');
 
-        if($monthYear == null) {
+        if ($monthYear == null) {
             $formattedMonthYear = "";
-
         } else {
             $formattedMonthYear = date("F Y", strtotime($monthYear));
         }

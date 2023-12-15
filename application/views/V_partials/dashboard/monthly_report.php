@@ -1,9 +1,10 @@
 <!-- monthly_report.php -->
 
 <div>
-    <form method="get" action="<?php echo base_url('dashboard/MonthlyReport'); ?>">
+    <form method="get" action="<?php echo base_url('dashboard/monthlyReport') ?>">
         <label for="month">Bulan:</label>
         <select name="month" id="month" required>
+            <option value="" selected>Pilih Bulan</option>
             <?php
             for ($i = 1; $i <= 12; $i++) {
                 $monthValue = sprintf("%02d", $i);
@@ -16,6 +17,7 @@
 
         <label for="year">Tahun:</label>
         <select name="year" id="year" required>
+            <option value="" selected>Pilih Tahun</option>
             <?php
             $currentYear = date("Y");
             for ($i = $currentYear; $i >= ($currentYear - 5); $i--) {
@@ -25,12 +27,13 @@
             ?>
         </select>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="submitButton" class="btn btn-primary" disabled>Submit</button>
+
     </form>
 </div>
 
+<div id="monthlyReportContainer">
 
-<div id="monthlyReportContent">
     <h2>Monthly Report <?php echo $selected_month ?></h2>
     <table class="table table-secondary">
         <thead>
@@ -66,9 +69,18 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <h5>Total Penjualan : <span class="format"><?php echo $total ?></span></h5>
+</div>
 
-</div>
-<div>
-    <a href="<?php echo base_url('dashboard/saveaspdf'); ?>" class="btn btn-primary">Save as PDF</a>
-</div>
+<script>
+    $(document).ready(function() {
+        // Menangani perubahan pada elemen select bulan dan tahun
+        $('#month, #year').on('change', function() {
+            // Memeriksa apakah kedua pilihan sudah dipilih
+            var isMonthSelected = $('#month').val() !== '';
+            var isYearSelected = $('#year').val() !== '';
+
+            // Mengaktifkan atau menonaktifkan tombol submit berdasarkan hasil pemeriksaan
+            $('#submitButton').prop('disabled', !(isMonthSelected && isYearSelected));
+        });
+    });
+</script>
