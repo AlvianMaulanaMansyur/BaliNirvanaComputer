@@ -185,14 +185,15 @@ class M_cart extends CI_Model
 
     public function getCart($id_customer)
     {
-        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, produk.foto_produk, produk.stok_produk, category.nama_category');
+        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, produk.stok_produk, category.nama_category, foto_produk.url_foto, foto_produk.urutan_foto');
         $this->db->from('cart');
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');
         $this->db->join('category', 'produk.id_category = category.id_category', 'left');
+        $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
         $this->db->where('cart.id_customer', $id_customer);
+        $this->db->where('foto_produk.urutan_foto', 1);
         $this->db->order_by('cart.create_time', 'asc');
-        
 
         $result = $this->db->get();
 
@@ -231,10 +232,12 @@ class M_cart extends CI_Model
 
     public function getCartByID($id_cart)
     {
-        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, produk.foto_produk, produk.stok_produk');
+        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.harga_produk,foto_produk.url_foto,foto_produk.urutan_foto, produk.stok_produk');
         $this->db->from('cart');
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');
+        $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
+        $this->db->where('foto_produk.urutan_foto', 1);
         $this->db->where('cart.id_cart', $id_cart);
 
         $result = $this->db->get();

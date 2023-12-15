@@ -100,13 +100,13 @@ class LandingPage extends CI_Controller {
         $data = array(
             'content' => 'customer/shop',
             'title' => 'Home',
-            'produk' => $this->M_produk->getProduk(), 
+            'produk' => $this->M_produk->getProdukForCustomer(), 
             'category' => $this->M_produk->getCategory(),
             'kosong' => false,
         );
         // Jika kata kunci null atau kosong, tampilkan seluruh produk
         if (empty($keyword)) {
-            $data['results'] = $this->M_produk->getProduk();
+            $data['results'] = $this->M_produk->getProdukForCustomer();
         } else {
             // Jika search dilakukan
             $data['results'] = $this->M_produk->searchProduk($keyword);

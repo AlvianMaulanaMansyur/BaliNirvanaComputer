@@ -181,7 +181,7 @@ class User extends CI_Controller
             ];
             $this->load->view('template', $data);
         } else {
-            redirect('home');
+            redirect('cart');
         }
     }
 

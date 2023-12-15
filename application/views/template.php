@@ -23,6 +23,10 @@
             /* pointer-events: none; */
             /* Adjust the blur effect as needed */
         }
+
+        .foto-card {
+            cursor: pointer;
+        }
     </style>
 </head>
 

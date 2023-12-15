@@ -90,7 +90,7 @@
       <?php if ($i < $cards_per_page) { ?>
         <div data-aos="fade-up">
           <div class="rkp card">
-            <img src="<?php echo base_url($product['foto_produk']); ?>" class="card-img-top" alt="Gambar">
+            <img src="<?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
             <div class="rkp_body card-body">
 
               <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>

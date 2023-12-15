@@ -3,12 +3,17 @@
     <div class="container">
         <div class="row gx-5">
             <aside class="col-lg-6">
-                <div class="border rounded-4 mb-3 d-flex justify-content-center">
-                    <img src="<?php echo base_url($produk['foto_produk']); ?>" alt="Foto Produk" style="width: 500px;height: auto;">
-
-                    </a>
+                <div id="mainPhoto" class="border rounded-4 mb-3 d-flex justify-content-center">
+                    <img src="<?php echo base_url($produk['url_foto']); ?>" alt="Foto Produk" style="width: 500px;height: auto;">
                 </div>
-                <!-- gallery-wrap .end// -->
+                <div class="row">
+                    <!-- Tampilkan semua foto dalam bentuk card -->
+                    <?php foreach ($produk['fotos'] as $foto) : ?>
+                            <div class="card mb-3 foto-card d-flex col-3 me-3 " style="align-items: center;" data-src="<?php echo base_url($foto['url_foto']); ?>" >
+                                <img src="<?php echo base_url($foto['url_foto']); ?>" class="card-img-top" alt="Foto Produk" style="width: auto;height: 140px;">
+                            </div>
+                    <?php endforeach; ?>
+                </div>
             </aside>
             <main class="col-lg-6">
 
@@ -62,6 +67,16 @@
 <!-- end detail barang -->
 
 <script>
+    document.querySelectorAll('.foto-card').forEach(function(fotoCard) {
+        fotoCard.addEventListener('click', function() {
+            // Dapatkan atribut 'data-src' dari elemen yang diklik
+            var newSrc = this.getAttribute('data-src');
+
+            // Ganti atribut 'src' dari elemen 'mainPhoto' dengan nilai baru
+            document.getElementById('mainPhoto').getElementsByTagName('img')[0].src = newSrc;
+        });
+    });
+
     $(document).ready(function() {
         updateButtonState();
     });
