@@ -10,33 +10,28 @@
                 $isStockEmpty = $key['stok_produk'] == 0;
                 $disableCheckbox = $isStockEmpty ? 'disabled' : '';
                 $disableQuantityButtons = $isStockEmpty ? 'disabled' : '';
-                ?>
 
-                <?php
-                // Update is_check to 0 if the stock is 0
-                if ($key['stok_produk'] == 0) {
+                if ($isStockEmpty || $key['qty_produk'] > $key['stok_produk']) {
                     $this->M_cart->updateIsCheck($key['id_cart'], 0);
                 }
                 ?>
-                <?php if ($key['qty_produk'] > $key['stok_produk']) : ?>
-                    <?php $this->M_cart->updateIsCheck($key['id_cart'], 0); ?>
-                <?php endif; ?>
+
                 <div class="row gy-3 mb-4">
                     <div class="col-lg-5">
                         <div class="me-lg-5">
                             <div class="d-flex" style="align-items: center;">
-                                <input class="me-3" type="checkbox" data-id="<?php echo $key['id_cart']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
+                                <input class="me-3 checkbox-product" type="checkbox" data-id="<?php echo $key['id_cart']; ?>" data-initial-stock="<?php echo $key['stok_produk']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
 
                                 <img src="<?php echo base_url($key['url_foto']) ?>" class="border rounded me-3" style="width: 96px; height: 96px;" />
                                 <div class="">
                                     <a href="#" class="nav-link"><?php echo $key['nama_produk'] ?></a>
                                     <p class="text-muted"><?php echo $key['nama_category'] ?></p>
 
-                                    <?php if ($key['qty_produk'] > $key['stok_produk'] && $key['stok_produk'] != 0) : ?>
-                                        <p class="stock-warning">Jumlah melebihi stok! Tidak bisa dicheckout.</p>
+                                    <?php if ($key['qty_produk'] > $key['stok_produk'] && !$isStockEmpty) : ?>
+                                        <p class="stock-warning">Jumlah melebihi stok! Tidak bisa dicheckout. (stok <?php echo $key['stok_produk'] ?>)</p>
                                     <?php endif; ?>
 
-                                    <?php if ($key['stok_produk'] == 0) : ?>
+                                    <?php if ($isStockEmpty) : ?>
                                         <p class="stock-warning">Maaf stok barang habis</p>
                                     <?php endif; ?>
                                 </div>
@@ -105,6 +100,18 @@
             updateCurrencyFormat(cartItem);
         });
 
+        $('.checkbox-product').each(function() {
+            var checkbox = $(this);
+            var initialStock = parseInt(checkbox.data('initial-stock'));
+            var isChecked = checkbox.prop('checked');
+            var currentQty = parseInt($('#qty_' + checkbox.data('id')).text());
+
+            if (currentQty > initialStock || initialStock == 0) {
+                checkbox.prop('checked', false);
+                checkbox.prop('disabled', true);
+            }
+        });
+
         $('.quantity-control').on('click', function(e) {
             e.preventDefault();
 
@@ -164,19 +171,19 @@
                     });
 
                     // Periksa dan atur kembali status checkbox
-                    var checkbox = $('.container[data-id="' + id_cart + '"] input[type="checkbox"]');
-                    var stockWarning = $('.container[data-id="' + id_cart + '"] .stock-warning');
+                    // Periksa dan atur kembali status checkbox
+                    var stockWarning = $('#qty_' + id_cart).closest('.row').find('.stock-warning');
+                    var checkbox = $('.checkbox-product[data-id="' + id_cart + '"]');
 
-                    console.log(response.qty_produk);
-                    console.log(response.stok_produk);
                     if (response.qty_produk > response.stok_produk) {
+                        stockWarning.show();
                         checkbox.prop('checked', false);
                         checkbox.prop('disabled', true);
-                        stockWarning.show();
                     } else {
-                        checkbox.prop('disabled', false);
                         stockWarning.hide();
+                        checkbox.prop('disabled', false);
                     }
+
                 }
             },
             error: function(error) {
@@ -260,7 +267,7 @@
             event.preventDefault();
             return false; // Prevent the default behavior of the link
         } else {
-            window.location.href = '<?php echo base_url('checkout')?>';
+            window.location.href = '<?php echo base_url('checkout') ?>';
         }
 
         // If items are selected, proceed with the checkout process

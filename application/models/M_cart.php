@@ -127,7 +127,8 @@ class M_cart extends CI_Model
     {
         $this->db->set('is_check', $is_checked);
         $this->db->where('id_cart', $id_cart);
-        $this->db->update('produk_has_cart');
+        $isUpdateSuccessful = $this->db->update('produk_has_cart');
+        return $isUpdateSuccessful;
     }
 
     public function deleteCartItem($id_cart)

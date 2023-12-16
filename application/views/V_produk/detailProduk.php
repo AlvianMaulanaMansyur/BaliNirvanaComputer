@@ -191,6 +191,22 @@
                                     window.location.href = '<?php echo base_url("checkout"); ?>';
                                 }
                             });
+                        } else {
+                            if (response.error_message) {
+                                // Tampilkan alert danger menggunakan Bootstrap
+                                document.getElementById('alertContainer').innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                ${response.error_message}
+                            </div>
+                            `;
+                            } else {
+                                // Tampilkan alert danger menggunakan Bootstrap
+                                document.getElementById('alertContainer').innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Gagal menambahkan produk ke keranjang.
+                            </div>
+                            `;
+                            }
                         }
                     } else {
                         if (response.redirect) {

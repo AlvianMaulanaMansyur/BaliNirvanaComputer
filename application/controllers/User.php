@@ -61,19 +61,12 @@ class User extends CI_Controller
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $is_checked = $this->input->post('is_check') ? 1 : 0;
-            // Ambil nilai is_checked dari database
-            $cart = $this->M_cart->getCartById($id_cart);
-            $is_checked = $cart[0]['is_check'];
+            $isUpdateSuccessful = $this->M_cart->updateIsCheck($id_cart, $is_checked);
 
-            // Toggle nilai is_checked (1 menjadi 0, 0 menjadi 1)
-            $is_checked = 1 - $is_checked;
-
-            // Update nilai is_checked di database
-            $this->M_cart->updateIsCheck($id_cart, $is_checked);
-            $this->updateTotalCheckedPrice();
-            redirect('user/getcart'); // Gantilah dengan halaman yang sesuai
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode(['success' => $isUpdateSuccessful]));
         } else {
-            // Tindakan untuk metode HTTP selain POST (misalnya, jika diakses langsung melalui URL)
             show_404();
         }
     }
