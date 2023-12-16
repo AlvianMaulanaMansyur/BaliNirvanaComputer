@@ -23,12 +23,15 @@ class Dashboard extends CI_Controller
     public function insertProduk()
     {
         $this->M_produk->insertProduk();
+        $this->session->set_flashdata('success_add', 'Produk berhasil ditambahkan.');
         redirect('dashboard/getproduk');
     }
 
     public function editProduk()
     {
-        $this->M_produk->editProduk();
+        $id_produk = $this->M_produk->editProduk();
+        $this->session->set_flashdata('success_edit', 'Produk berhasil diubah.');
+        $this->session->set_flashdata('edited_product_id', $id_produk); // id_produk dari hasil pengeditan
         redirect('dashboard/getproduk');
     }
 
@@ -134,7 +137,6 @@ class Dashboard extends CI_Controller
             $this->admin_model->update_customer($id_customer, $data_to_save);
         }
     }
-
 
     public function update_customer()
     {

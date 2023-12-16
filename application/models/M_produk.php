@@ -50,7 +50,7 @@ class M_produk extends CI_Model
         $this->db->where('produk.stok_produk >', 0);
         $this->db->where('produk.id_produk', $id);
         $result = $this->db->get()->result_array();
-    
+
         // Membuat array baru untuk menyimpan semua foto terkait produk
         $fotos = [];
         foreach ($result as $row) {
@@ -59,13 +59,13 @@ class M_produk extends CI_Model
                 'urutan_foto' => $row['urutan_foto'],
             ];
         }
-    
+
         // Menambahkan array fotos ke hasil query
         $result[0]['fotos'] = $fotos;
-    
+
         return $result[0];
     }
-    
+
 
     public function insertProduk()
     {
@@ -86,63 +86,24 @@ class M_produk extends CI_Model
             die;
         }
 
-        // Photo 1 is uploaded successfully
-        $data1 = array('upload_data1' => $this->upload->data());
-        $gambar_path1 = 'assets/foto/' . $data1['upload_data1']['file_name'];
+        $gambar_paths = array();
 
-        // Handle optional uploads for foto_produk2 and foto_produk3
-        $data2 = array();
-        if (!empty($_FILES['foto_produk2']['name'])) {
-            if ($this->upload->do_upload('foto_produk2')) {
-                $data2['upload_data2'] = $this->upload->data();
+        for ($i = 1; $i <= 3; $i++) {
+            if (!empty($_FILES['foto_produk' . $i]['name'])) {
+                if ($this->upload->do_upload('foto_produk' . $i)) {
+                    $data['upload_data' . $i] = $this->upload->data();
+                    $gambar_paths[] = 'assets/foto/' . $data['upload_data' . $i]['file_name'];
+                } else {
+                    // Handle the case when the upload is not successful
+                    $error = array('error' => $this->upload->display_errors());
+                    var_dump($error);
+                    // Continue execution, as foto_produk2 and foto_produk3 are optional
+                    $gambar_paths[] = ''; // Set a default value or handle accordingly
+                }
             } else {
-                // Handle the case when the upload is not successful
-                $error = array('error' => $this->upload->display_errors());
-                var_dump($error);
-                // Continue execution, as foto_produk2 is optional
+                $gambar_paths[] = ''; // Set a default value or handle accordingly
             }
         }
-
-        $data3 = array();
-        if (!empty($_FILES['foto_produk3']['name'])) {
-            if ($this->upload->do_upload('foto_produk3')) {
-                $data3['upload_data3'] = $this->upload->data();
-            } else {
-                // Handle the case when the upload is not successful
-                $error = array('error' => $this->upload->display_errors());
-                var_dump($error);
-                // Continue execution, as foto_produk3 is optional
-            }
-        }
-
-        // Set default paths for images
-        $gambar_path2 = isset($data2['upload_data2']) ? 'assets/foto/' . $data2['upload_data2']['file_name'] : '';
-        $gambar_path3 = isset($data3['upload_data3']) ? 'assets/foto/' . $data3['upload_data3']['file_name'] : '';
-
-        // Check if the file uploads were successful before accessing the data
-        if (isset($data1['upload_data1'])) {
-            $gambar_path1 = 'assets/foto/' . $data1['upload_data1']['file_name'];
-        } else {
-            // Handle the case when $data1['upload_data1'] is not set
-            $gambar_path1 = ''; // Set a default value or handle accordingly
-        }
-
-        if (isset($data2['upload_data2'])) {
-            $gambar_path2 = 'assets/foto/' . $data2['upload_data2']['file_name'];
-        } else {
-            // Handle the case when $data2['upload_data2'] is not set
-            $gambar_path2 = ''; // Set a default value or handle accordingly
-        }
-
-        if (isset($data3['upload_data3'])) {
-            $gambar_path3 = 'assets/foto/' . $data3['upload_data3']['file_name'];
-        } else {
-            // Handle the case when $data3['upload_data3'] is not set
-            $gambar_path3 = ''; // Set a default value or handle accordingly
-        }
-
-        // var_dump($gambar_path1);
-        // die;
 
         $insert_data = array(
             'nama_produk' => $this->input->post('nama_produk'),
@@ -157,16 +118,10 @@ class M_produk extends CI_Model
         $result = $this->db->insert('produk', $insert_data);
         $insert_id = $this->db->insert_id();
 
-        if (!empty($gambar_path1)) {
-            $this->saveFotoProduk($insert_id, $gambar_path1, 1);
-        }
-
-        if (!empty($gambar_path2)) {
-            $this->saveFotoProduk($insert_id, $gambar_path2, 2);
-        }
-
-        if (!empty($gambar_path3)) {
-            $this->saveFotoProduk($insert_id, $gambar_path3, 3);
+        for ($i = 1; $i <= 3; $i++) {
+            if (!empty($gambar_paths[$i - 1])) {
+                $this->saveFotoProduk($insert_id, $gambar_paths[$i - 1], $i);
+            }
         }
         return $result;
     }
@@ -187,70 +142,27 @@ class M_produk extends CI_Model
         $this->load->library('upload', $config);
 
         // Check if the first photo is selected
-        $data1 = array();
-        if (!empty($_FILES['foto_produk1']['name'])) {
-            if ($this->upload->do_upload('foto_produk1')) {
-                $data1['upload_data1'] = $this->upload->data();
+        $gambar_paths = array();
+
+        for ($i = 1; $i <= 3; $i++) {
+            $data = array();
+            if (!empty($_FILES['foto_produk' . $i]['name'])) {
+                if ($this->upload->do_upload('foto_produk' . $i)) {
+                    $data['upload_data' . $i] = $this->upload->data();
+                    $gambar_paths[$i] = 'assets/foto/' . $data['upload_data' . $i]['file_name'];
+                } else {
+                    // Handle the case when the upload is not successful
+                    $error = array('error' => $this->upload->display_errors());
+                    var_dump($error);
+                    // Continue execution, as foto_produk is optional
+                    $gambar_paths[$i] = ''; // Set a default value or handle accordingly
+                }
             } else {
-                // Handle the case when the upload is not successful
-                $error = array('error' => $this->upload->display_errors());
-                var_dump($error);
-                // Continue execution, as foto_produk1 is optional
+                $gambar_paths[$i] = ''; // Set a default value or handle accordingly
             }
         }
 
-        // Handle optional uploads for foto_produk2 and foto_produk3
-        $data2 = array();
-        if (!empty($_FILES['foto_produk2']['name'])) {
-            if ($this->upload->do_upload('foto_produk2')) {
-                $data2['upload_data2'] = $this->upload->data();
-            } else {
-                // Handle the case when the upload is not successful
-                $error = array('error' => $this->upload->display_errors());
-                var_dump($error);
-                // Continue execution, as foto_produk2 is optional
-            }
-        }
-
-        $data3 = array();
-        if (!empty($_FILES['foto_produk3']['name'])) {
-            if ($this->upload->do_upload('foto_produk3')) {
-                $data3['upload_data3'] = $this->upload->data();
-            } else {
-                // Handle the case when the upload is not successful
-                $error = array('error' => $this->upload->display_errors());
-                var_dump($error);
-                // Continue execution, as foto_produk3 is optional
-            }
-        }
-
-        // Set default paths for images
-        $gambar_path1 = isset($data1['upload_data1']) ? 'assets/foto/' . $data1['upload_data1']['file_name'] : '';
-        $gambar_path2 = isset($data2['upload_data2']) ? 'assets/foto/' . $data2['upload_data2']['file_name'] : '';
-        $gambar_path3 = isset($data3['upload_data3']) ? 'assets/foto/' . $data3['upload_data3']['file_name'] : '';
         $id_produk = $this->input->post('id_produk');
-
-        // Check if the file uploads were successful before accessing the data
-        if (isset($data1['upload_data1'])) {
-            $gambar_path1 = 'assets/foto/' . $data1['upload_data1']['file_name'];
-        } else {
-            // Handle the case when $data1['upload_data1'] is not set
-            $gambar_path1 = ''; // Set a default value or handle accordingly
-        }
-
-        if (isset($data2['upload_data2'])) {
-            $gambar_path2 = 'assets/foto/' . $data2['upload_data2']['file_name'];
-        } else {
-            // Handle the case when $data2['upload_data2'] is not set
-            $gambar_path2 = ''; // Set a default value or handle accordingly
-        }
-
-        if (isset($data3['upload_data3'])) {
-            $gambar_path3 = 'assets/foto/' . $data3['upload_data3']['file_name'];
-        } else {
-            // Handle the case when $data3['upload_data3'] is not set
-            $gambar_path3 = ''; // Set a default value or handle accordingly
-        }
 
         $update_data = array(
             'nama_produk' => $this->input->post('nama_produk'),
@@ -262,23 +174,16 @@ class M_produk extends CI_Model
         );
 
         $this->db->where('id_produk', $id_produk);
-        $result = $this->db->update('produk', $update_data);
+        $this->db->update('produk', $update_data);
 
-        if (!empty($gambar_path1)) {
-            $this->saveFotoProduk($id_produk, $gambar_path1, 1);
+        for ($i = 1; $i <= 3; $i++) {
+            if (!empty($gambar_paths[$i])) {
+                $this->deleteOldFoto($id_produk, $i);
+                $this->saveFotoProduk($id_produk, $gambar_paths[$i], $i);
+            }
         }
 
-        if (!empty($gambar_path2)) {
-            $this->saveFotoProduk($id_produk, $gambar_path2, 2);
-        }
-
-        if (!empty($gambar_path3)) {
-            $this->saveFotoProduk($id_produk, $gambar_path3, 3);
-        }
-
-        $this->updateFotoProduk($id_produk, $gambar_path1, $gambar_path2, $gambar_path3);
-
-        return $result;
+        return $id_produk;
     }
 
 
@@ -305,35 +210,41 @@ class M_produk extends CI_Model
         }
     }
 
-    private function updateFotoProduk($id_produk, $gambar_path1, $gambar_path2, $gambar_path3)
+    private function deleteOldFoto($id_produk, $urutan_foto)
     {
-        // Update foto_produk untuk urutan_foto = 1 (foto_produk1) jika gambar_path1 tidak kosong
-        if (!empty($gambar_path1)) {
-            $this->db->update('foto_produk', array('url_foto' => $gambar_path1), array('id_produk' => $id_produk, 'urutan_foto' => 1));
-        }
+        // Get the old photo path from the database
+        $oldFoto = $this->db->select('url_foto')->where(array('id_produk' => $id_produk, 'urutan_foto' => $urutan_foto))->get('foto_produk')->row();
 
-        // Update foto_produk untuk urutan_foto = 2 (foto_produk2) jika gambar_path2 tidak kosong
-        if (!empty($gambar_path2)) {
-            $this->db->update('foto_produk', array('url_foto' => $gambar_path2), array('id_produk' => $id_produk, 'urutan_foto' => 2));
-        }
-
-        // Update foto_produk untuk urutan_foto = 3 (foto_produk3) jika gambar_path3 tidak kosong
-        if (!empty($gambar_path3)) {
-            $this->db->update('foto_produk', array('url_foto' => $gambar_path3), array('id_produk' => $id_produk, 'urutan_foto' => 3));
+        if ($oldFoto && !empty($oldFoto->url_foto)) {
+            // Delete the old photo file
+            $oldFilePath = './' . $oldFoto->url_foto;
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
         }
     }
-
-
 
     public function deleteProduk($id_produk)
     {
-        // Hapus terlebih dahulu foto_produk yang terkait
-        $this->db->delete('foto_produk', array('id_produk' => $id_produk));
+        $foto_info = $this->db->select('url_foto')->where('id_produk', $id_produk)->get('foto_produk')->result();
 
-        // Baru hapus produknya
-        $this->db->delete('produk', array('id_produk' => $id_produk));
+        $this->db->where('id_produk', $id_produk);
+        $this->db->delete('foto_produk');
+
+        // Delete the product
+        $this->db->where('id_produk', $id_produk);
+        $this->db->delete('produk');
+
+        // Delete associated photos
+        foreach ($foto_info as $foto) {
+            if ($foto && !empty($foto->url_foto)) {
+                $foto_path = './' . $foto->url_foto;
+                if (file_exists($foto_path)) {
+                    unlink($foto_path);
+                }
+            }
+        }
     }
-
 
     public function getCategory()
     {
@@ -396,7 +307,7 @@ class M_produk extends CI_Model
         $this->db->join('foto_produk', 'produk.id_produk = produk.id_produk', 'left');
         $this->db->like('nama_produk', $keyword);
         $this->db->where('foto_produk.urutan_foto', 1);
-        
+
         $query = $this->db->get();
 
         return $query->result_array();

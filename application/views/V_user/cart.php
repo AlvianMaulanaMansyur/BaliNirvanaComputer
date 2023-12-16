@@ -26,7 +26,7 @@
                         <div class="me-lg-5">
                             <div class="d-flex" style="align-items: center;">
                                 <input class="me-3" type="checkbox" data-id="<?php echo $key['id_cart']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
-                                
+
                                 <img src="<?php echo base_url($key['url_foto']) ?>" class="border rounded me-3" style="width: 96px; height: 96px;" />
                                 <div class="">
                                     <a href="#" class="nav-link"><?php echo $key['nama_produk'] ?></a>
@@ -93,7 +93,9 @@
             </div>
 
             <div class="mt-3">
-                <a href="<?php echo base_url('checkout') ?>" class="btn btn-success w-100 shadow-0 mb-2"> Lanjutkan Transaksi </a>
+                <!-- <a href="<?php echo base_url('checkout') ?>" class="btn btn-success w-100 shadow-0 mb-2" onclick="validateCheckout()"> Lanjutkan Transaksi </a> -->
+                <a href="#" class="btn btn-success w-100 shadow-0 mb-2" onclick="return validateCheckout()"> Lanjutkan Transaksi </a>
+
                 <a href="<?php echo base_url('shop') ?>" class="btn btn-light w-100 border mt-2"> Kembali Berbelanja </a>
             </div>
         </div>
@@ -101,7 +103,6 @@
 
 </div>
 <!-- end cart -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -233,6 +234,9 @@
     }
 
     function updateTotalCheckedPrice() {
+        // Get all checked checkboxes
+
+        // There are checked items, proceed with updating the total price
         $.ajax({
             url: '<?php echo base_url('user/updateTotalCheckedPrice'); ?>',
             type: 'GET',
@@ -240,12 +244,32 @@
             success: function(response) {
                 // Update total harga yang dicentang pada elemen HTML yang sesuai
                 $('#total_checked_price').text('Total: ' + formatCurrency(response.total_checked_price));
-
             },
             error: function(error) {
                 console.log(error);
             }
         });
+    }
+
+    function validateCheckout(event) {
+        // Check if any items are selected
+        var selectedItems = $('[type="checkbox"]:checked');
+
+        if (selectedItems.length === 0) {
+            // If no items are selected, show a SweetAlert
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Pilih barang terlebih dahulu sebelum melanjutkan transaksi.',
+            });
+            event.preventDefault();
+            return false; // Prevent the default behavior of the link
+        } else {
+            window.location.href = '<?php echo base_url('checkout')?>';
+        }
+
+        // If items are selected, proceed with the checkout process
+        return true;
     }
 
     function updateCurrencyFormat(cartItem) {

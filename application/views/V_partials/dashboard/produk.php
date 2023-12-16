@@ -2,11 +2,11 @@
     <div class="card mb-4">
         <div class="card-body">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800 ">Data Customer</h1>
+                <h1 class="h3 mb-0 text-gray-800 ">Data Produk</h1>
             </div>
 
             <button type="button" class="btn btn-primary " style="margin-bottom:30px ;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Tambah Produk
+                <i class="fa-solid fa-plus"></i> Tambah Produk
             </button>
 
             <?php echo form_open('Dashboard/search_produk', 'class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3  my-2 my-md-0 "'); ?>
@@ -54,11 +54,10 @@
                                 ?>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $product['id_produk']; ?>">Edit</button>
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $product['id_produk']; ?>"><i class="fa-regular fa-pen-to-square"></i></button>
 
                                 <!-- Display alert before deleting -->
-                                <button class="btn btn-danger delete-product-item" data-id="<?php echo $product['id_produk']; ?>" data-name="<?php echo $product['nama_produk']; ?>">
-                                    Delete
+                                <button class="btn btn-danger delete-product-item" data-id="<?php echo $product['id_produk']; ?>" data-name="<?php echo $product['nama_produk']; ?>"><i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
@@ -304,4 +303,28 @@
             });
         });
     });
+</script>
+
+<script>
+    $(document).ready(function() {
+        <?php if ($this->session->flashdata('success_add')) : ?>
+            Swal.fire({
+                title: 'Sukses!',
+                text: '<?php echo $this->session->flashdata('success_add'); ?>',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        <?php endif; ?>
+    });
+</script>
+
+<script>
+    <?php if ($this->session->flashdata('success_edit') && $this->session->flashdata('edited_product_id')) : ?>
+        Swal.fire({
+            title: 'Sukses!',
+            text: '<?php echo $this->session->flashdata('success_edit'); ?>',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    <?php endif; ?>
 </script>
