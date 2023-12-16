@@ -72,9 +72,6 @@
                 <span id="subtotal_<?php echo $key['id_cart']; ?>"><?php $key['harga_produk'] * $key['qty_produk']; ?></span>
 
             <?php } ?>
-
-
-
             <div class="border-top pt-4 mx-4 mb-4">
                 <p><i class="fas fa-truck text-muted fa-lg"></i> Pengiriman Akan Dilakukan 1-2 Hari Setelah Pembayaran</p>
                 <p class="text-muted">
@@ -93,9 +90,7 @@
             </div>
 
             <div class="mt-3">
-                <!-- <a href="<?php echo base_url('checkout') ?>" class="btn btn-success w-100 shadow-0 mb-2" onclick="validateCheckout()"> Lanjutkan Transaksi </a> -->
                 <a href="#" class="btn btn-success w-100 shadow-0 mb-2" onclick="return validateCheckout()"> Lanjutkan Transaksi </a>
-
                 <a href="<?php echo base_url('shop') ?>" class="btn btn-light w-100 border mt-2"> Kembali Berbelanja </a>
             </div>
         </div>
