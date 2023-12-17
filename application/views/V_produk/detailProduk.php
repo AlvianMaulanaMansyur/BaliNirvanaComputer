@@ -53,9 +53,13 @@
                             </div>
                             <div id="alertContainer"></div>
                         </div>
+                        <div>
+                            <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button>
+                            <!-- <button type="submit" class="btn btn-danger shadow-0"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button> -->
+
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-warning shadow-0"> Beli </button>
-                    <button type="button" class="btn btn-danger shadow-0"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button>
+
                 </form>
             </main>
 
@@ -86,20 +90,27 @@
 
     function incrementQty() {
         var currentQty = parseInt(qtyInput.value);
+
+        if (isNaN(currentQty)) {
+            currentQty = 0;
+        }
+
         qtyInput.value = currentQty + 1;
         updateButtonState();
         document.getElementById('alertContainer').innerHTML = '';
-
     }
 
     function decrementQty() {
         var currentQty = parseInt(qtyInput.value);
-        if (currentQty > 1) {
+
+        if (isNaN(currentQty) || currentQty <= 1) {
+            qtyInput.value = 0;
+        } else {
             qtyInput.value = currentQty - 1;
         }
+
         updateButtonState();
         document.getElementById('alertContainer').innerHTML = '';
-
     }
 
     function updateButtonState() {
@@ -144,7 +155,7 @@
         }
     });
 
-    function validateAndSubmit(isCheckout) {
+    function validateAndSubmit() {
         var qtyProduk = document.getElementById('Qty_produk').value;
         var stokProduk = <?php echo $produk['stok_produk']; ?>;
 
@@ -155,7 +166,7 @@
             Jumlah melebihi stok yang tersedia.
         </div>
         `;
-        } else if (!/^[1-9]\d*$/.test(qtyProduk)) {
+        } else if (qtyProduk.trim() == '' || !/^[1-9]\d*$/.test(qtyProduk)) {
             // Tampilkan alert warning menggunakan Bootstrap
             document.getElementById('alertContainer').innerHTML = `
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -171,78 +182,40 @@
                 data: $('form').serialize(),
                 dataType: 'json',
                 success: function(response) {
-                    if (isCheckout) {
-                        // Redirect to the checkout page
-                        if (response.redirect) {
-                            window.location.href = response.redirect;
-                        } else if (response.success) {
-                            // Tampilkan alert success menggunakan Bootstrap
-                            Swal.fire({
-                                title: "Success!",
-                                text: "Produk berhasil dicheckout.",
-                                icon: "success",
-                                showCancelButton: false,
-                                showConfirmButton: true,
-                                confirmButtonText: "OK",
-                                confirmButtonColor: "#3085d6",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // Redirect to the cart page
-                                    window.location.href = '<?php echo base_url("checkout"); ?>';
-                                }
-                            });
-                        } else {
-                            if (response.error_message) {
-                                // Tampilkan alert danger menggunakan Bootstrap
-                                document.getElementById('alertContainer').innerHTML = `
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                ${response.error_message}
-                            </div>
-                            `;
-                            } else {
-                                // Tampilkan alert danger menggunakan Bootstrap
-                                document.getElementById('alertContainer').innerHTML = `
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Gagal menambahkan produk ke keranjang.
-                            </div>
-                            `;
+
+                    if (response.redirect) {
+                        window.location.href = response.redirect;
+                    } else if (response.success) {
+                        // Tampilkan alert success menggunakan Bootstrap
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Produk berhasil ditambahkan ke keranjang.",
+                            icon: "success",
+                            showCancelButton: false,
+                            showConfirmButton: true,
+                            confirmButtonText: "OK",
+                            confirmButtonColor: "#3085d6",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Redirect to the cart page
+                                window.location.href = '<?php echo base_url("cart"); ?>';
                             }
-                        }
+                        });
                     } else {
-                        if (response.redirect) {
-                            window.location.href = response.redirect;
-                        } else if (response.success) {
-                            // Tampilkan alert success menggunakan Bootstrap
-                            Swal.fire({
-                                title: "Success!",
-                                text: "Produk berhasil ditambahkan ke keranjang.",
-                                icon: "success",
-                                showCancelButton: false,
-                                showConfirmButton: true,
-                                confirmButtonText: "OK",
-                                confirmButtonColor: "#3085d6",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // Redirect to the cart page
-                                    window.location.href = '<?php echo base_url("cart"); ?>';
-                                }
-                            });
-                        } else {
-                            if (response.error_message) {
-                                // Tampilkan alert danger menggunakan Bootstrap
-                                document.getElementById('alertContainer').innerHTML = `
+                        if (response.error_message) {
+                            // Tampilkan alert danger menggunakan Bootstrap
+                            document.getElementById('alertContainer').innerHTML = `
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 ${response.error_message}
                             </div>
                             `;
-                            } else {
-                                // Tampilkan alert danger menggunakan Bootstrap
-                                document.getElementById('alertContainer').innerHTML = `
+                        } else {
+                            // Tampilkan alert danger menggunakan Bootstrap
+                            document.getElementById('alertContainer').innerHTML = `
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 Gagal menambahkan produk ke keranjang.
                             </div>
                             `;
-                            }
                         }
                     }
                 },

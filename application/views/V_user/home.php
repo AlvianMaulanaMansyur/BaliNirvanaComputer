@@ -49,14 +49,14 @@
 
       <?php foreach ($category as $key) : ?>
         <div class="col_kategori">
-        <a href="<?php echo base_url('category/') . $key['id_category'] ?>">
-          <div class="card">
-            <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top" alt="">
-            <div class="card-body">
-              <h5 class="card-title"></h5>
-              <h5 class="card-title text-center"><a href="<?php echo base_url('category/') . $key['id_category'] ?>"><?php echo $key['nama_category'] ?></a></h5>
+          <a href="<?php echo base_url('category/') . $key['id_category'] ?>">
+            <div class="card">
+              <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top" alt="">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+                <h5 class="card-title text-center"><a href="<?php echo base_url('category/') . $key['id_category'] ?>"><?php echo $key['nama_category'] ?></a></h5>
+              </div>
             </div>
-          </div>
           </a>
         </div>
       <?php endforeach ?>
@@ -89,21 +89,24 @@
       <?php $i++ ?>
       <?php if ($i < $cards_per_page) { ?>
         <div data-aos="fade-up">
+
           <div class="rkp card">
-            <img src="<?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
-            <div class="rkp_body card-body">
-
-              <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
-            </div>
-            <div class="rkp_ket  mb-3">
-            <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
-
-              <div class="d-flex justify-content-end pe-1">
-                <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>
+            <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>">
+            <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
+              <div class="rkp_body card-body">
+              </a>
+                <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
               </div>
-            </div>
+              <div class="rkp_ket  mb-3">
+                <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
 
+                <div class="d-flex justify-content-end pe-1">
+                  <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>
+                </div>
+              </div>
+         
           </div>
+
         </div>
       <?php } else {
         if ($i % $cards_per_page === 0) {

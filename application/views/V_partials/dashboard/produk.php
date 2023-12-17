@@ -152,13 +152,15 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    <div class=" mb-3">
                         <label for="Stok_produk" class="form-label">Stok Produk</label>
                         <input type="number" name="stok_produk" class="form-control" id="Stok_produk" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="Harga" class="form-label">Harga Produk</label>
+
+                    <label for="Harga" class="form-label">Harga Produk</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Rp</span>
                         <input type="number" name="harga_produk" class="form-control" id="Harga" required>
                     </div>
 
@@ -232,8 +234,9 @@
                                 <input type="number" name="stok_produk" class="form-control" id="Stok_produk" value="<?php echo $key['stok_produk'] ?>">
                             </div>
 
-                            <div class="mb-3">
-                                <label for="Harga" class="form-label">Harga Produk</label>
+                            <label for="Harga" class="form-label">Harga Produk</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Rp</span>
                                 <input type="number" name="harga_produk" class="form-control" id="Harga" value="<?php echo $key['harga_produk'] ?>">
                             </div>
                             <div class="mb-3">

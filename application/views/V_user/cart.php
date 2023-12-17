@@ -1,5 +1,5 @@
 <!-- cart -->
-<div class="row d-flex pt-5" style="justify-content: center;">
+<div class="row d-flex py-5" style="justify-content: center;">
 
     <div class="col-lg-8 col-md-10 col-sm-12 card border shadow-0">
         <div class="m-4">
@@ -22,74 +22,80 @@
                             <div class="d-flex" style="align-items: center;">
                                 <input class="me-3 checkbox-product" type="checkbox" data-id="<?php echo $key['id_cart']; ?>" data-initial-stock="<?php echo $key['stok_produk']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
 
-                                <img src="<?php echo base_url($key['url_foto']) ?>" class="border rounded me-3" style="width: 96px; height: 96px;" />
-                                <div class="">
-                                    <a href="#" class="nav-link"><?php echo $key['nama_produk'] ?></a>
-                                    <p class="text-muted"><?php echo $key['nama_category'] ?></p>
+                                <a href="<?php echo base_url('produk/') . $key['id_produk'] ?>" class="nav-link">
+                                    <img src="<?php echo base_url($key['url_foto']) ?>" class="border rounded me-3" style="width: 96px; height: 96px;" />
+                                    <div class="">
+                                        <?php echo $key['nama_produk'] ?>
+                                </a>
+                                <p class="text-muted"><?php echo $key['nama_category'] ?></p>
 
-                                    <?php if ($key['qty_produk'] > $key['stok_produk'] && !$isStockEmpty) : ?>
-                                        <p class="stock-warning">Jumlah melebihi stok! Tidak bisa dicheckout. (stok <?php echo $key['stok_produk'] ?>)</p>
-                                    <?php endif; ?>
 
-                                    <?php if ($isStockEmpty) : ?>
-                                        <p class="stock-warning">Maaf stok barang habis</p>
-                                    <?php endif; ?>
-                                </div>
+                                <?php if ($key['qty_produk'] > $key['stok_produk'] && !$isStockEmpty) : ?>
+                                    <p class="stock-warning">Jumlah melebihi stok! Tidak bisa dicheckout. (stok <?php echo $key['stok_produk'] ?>)</p>
+                                <?php endif; ?>
+
+                                <?php if ($isStockEmpty) : ?>
+                                    <p class="stock-warning">Maaf stok barang habis</p>
+                                <?php endif; ?>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                        <div class="d-flex me-5" style="justify-content: center;text-align: center;">
-                            <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease" <?php echo ($key['qty_produk'] == 1 || $key['stok_produk'] == 0) ? 'disabled' : ''; ?> style="height: 40px;width: 50px;text-align: center;">
-                                <i class="fas fa-minus"></i>
-                            </button>
-
-                            <h4 id="qty_<?php echo $key['id_cart']; ?>" class="mx-2"><?php echo $key['qty_produk']; ?></h4>
-
-                            <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart']; ?>" data-action="increase" <?php echo ($key['qty_produk'] == $key['stok_produk'] || $key['stok_produk'] == 0) ? 'disabled' : ''; ?> style="height: 40px;width: 50px;text-align: center;">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                        <div class="">
-                            <text class="h6"><span class="format"><?php echo $key['harga_produk'] ?></span></text> <br />
-                            <small class="text-muted text-nowrap"><span class="format"><?php echo $key['harga_produk'] ?></span>/per item</small>
-                        </div>
-                    </div>
-                    <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
-                        <div class="float-md-end">
-                            <!--                   <a href="#!" class="btn btn-light border px-2 icon-hover-primary"><i class="fas fa-heart fa-lg px-1 text-secondary"></i></a> -->
-                            <a href="<?php echo base_url('user/deleteCart/') . $key['id_cart'] ?>" class="btn btn-light border text-danger icon-hover-danger delete-cart-item"> Hapus</a>
                         </div>
                     </div>
                 </div>
 
-                <span id="subtotal_<?php echo $key['id_cart']; ?>"><?php $key['harga_produk'] * $key['qty_produk']; ?></span>
+                <div class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
+                    <div class="d-flex me-5" style="justify-content: center;text-align: center;">
+                        <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart']; ?>" data-action="decrease" <?php echo ($key['qty_produk'] == 1 || $key['stok_produk'] == 0) ? 'disabled' : ''; ?> style="height: 40px;width: 50px;text-align: center;">
+                            <i class="fas fa-minus"></i>
+                        </button>
 
-            <?php } ?>
-            <div class="border-top pt-4 mx-4 mb-4">
-                <p><i class="fas fa-truck text-muted fa-lg"></i> Pengiriman Akan Dilakukan 1-2 Hari Setelah Pembayaran</p>
-                <p class="text-muted">
-                    Proses pengiriman akan dilakukan setelah pihak pembeli melakukan pembayaran dan mengonfirmasi pembayaran kepada penjual yang dilakukan melalui whatsapp.
-                </p>
-            </div>
+                        <h4 id="qty_<?php echo $key['id_cart']; ?>" class="mx-2"><?php echo $key['qty_produk']; ?></h4>
+
+                        <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart']; ?>" data-action="increase" <?php echo ($key['qty_produk'] == $key['stok_produk'] || $key['stok_produk'] == 0) ? 'disabled' : ''; ?> style="height: 40px;width: 50px;text-align: center;">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="">
+                        <h6><span id="subtotal_<?php echo $key['id_cart']; ?>" class="format"><?php $key['harga_produk'] * $key['qty_produk']; ?></span></h6>
+                        <small class="text-muted text-nowrap"><span class="format"><?php echo $key['harga_produk'] ?></span>/per item</small>
+                    </div>
+                </div>
+                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                    <div class="float-md-end">
+                        <!--                   <a href="#!" class="btn btn-light border px-2 icon-hover-primary"><i class="fas fa-heart fa-lg px-1 text-secondary"></i></a> -->
+                        <a href="<?php echo base_url('user/deleteCart/') . $key['id_cart'] ?>" class="btn btn-light border text-danger icon-hover-danger delete-cart-item"> Hapus</a>
+                    </div>
+                </div>
         </div>
+
+
+    <?php } ?>
+    <div class="border-top pt-4 mx-4 mb-4">
+        <p><i class="fas fa-truck text-muted fa-lg"></i> Pengiriman Akan Dilakukan 1-2 Hari Setelah Pembayaran</p>
+        <p class="text-muted">
+            Proses pengiriman akan dilakukan setelah pihak pembeli melakukan pembayaran dan mengonfirmasi pembayaran kepada penjual yang dilakukan melalui whatsapp.
+        </p>
     </div>
+    </div>
+</div>
 
-    <div class="col-3">
+<div class="col-lg-3 col-md-10 col-sm-12 pt-2">
 
-        <div class="card shadow-0 border">
-            <div class="d-flex justify-content-between pt-3 px-2">
-                <p class="mb-2 fw-bold format" id="total_checked_price"></p>
+    <div class="card shadow-0 border">
+        <div class="d-flex justify-content-between pt-3 px-2">
+            <p class="mb-2 fw-bold" id="total_checked_price"></p>
 
-            </div>
+        </div>
 
-            <div class="mt-3">
+        <div class="row my-3 d-flex flex-column" style="align-items: center;">
+            <div class="col-11">
                 <a href="#" class="btn btn-success w-100 shadow-0 mb-2" onclick="return validateCheckout()"> Lanjutkan Transaksi </a>
+            </div>
+            <div class="col-11">
                 <a href="<?php echo base_url('shop') ?>" class="btn btn-light w-100 border mt-2"> Kembali Berbelanja </a>
             </div>
         </div>
     </div>
+</div>
 
 </div>
 <!-- end cart -->
@@ -129,21 +135,7 @@
 
             var deleteUrl = $(this).attr('href');
             var parentContainer = $(this).closest('.d-flex');
-
-            Swal.fire({
-                title: "Hapus Cart?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Ya, hapus!",
-                cancelButtonText: "Batal"
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                    window.location.href = deleteUrl;
-                }
-            });
+            window.location.href = deleteUrl;
         });
         updateTotalCheckedPrice();
     });
@@ -163,7 +155,7 @@
                     $('#qty_' + id_cart).text(response.qty_produk);
 
                     var newSubtotal = response.harga_produk * response.qty_produk;
-                    // $('#subtotal_' + id_cart).text(formatCurrency(newSubtotal));
+                    $('#subtotal_' + id_cart).text(formatCurrency(newSubtotal));
 
                     // Update the button states with a callback for updateTotalCheckedPrice
                     updateButtonStates(id_cart, response.qty_produk, response.stok_produk, function() {
@@ -276,6 +268,6 @@
 
     function updateCurrencyFormat(cartItem) {
         var newSubtotal = cartItem.harga_produk * cartItem.qty_produk;
-        // $('#subtotal_' + cartItem.id_cart).text(formatCurrency(newSubtotal));
+        $('#subtotal_' + cartItem.id_cart).text(newSubtotal);
     }
 </script>
