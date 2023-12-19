@@ -28,6 +28,11 @@ $results = isset($results) ? $results : null;
     </div>
 </div>
 
+<?php if (empty($results) && is_iterable($results)) : ?>
+    <?php $kosong = true; ?>
+    <?php $produk = '' ?>
+<?php endif ?>
+
 <!-- Tampilan Hasil Pencarian atau Produk - Produk -->
 <div class="container py-4 animate__animated animate__fadeInUp" id='menu'>
     <div class="box_shop">
@@ -44,8 +49,7 @@ $results = isset($results) ? $results : null;
 </div>
 
 <div class="container">
-    <?php if ($kosong) : ?>
-    <?php elseif (!empty($results) && is_iterable($results)) : ?>
+    <?php if (!empty($results) && is_iterable($results)) : ?>
         <!-- Tampilkan hasil pencarian jika ditemukan -->
         <div class="row row-cols-2 row-cols-md-3 g-3 py-3">
             <?php foreach ($results as $product) : ?>
@@ -66,34 +70,35 @@ $results = isset($results) ? $results : null;
                     </div>
                 </div>
         </div>
-            <?php endforeach ?>
-        </div>
-    <?php elseif (!empty($produk) && is_iterable($produk)) : ?>
-        <!-- Tampilkan produk jika hasil pencarian tidak ditemukan -->
-        <div class="row row-cols-2 row-cols-md-3 g-3 py-3">
-            <?php foreach ($produk as $product) : ?>
-                <div data-aos="fade-up">
-                    <div class="rkp card">
-                        <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>">
-                            <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
-                            <div class="rkp_body card-body">
-                        </a>
-                        <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
-                    </div>
-                    <div class="rkp_ket  mb-3">
-                        <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
+    <?php endforeach ?>
+</div>
 
-                        <div class="d-flex justify-content-end pe-1">
-                            <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>
-                        </div>
+<?php elseif (!empty($produk) && is_iterable($produk)) : ?>
+    <!-- Tampilkan produk jika hasil pencarian tidak ditemukan -->
+    <div class="row row-cols-2 row-cols-md-3 g-3 py-3">
+        <?php foreach ($produk as $product) : ?>
+            <div data-aos="fade-up">
+                <div class="rkp card">
+                    <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>">
+                        <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
+                        <div class="rkp_body card-body">
+                    </a>
+                    <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
+                </div>
+                <div class="rkp_ket  mb-3">
+                    <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
+
+                    <div class="d-flex justify-content-end pe-1">
+                        <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>
                     </div>
                 </div>
-        </div>
-    <?php endforeach ?>
+            </div>
+    </div>
+<?php endforeach ?>
 </div>
 <?php else : ?>
     <!-- Konten Khusus jika produk kosong (misalnya, setelah pemfilteran kategori) -->
-    <div class="container d-flex" style="justify-content: center;">
+    <div class="container d-flex pb-4" style="justify-content: center;">
         <h1>Produk Kosong</h1>
     </div>
 <?php endif; ?>
