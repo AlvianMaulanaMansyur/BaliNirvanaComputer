@@ -103,13 +103,13 @@ class M_produk extends CI_Model
                 $gambar_paths[] = ''; // Set a default value or handle accordingly
             }
         }
-
+        $harga_produk = intval($this->input->post('harga_produk'));
         $insert_data = array(
             'nama_produk' => $this->input->post('nama_produk'),
             'id_category' => $this->input->post('id_category'),
             'id_admin' => $this->input->post('id_admin'),
             'stok_produk' => $this->input->post('stok_produk'),
-            'harga_produk' => $this->input->post('harga_produk'),
+            'harga_produk' => $harga_produk,
             'deskripsi_produk' => $this->input->post('deskripsi_produk'),
             'create_time' => date('Y-m-d H:i:s'),
         );
