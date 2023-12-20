@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 20, 2023 at 10:29 AM
+-- Generation Time: Dec 20, 2023 at 02:47 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -59,7 +59,9 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`id_cart`, `id_customer`, `create_time`) VALUES
 (212, 1, '2023-12-20 07:56:41'),
-(213, 1, '2023-12-20 09:06:25');
+(213, 1, '2023-12-20 09:06:25'),
+(214, 1, '2023-12-20 12:53:12'),
+(215, 1, '2023-12-20 13:16:33');
 
 -- --------------------------------------------------------
 
@@ -148,7 +150,8 @@ INSERT INTO `foto_produk` (`id_foto`, `id_produk`, `url_foto`, `urutan_foto`) VA
 (37, 45, 'assets/foto/asus123.png', 1),
 (38, 46, 'assets/foto/bank1.jpg', 1),
 (39, 47, 'assets/foto/huawei25.jpg', 1),
-(40, 48, 'assets/foto/164.jpeg', 1);
+(40, 48, 'assets/foto/164.jpeg', 1),
+(41, 49, 'assets/foto/251.jpeg', 1);
 
 -- --------------------------------------------------------
 
@@ -264,23 +267,25 @@ CREATE TABLE `produk` (
   `harga_produk` int(11) NOT NULL,
   `diskon` float DEFAULT NULL,
   `deskripsi_produk` longtext DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT current_timestamp()
+  `create_time` timestamp NULL DEFAULT current_timestamp(),
+  `slug` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `produk`
 --
 
-INSERT INTO `produk` (`id_produk`, `id_category`, `id_admin`, `nama_produk`, `stok_produk`, `harga_produk`, `diskon`, `deskripsi_produk`, `create_time`) VALUES
-(40, 3, 1, '12334', 12, 98998896, NULL, 'uiuiui', '2023-12-20 00:56:32'),
-(41, 2, 1, 'Wii', 123, 123456792, NULL, '12345', '2023-12-20 02:05:59'),
-(42, 2, 1, 'Pepsodent', 12, 123456792, NULL, 'asdasf', '2023-12-20 02:07:49'),
-(43, 1, 1, 'aaa', 1, 123456792, NULL, '1', '2023-12-20 02:14:15'),
-(44, 2, 1, 'Pepsodent', 1234, 1000000000, NULL, '12324', '2023-12-20 02:23:53'),
-(45, 1, 1, 'Pepsodent', 12, 1000000000, NULL, '1212', '2023-12-20 02:24:32'),
-(46, 1, 1, 'Pepsodent', 1, 1, NULL, '1', '2023-12-20 02:25:13'),
-(47, 3, 1, 'Pepsodent', 123, 1000000000, NULL, '123', '2023-12-20 02:26:55'),
-(48, 3, 1, 'Pepsodent', 123, 999999999, NULL, '1234', '2023-12-20 02:28:13');
+INSERT INTO `produk` (`id_produk`, `id_category`, `id_admin`, `nama_produk`, `stok_produk`, `harga_produk`, `diskon`, `deskripsi_produk`, `create_time`, `slug`) VALUES
+(40, 3, 1, '12334', 12, 98998896, NULL, 'uiuiui', '2023-12-20 00:56:32', '12334'),
+(41, 2, 1, 'Wii', 123, 123456792, NULL, '12345', '2023-12-20 02:05:59', 'wii'),
+(42, 2, 1, 'Pepsodent', 12, 123456792, NULL, 'asdasf', '2023-12-20 02:07:49', 'pepsodent-3'),
+(43, 1, 1, 'aaa', 1, 123456792, NULL, '1', '2023-12-20 02:14:15', 'aaa'),
+(44, 2, 1, 'Pepsodent', 1234, 1000000000, NULL, '12324', '2023-12-20 02:23:53', 'pepsodent-4'),
+(45, 1, 1, 'Pepsodent', 12, 1000000000, NULL, '1212', '2023-12-20 02:24:32', 'pepsodent'),
+(46, 1, 1, 'Pepsodent', 1, 1, NULL, '1', '2023-12-20 02:25:13', 'pepsodent-1'),
+(47, 3, 1, 'Pepsodent', 123, 1000000000, NULL, '123', '2023-12-20 02:26:55', 'pepsodent-5'),
+(48, 3, 1, 'Pepsodent', 123, 999999999, NULL, '1234', '2023-12-20 02:28:13', 'pepsodent-6'),
+(49, 1, 1, 'Pepsodent', 12345, 2147483647, NULL, '1234', '2023-12-20 02:40:53', 'pepsodent-2');
 
 -- --------------------------------------------------------
 
@@ -300,8 +305,10 @@ CREATE TABLE `produk_has_cart` (
 --
 
 INSERT INTO `produk_has_cart` (`id_produk`, `id_cart`, `qty_produk`, `is_check`) VALUES
-(40, 212, 1, '1'),
-(41, 213, 1, '1');
+(40, 212, 1, '0'),
+(41, 213, 2, '0'),
+(43, 215, 1, '1'),
+(45, 214, 2, '1');
 
 --
 -- Indexes for dumped tables
@@ -405,7 +412,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=214;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -429,7 +436,7 @@ ALTER TABLE `detail_pesanan`
 -- AUTO_INCREMENT for table `foto_produk`
 --
 ALTER TABLE `foto_produk`
-  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_foto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `kecamatan`
@@ -459,7 +466,7 @@ ALTER TABLE `pesanan`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables
