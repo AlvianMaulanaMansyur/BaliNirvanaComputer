@@ -50,10 +50,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'LandingPage';
-$route['404_override'] = '';
+$route['404_override'] = 'landingPage/error_page';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['produk/(:num)'] = 'LandingPage/detailproduk/$1';
+$route['produk/(:any)'] = 'LandingPage/detailproduk/$1';
 $route['category/(:any)'] = 'LandingPage/detailCategory/$1';
 $route['cart'] = 'user/getcart';
 $route['checkout'] = 'user/checkout';
@@ -65,6 +65,7 @@ $route['shop'] = 'LandingPage/shop';
 $route['about'] = 'LandingPage/aboutUs';
 $route['contact'] = 'LandingPage/contactUs';
 $route['transaksi/(:num)'] = 'user/hlmtransaksi/$1';
+$route['error_page'] = 'landingPage/error_page';
 
 // $route['dashboard/update_monthly_report'] = 'dashboard/update_monthly_report';
 

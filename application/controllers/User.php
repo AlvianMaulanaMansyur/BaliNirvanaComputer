@@ -89,7 +89,7 @@ class User extends CI_Controller
 
         if (!empty($cart)) {
             $qty_produk = $cart[0]['qty_produk'];
-            $result = $this->M_produk->getDetailProduk($cart[0]['id_produk']);
+            $result = $this->M_produk->getDetailProdukByID($cart[0]['id_produk']);
             $stok_produk = $result['stok_produk'];
             if ($action == 'increase' && $qty_produk < $stok_produk) {
                 $qty_produk++;

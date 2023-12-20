@@ -17,7 +17,7 @@ $results = isset($results) ? $results : null;
                             <div class="card">
                                 <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top" alt="">
                                 <div class="card-body">
-                                    <h5 class="card-title text-center"><a href="<?php echo base_url('category/') . $key['id_category'] ?>"><?php echo $key['nama_category'] ?></a></h5>
+                                    <h5 class="card-title text-center"><a href="<?php echo base_url('category/') . strtolower($key['nama_category']) ?>"><?php echo $key['nama_category'] ?></a></h5>
                                 </div>
                             </div>
                         </a>
@@ -55,7 +55,7 @@ $results = isset($results) ? $results : null;
             <?php foreach ($results as $product) : ?>
                 <div data-aos="fade-up">
                     <div class="rkp card">
-                        <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>">
+                        <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
                             <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
                             <div class="rkp_body card-body">
                         </a>
@@ -65,7 +65,7 @@ $results = isset($results) ? $results : null;
                         <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
 
                         <div class="d-flex justify-content-end pe-1">
-                            <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>
+                            <a href="<?php echo base_url('produk/') . $product['slug'] ?>" class="btn btn-primary"> Check</a>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ $results = isset($results) ? $results : null;
             <?php foreach ($produk as $product) : ?>
                 <div data-aos="fade-up">
                     <div class="rkp card">
-                        <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>">
+                        <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
                             <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
                             <div class="rkp_body card-body">
                         </a>
@@ -88,7 +88,7 @@ $results = isset($results) ? $results : null;
                         <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
 
                     <div class="d-flex justify-content-end pe-1">
-                        <a href="<?php echo base_url('produk/') . $product['id_produk'] ?>" class="btn btn-primary"> Check</a>
+                        <a href="<?php echo base_url('produk/') . $product['slug'] ?>" class="btn btn-primary"> Check</a>
                     </div>
                 </div>
             </div>

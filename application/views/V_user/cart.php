@@ -22,7 +22,7 @@
                             <div class="d-flex" style="align-items: center;">
                                 <input class="me-3 checkbox-product" type="checkbox" data-id="<?php echo $key['id_cart']; ?>" data-initial-stock="<?php echo $key['stok_produk']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
 
-                                <a href="<?php echo base_url('produk/') . $key['id_produk'] ?>" class="nav-link">
+                                <a href="<?php echo base_url('produk/') . $key['slug'] ?>" class="nav-link">
                                     <img src="<?php echo base_url($key['url_foto']) ?>" class="border rounded me-3" style="width: 96px; height: 96px;" />
                                     <div class="">
                                         <?php echo $key['nama_produk'] ?>

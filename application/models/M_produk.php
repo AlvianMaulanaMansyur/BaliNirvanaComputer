@@ -10,6 +10,37 @@ class M_produk extends CI_Model
         parent::__construct();
     }
 
+    function generateSlug($text)
+    {
+        // Ubah ke huruf kecil dan hapus karakter khusus
+        $text = strtolower($text);
+        $text = preg_replace('/[^a-z0-9\s]/', '', $text);
+
+        // Ganti spasi dengan strip dan hapus karakter berulang
+        $text = preg_replace('/\s+/', '-', $text);
+
+        // Pastikan slug unik (misalnya, dengan menambahkan timestamp)
+        // $text = $text . '-' . time();
+        $newSlug = $text;
+
+        $isUnique = $this->isSlugUnique($text);
+        $counter = 1;
+        while (!$isUnique) {
+            $newSlug = $text . '-' . $counter;
+            $isUnique = $this->isSlugUnique($newSlug);
+            $counter++;
+        }
+        return $isUnique ? $newSlug : $text;
+    }
+
+    private function isSlugUnique($slug)
+    {
+        // Cek apakah slug sudah ada dalam database
+        $existingSlug = $this->db->get_where('produk', ['slug' => $slug])->row();
+
+        return empty($existingSlug);
+    }
+
     public function getProduk()
     {
         $this->db->select('produk.*, category.nama_category');
@@ -19,11 +50,6 @@ class M_produk extends CI_Model
         $produk = $result->result_array();
 
         return $produk;
-    }
-
-    public function splitDescription($description) {
-        $paragraphs = explode("\n", wordwrap($description, 200));
-        return $paragraphs;
     }
 
     public function getProdukForCustomer()
@@ -40,8 +66,31 @@ class M_produk extends CI_Model
     }
 
 
-    public function getDetailProduk($id)
+    public function getDetailProduk($slug)
     {
+        $this->db->select('produk.*, category.nama_category, foto_produk.url_foto, foto_produk.urutan_foto');
+        $this->db->from('produk');
+        $this->db->join('category', 'produk.id_category = category.id_category');
+        $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
+        $this->db->where('produk.stok_produk >', 0);
+        $this->db->where('produk.slug', $slug);
+        $result = $this->db->get()->result_array();
+
+        // Membuat array baru untuk menyimpan semua foto terkait produk
+        $fotos = [];
+        foreach ($result as $row) {
+            $fotos[] = [
+                'url_foto' => $row['url_foto'],
+                'urutan_foto' => $row['urutan_foto'],
+            ];
+        }
+
+        // Menambahkan array fotos ke hasil query
+        $result[0]['fotos'] = $fotos;
+
+        return $result[0];
+    }
+    public function getDetailProdukByID($id) {
         $this->db->select('produk.*, category.nama_category, foto_produk.url_foto, foto_produk.urutan_foto');
         $this->db->from('produk');
         $this->db->join('category', 'produk.id_category = category.id_category');
@@ -104,6 +153,8 @@ class M_produk extends CI_Model
             }
         }
         $harga_produk = intval($this->input->post('harga_produk'));
+        $slug = $this->generateSlug($this->input->post('nama_produk'));
+
         $insert_data = array(
             'nama_produk' => $this->input->post('nama_produk'),
             'id_category' => $this->input->post('id_category'),
@@ -112,6 +163,7 @@ class M_produk extends CI_Model
             'harga_produk' => $harga_produk,
             'deskripsi_produk' => $this->input->post('deskripsi_produk'),
             'create_time' => date('Y-m-d H:i:s'),
+            'slug' => $slug,
         );
 
         $result = $this->db->insert('produk', $insert_data);
@@ -161,13 +213,22 @@ class M_produk extends CI_Model
 
         $id_produk = $this->input->post('id_produk');
 
+        $harga_produk = intval($this->input->post('harga_produk'));
+
+        // Periksa apakah produk sudah memiliki slug
+        $existingSlug = $this->getExistingSlug($id_produk);
+
+        // Jika produk belum memiliki slug, hasilkan slug baru
+        $slug = empty($existingSlug) ? $this->generateSlug($this->input->post('nama_produk')) : $existingSlug;
+
         $update_data = array(
             'nama_produk' => $this->input->post('nama_produk'),
             'id_category' => $this->input->post('id_category'),
             'id_admin' => $this->input->post('id_admin'),
             'stok_produk' => $this->input->post('stok_produk'),
-            'harga_produk' => $this->input->post('harga_produk'),
+            'harga_produk' => $harga_produk,
             'deskripsi_produk' => $this->input->post('deskripsi_produk'),
+            'slug' => $slug,
         );
 
         $this->db->where('id_produk', $id_produk);
@@ -182,6 +243,22 @@ class M_produk extends CI_Model
 
         return $id_produk;
     }
+
+    // Fungsi untuk mendapatkan slug yang sudah ada
+    private function getExistingSlug($id_produk)
+    {
+        $this->db->select('slug');
+        $this->db->where('id_produk', $id_produk);
+        $query = $this->db->get('produk');
+
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->slug;
+        }
+
+        return '';
+    }
+
 
 
     private function saveFotoProduk($id_produk, $gambar_path, $urutan_foto)

@@ -1,8 +1,9 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class LandingPage extends CI_Controller {
+class LandingPage extends CI_Controller
+{
 
     public function __construct()
     {
@@ -45,13 +46,28 @@ class LandingPage extends CI_Controller {
     public function detailProduk($id)
     {
         $produk = $this->M_produk->getDetailProduk($id);
+    
+        // Cek apakah produk ditemukan
+        if (!$produk || empty($produk['fotos'])) {
+            // Jika tidak ditemukan atau array 'fotos' kosong, arahkan ke halaman error atau halaman lain
+            redirect('error_page'); // Sesuaikan 'error_page' dengan URL halaman yang sesuai
+            return;
+        }
+    
         $data = [
             'content' => 'V_produk/detailProduk',
             'title' => $produk['nama_produk'],
             'produk' => $produk,
         ];
+    
         $this->load->view('template', $data);
     }
+
+    public function error_page() {
+        $this->load->view('error_page');
+    }
+    
+
 
     public function detailCategory($nama)
     {
@@ -77,31 +93,32 @@ class LandingPage extends CI_Controller {
         $this->load->view('template', $data);
     }
 
-    public function contactUs() {
+    public function contactUs()
+    {
         $data = [
             'content' => 'customer/contact',
             'title' => 'Contact Us',
         ];
         $this->load->view('template', $data);
-        
     }
 
-    public function aboutUs() {
+    public function aboutUs()
+    {
         $data = [
             'content' => 'customer/about',
             'title' => 'Contact Us',
         ];
         $this->load->view('template', $data);
-        
     }
 
-    public function search(){
+    public function search()
+    {
         $keyword = $this->input->get('search');
 
         $data = array(
             'content' => 'customer/shop',
             'title' => 'Home',
-            'produk' => $this->M_produk->getProdukForCustomer(), 
+            'produk' => $this->M_produk->getProdukForCustomer(),
             'category' => $this->M_produk->getCategory(),
             'kosong' => false,
         );
@@ -114,9 +131,6 @@ class LandingPage extends CI_Controller {
         }
         $this->load->view('template', $data);
     }
-    
 }
 
 /* End of file LandingPage.php */
-
-?>

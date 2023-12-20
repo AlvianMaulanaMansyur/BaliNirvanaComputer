@@ -17,7 +17,7 @@
             </aside>
             <main class="col-lg-6">
 
-                <form action="<?php echo base_url('user/insertcart/') . $produk['id_produk'] ?>" method="post" onsubmit="return validateAndSubmit()">
+                <form action="<?php echo base_url('user/insertcart/') . $produk['slug'] ?>" method="post" onsubmit="return validateAndSubmit()">
                     <div class="ps-lg-3">
                         <h3 class="title text-dark">
                             <?php echo $produk['nama_produk'] ?>
@@ -181,7 +181,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '<?php echo base_url("user/insertcart/") . $produk["id_produk"]; ?>',
+                url: '<?php echo base_url("user/insertcart/") . $produk["slug"]; ?>',
                 data: $('form').serialize(),
                 dataType: 'json',
                 success: function(response) {
