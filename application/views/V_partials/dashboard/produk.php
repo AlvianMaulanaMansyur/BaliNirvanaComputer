@@ -31,7 +31,7 @@
                             <th>Action</th>
                         </tr>
                 </thead>
-                <tbody class="table-group-divider">
+                <tbody class="">
                     <?php if (isset($produk) && !empty($produk)) ?>
                     <?php $no = 1 ?>
                     <?php foreach ($produk as $product) : ?>
@@ -44,16 +44,17 @@
                             <td class="format"> <?php echo $product['harga_produk'] ?></td>
                             <td class="col-3">
                                 <div>
+                                    <pre>
                                 <?php
                                 $desc = $product['deskripsi_produk'];
                                 $trimmed_desc = substr($desc, 0, 200);
                                 echo '<p>' . $trimmed_desc . '</p>';
-                                ?>
+                                ?></pre>
                                 </div>
                                 <div class="d-flex" style="justify-content: end;">
-                                <button type="button" class="btn btn-primary show-all-button" data-bs-toggle="modal" data-bs-target="#deskripsiModal<?php echo $product['id_produk']; ?>" style="font-size: 13px; border-radius: 20px; padding: 6px 12px;">
-                                    Detail desc..
-                                </button>
+                                    <button type="button" class="btn btn-primary show-all-button" data-bs-toggle="modal" data-bs-target="#deskripsiModal<?php echo $product['id_produk']; ?>" style="font-size: 13px; border-radius: 20px; padding: 6px 12px;">
+                                        Detail desc..
+                                    </button>
                                 </div>
                             </td>
 
@@ -66,7 +67,9 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
+                                        <pre>
                                             <p><?php echo $product['deskripsi_produk']; ?></p>
+                                        </pre>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -121,6 +124,7 @@
                                                 <td><?php echo $result->nama_produk ?></td>
                                                 <td><?php echo $result->stok_produk ?></td>
                                                 <td><?php echo $result->harga_produk ?></td>
+
                                                 <td><?php echo $result->deskripsi_produk ?></td>
                                                 <td>
                                                     <?php
@@ -364,4 +368,3 @@
         });
     <?php endif; ?>
 </script>
-

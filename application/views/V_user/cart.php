@@ -268,6 +268,6 @@
 
     function updateCurrencyFormat(cartItem) {
         var newSubtotal = cartItem.harga_produk * cartItem.qty_produk;
-        $('#subtotal_' + cartItem.id_cart).text(newSubtotal);
+        $('#subtotal_' + cartItem.id_cart).text(formatCurrency(newSubtotal));
     }
 </script>

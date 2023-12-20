@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Tambahkan script SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/pre.css') ?>">
 
     <style>
     .disabled-link {

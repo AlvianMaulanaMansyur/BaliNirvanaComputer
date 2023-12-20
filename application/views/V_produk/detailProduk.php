@@ -52,14 +52,14 @@
                         <div>
                             <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button>
                             <!-- <button type="submit" class="btn btn-danger shadow-0"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button> -->
-
                         </div>
 
                         <h3 class="pt-3">Deskripsi</h3>
                         <p>
-                            <?php echo $produk['deskripsi_produk'] ?>
+<pre>
+<?php echo $produk['deskripsi_produk'] ?>
+</pre>
                         </p>
-
                         
                     </div>
 
