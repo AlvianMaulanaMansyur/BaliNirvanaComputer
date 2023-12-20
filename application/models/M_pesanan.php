@@ -77,6 +77,7 @@ class M_pesanan extends CI_Model
                     'telepon' => $row['telepon'],
                     'status_pesanan' => $row['status_pesanan'],
                     'alamat_pengiriman' => $row['alamat_pengiriman'],
+                    'detail_alamat_pengiriman' => $row['detail_alamat_pengiriman'],
                     'nama_produk' => $row['nama_produk'],
                     'harga_produk' => $row['harga_produk'],
                     'qty_produk' => $row['qty_produk'],
