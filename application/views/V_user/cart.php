@@ -111,7 +111,7 @@
             var initialStock = parseInt(checkbox.data('initial-stock'));
             var isChecked = checkbox.prop('checked');
             var currentQty = parseInt($('#qty_' + checkbox.data('id')).text());
-
+            
             if (currentQty > initialStock || initialStock == 0) {
                 checkbox.prop('checked', false);
                 checkbox.prop('disabled', true);
@@ -147,27 +147,30 @@
             data: {
                 action: action
             },
-            dataType: 'json',
+            dataType: 'JSON',
             success: function(response) {
                 if ('error' in response) {
                     // Handle error (jika diperlukan)
                 } else {
-                    $('#qty_' + id_cart).text(response.qty_produk);
 
-                    var newSubtotal = response.harga_produk * response.qty_produk;
+                    var qty_produk = parseInt(response.qty_produk);
+                    var stok_produk = parseInt(response.stok_produk);
+                    var harga_produk = parseInt(response.harga_produk);
+
+                    $('#qty_' + id_cart).text(qty_produk);
+
+                    var newSubtotal = harga_produk * qty_produk;
                     $('#subtotal_' + id_cart).text(formatCurrency(newSubtotal));
 
-                    // Update the button states with a callback for updateTotalCheckedPrice
-                    updateButtonStates(id_cart, response.qty_produk, response.stok_produk, function() {
+                    updateButtonStates(id_cart, qty_produk, stok_produk, function() {
                         updateTotalCheckedPrice();
                     });
 
-                    // Periksa dan atur kembali status checkbox
-                    // Periksa dan atur kembali status checkbox
                     var stockWarning = $('#qty_' + id_cart).closest('.row').find('.stock-warning');
                     var checkbox = $('.checkbox-product[data-id="' + id_cart + '"]');
 
-                    if (response.qty_produk > response.stok_produk) {
+                    if (qty_produk > stok_produk) {
+                        
                         stockWarning.show();
                         checkbox.prop('checked', false);
                         checkbox.prop('disabled', true);
@@ -184,12 +187,12 @@
         });
     }
 
-
     function updateButtonStates(id_cart, qty_produk, stok_produk, callback) {
         var decreaseButton = $('.quantity-control[data-id="' + id_cart + '"][data-action="decrease"]');
         var increaseButton = $('.quantity-control[data-id="' + id_cart + '"][data-action="increase"]');
 
         // Enable or disable the buttons based on the quantity and stock
+        
         if (qty_produk <= 1) {
             decreaseButton.attr('disabled', 'disabled');
         } else {
@@ -202,7 +205,6 @@
             increaseButton.removeAttr('disabled');
         }
 
-        // // Execute the callback if provided
         if (callback && typeof callback === 'function') {
             callback();
         }

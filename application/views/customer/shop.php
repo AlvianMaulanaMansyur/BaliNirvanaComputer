@@ -13,7 +13,7 @@ $results = isset($results) ? $results : null;
             <div class="row row-cols-1 row-cols-md-5 g-2 py-5 ">
                 <?php foreach ($category as $key) : ?>
                     <div class="col_kategori">
-                        <a href="<?php echo base_url('category/') . $key['id_category'] ?>">
+                        <a href="<?php echo base_url('category/') . strtolower($key['nama_category']) ?>">
                             <div class="card">
                                 <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top" alt="">
                                 <div class="card-body">

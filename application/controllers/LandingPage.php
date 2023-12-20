@@ -53,9 +53,9 @@ class LandingPage extends CI_Controller {
         $this->load->view('template', $data);
     }
 
-    public function detailCategory($id)
+    public function detailCategory($nama)
     {
-        $produk = $this->M_produk->getDetailCategory($id);
+        $produk = $this->M_produk->getDetailCategory($nama);
         $category = $this->M_produk->getCategory();
         if (!empty($produk)) {
             $data = [

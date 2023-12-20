@@ -113,7 +113,6 @@ class User extends CI_Controller
         }
     }
 
-
     public function deleteCart($id_cart)
     {
         $this->M_cart->deleteProdukHasCart($id_cart);

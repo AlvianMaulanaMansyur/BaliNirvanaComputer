@@ -234,7 +234,6 @@ class Dashboard extends CI_Controller
 
     public function monthlyReport()
     {
-        // Ambil nilai bulan dari query string
         $selectedMonth = $this->input->get('month');
         // var_dump($selectedMonth);die;
         // Cek apakah ada data GET
