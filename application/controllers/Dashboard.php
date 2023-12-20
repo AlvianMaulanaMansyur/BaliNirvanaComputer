@@ -322,6 +322,33 @@ class Dashboard extends CI_Controller
         $this->load->view('master', $data);
     }
 
+    public function search_pesanan()
+    {
+        $keyword = $this->input->post('keyword');
+
+        $data = [
+            'title' => 'Edit Data',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'js' => 'V_partials/dashboard/js',
+            'active_tab' => 'OrderList'
+        ];
+
+        if ($keyword) {
+            $data['orders'] = $this->M_pesanan->searchOrder($keyword);
+            $data['search_result'] = true; // Tandai bahwa hasil pencarian akan ditampilkan
+            $data['content'] =  'V_partials/dashboard/pesanan';
+        } else {
+            $data['orders'] = $this->M_pesanan->getAllOrderForAdmin();
+            $data['search_result'] = false; // Tandai bahwa seluruh pesanan akan ditampilkan
+            $data['content'] =  'V_partials/dashboard/pesanan';
+        }
+
+        $this->load->view('master', $data);
+    }
+
     public function logout()
     {
         $this->session->unset_userdata('admin_id');

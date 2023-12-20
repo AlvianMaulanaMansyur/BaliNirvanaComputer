@@ -127,7 +127,7 @@
                         <h4 style="font-weight: 800;">Total : <?php echo $total ?></h4>
                     </div>
                     <div class="d-flex" style="justify-content: end;">
-                        <button type="submit" class="btn btn-warning col-lg-2 col-sm-4">Order</button>
+                        <button type="submit" class="btn btn-warning col-lg-2 col-sm-4">Chekout!</button>
                     </div>
                 </div>
             </div>

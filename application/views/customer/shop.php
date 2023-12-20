@@ -22,7 +22,7 @@ $results = isset($results) ? $results : null;
                             </div>
                         </a>
                     </div>
-                <?php endforeach ?>
+                <?php endforeach ?> 
             </div>
         </div>
     </div>
@@ -68,6 +68,7 @@ $results = isset($results) ? $results : null;
         </div>
             <?php endforeach ?>
         </div>
+
     <?php elseif (!empty($produk) && is_iterable($produk)) : ?>
         <!-- Tampilkan produk jika hasil pencarian tidak ditemukan -->
         <div class="row row-cols-2 row-cols-md-3 g-3 py-3">
@@ -80,7 +81,7 @@ $results = isset($results) ? $results : null;
                         </a>
                         <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
                     </div>
-                    <div class="rkp_ket  mb-3">
+                    <div class="rkp_ket mb-3">
                         <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
 
                         <div class="d-flex justify-content-end pe-1">
