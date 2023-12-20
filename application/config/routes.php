@@ -58,6 +58,7 @@ $route['category/(:num)'] = 'LandingPage/detailCategory/$1';
 $route['cart'] = 'user/getcart';
 $route['checkout'] = 'user/checkout';
 $route['orders'] = 'user/orders';
+$route['search'] = 'LandingPage/search';
 
 $route['home'] = 'LandingPage/index';
 $route['shop'] = 'LandingPage/shop';

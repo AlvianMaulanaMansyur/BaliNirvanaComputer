@@ -7,11 +7,10 @@
         <li><a href="<?php echo site_url('contact') ?>">Contact Us</a></li>
     </ul>
 
-    <form action="<?php echo site_url('LandingPage/search'); ?>" method="get" class="form-search col-5 col-sm-4 col-lg-3">
+    <form action="<?php echo site_url('search'); ?>" method="get" class="form-search col-5 col-sm-4 col-lg-3">
         <input type="search" name="search" class="search-data" placeholder="Search" id="search-form">
         <button type="submit"><i class="fas fa-search"></i></button>
     </form>
-   
 
     <div class="icon">
         <div class="search-icon"><i class="fa-solid fa-search"></i></div>

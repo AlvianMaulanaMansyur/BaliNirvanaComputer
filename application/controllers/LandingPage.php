@@ -70,6 +70,7 @@ class LandingPage extends CI_Controller {
                 'content' => 'customer/shop',
                 'title' => $category[0]['nama_category'],
                 'category' => $category,
+                'produk' => '',
                 'kosong' => true,
             ];
         }

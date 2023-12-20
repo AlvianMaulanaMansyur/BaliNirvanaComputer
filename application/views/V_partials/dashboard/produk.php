@@ -42,8 +42,41 @@
                             <td><?php echo $product['nama_produk'] ?></td>
                             <td><?php echo $product['stok_produk'] ?></td>
                             <td class="format"> <?php echo $product['harga_produk'] ?></td>
-                            <td> <?php echo $product['deskripsi_produk'] ?></td>
-                            <!-- <td> <img src="<?php echo base_url($product['foto_produk']); ?>" alt="Gambar" style="width: 200px;height: auto;"></td> -->
+                            <td class="col-3">
+                                <div>
+                                <?php
+                                $desc = $product['deskripsi_produk'];
+                                $trimmed_desc = substr($desc, 0, 200);
+                                echo '<p>' . $trimmed_desc . '</p>';
+                                ?>
+                                </div>
+                                <div class="d-flex" style="justify-content: end;">
+                                <button type="button" class="btn btn-primary show-all-button" data-bs-toggle="modal" data-bs-target="#deskripsiModal<?php echo $product['id_produk']; ?>" style="font-size: 13px; border-radius: 20px; padding: 6px 12px;">
+                                    Detail desc..
+                                </button>
+                                </div>
+                            </td>
+
+                            <!-- Modal untuk menampilkan semua deskripsi -->
+                            <div class="modal fade" id="deskripsiModal<?php echo $product['id_produk']; ?>" tabindex="-1" aria-labelledby="deskripsiModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deskripsiModalLabel">Deskripsi Produk</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><?php echo $product['deskripsi_produk']; ?></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                             <td>
                                 <?php
                                 // Fetch and display photos for the current product
@@ -170,17 +203,17 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="Foto_produk1" class="form-label">Foto Produk 1</label>
+                        <label for="Foto_produk1" class="form-label">Foto Produk 1 (Wajib)</label>
                         <input type="file" name="foto_produk1" class="form-control" id="Foto_produk1">
                     </div>
 
                     <div class="mb-3">
-                        <label for="Foto_produk2" class="form-label">Foto Produk 2</label>
+                        <label for="Foto_produk2" class="form-label">Foto Produk 2 (Opsional)</label>
                         <input type="file" name="foto_produk2" class="form-control" id="Foto_produk2">
                     </div>
 
                     <div class="mb-3">
-                        <label for="Foto_produk3" class="form-label">Foto Produk 3</label>
+                        <label for="Foto_produk3" class="form-label">Foto Produk 3 (Opsional)</label>
                         <input type="file" name="foto_produk3" class="form-control" id="Foto_produk3">
                     </div>
 
@@ -254,17 +287,17 @@
 
 
                             <div class="mb-3">
-                                <label for="Foto_produk1" class="form-label">Foto Produk 1</label>
+                                <label for="Foto_produk1" class="form-label">Foto Produk 1 (Wajib)</label>
                                 <input type="file" name="foto_produk1" class="form-control" id="Foto_produk1">
                             </div>
 
                             <div class="mb-3">
-                                <label for="Foto_produk2" class="form-label">Foto Produk 2</label>
+                                <label for="Foto_produk2" class="form-label">Foto Produk 2 (Opsional)</label>
                                 <input type="file" name="foto_produk2" class="form-control" id="Foto_produk2">
                             </div>
 
                             <div class="mb-3">
-                                <label for="Foto_produk3" class="form-label">Foto Produk 3</label>
+                                <label for="Foto_produk3" class="form-label">Foto Produk 3 (Opsional)</label>
                                 <input type="file" name="foto_produk3" class="form-control" id="Foto_produk3">
                             </div>
                             <div class="modal-footer">
@@ -331,3 +364,4 @@
         });
     <?php endif; ?>
 </script>
+

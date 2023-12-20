@@ -36,10 +36,6 @@
                             Stok : <?php echo $produk['stok_produk'] ?>
                         </div>
 
-                        <p>
-                            <?php echo $produk['deskripsi_produk'] ?>
-                        </p>
-
                         <div class="col-md-4 col-6 mb-3">
                             <label class="mb-2 d-block">Jumlah</label>
                             <div class="input-group mb-3" style="width: 170px;">
@@ -58,6 +54,13 @@
                             <!-- <button type="submit" class="btn btn-danger shadow-0"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button> -->
 
                         </div>
+
+                        <h3 class="pt-3">Deskripsi</h3>
+                        <p>
+                            <?php echo $produk['deskripsi_produk'] ?>
+                        </p>
+
+                        
                     </div>
 
                 </form>
