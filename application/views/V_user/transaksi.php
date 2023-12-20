@@ -20,6 +20,9 @@
                 <div class="pe-5">
                     <?php echo $order[0]['alamat_pengiriman'] ?>
                 </div>
+                <div class="pe-5">
+                    <?php echo $order[0]['detail_alamat_pengiriman'] ?>
+                </div>
             </div>
             <div class="">
                 <?php

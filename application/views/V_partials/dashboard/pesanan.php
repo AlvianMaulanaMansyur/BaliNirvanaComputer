@@ -24,6 +24,7 @@
                         <h1>Pesanan <?php echo $invoice_number; ?></h1>
                         <h5>Nama : <?php echo $order['details'][0]['nama_customer']; ?></h5>
                         <h5>Alamat : <?php echo $order['details'][0]['alamat_pengiriman']; ?></h5>
+                        <h5>Detail Alamat : <?php echo $order['details'][0]['detail_alamat_pengiriman']; ?></h5>
                         <h5>No. Telepon : <?php echo $order['details'][0]['telepon']; ?></h5>
                         <table class="table table-secondary">   
                             <thead>

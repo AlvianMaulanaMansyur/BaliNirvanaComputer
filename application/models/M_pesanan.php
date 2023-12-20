@@ -22,7 +22,7 @@ class M_pesanan extends CI_Model
         $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
         $this->db->where('pesanan.id_pesanan', $id_pesanan);
 
-        $result = $this->db->get(); 
+        $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
             $cart = $result->result_array();
@@ -34,63 +34,63 @@ class M_pesanan extends CI_Model
     }
 
     public function searchOrder($keyword)
-{
-    $this->db->select('pesanan.*, detail_pesanan.*, produk.nama_produk, produk.harga_produk, customer.nama_customer, customer.email, customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, kota_kab.kota, kecamatan.kecamatan');
-    $this->db->from('pesanan');
-    $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
-    $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
-    $this->db->join('customer', 'pesanan.id_customer = customer.id_customer', 'left');
-    $this->db->join('personal_info', 'pesanan.id_customer = personal_info.id_customer', 'left');
-    $this->db->join('kecamatan', 'personal_info.id_kecamatan = kecamatan.id_kecamatan', 'left');
-    $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
+    {
+        $this->db->select('pesanan.*, detail_pesanan.*, produk.nama_produk, produk.harga_produk, customer.nama_customer, customer.email, customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, kota_kab.kota, kecamatan.kecamatan');
+        $this->db->from('pesanan');
+        $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
+        $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
+        $this->db->join('customer', 'pesanan.id_customer = customer.id_customer', 'left');
+        $this->db->join('personal_info', 'pesanan.id_customer = personal_info.id_customer', 'left');
+        $this->db->join('kecamatan', 'personal_info.id_kecamatan = kecamatan.id_kecamatan', 'left');
+        $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
 
-    // Menambahkan kondisi pencarian berdasarkan nama_customer atau alamat_pengiriman
-    if (!empty($keyword)) {
-        $this->db->group_start();
-        $this->db->like('customer.nama_customer', $keyword);
-        $this->db->or_like('produk.nama_produk', $keyword);
-        $this->db->or_like('personal_info.alamat', $keyword);
-        $this->db->group_end();
-    }
-
-    $this->db->order_by('pesanan.status_pesanan', 'asc');
-    $this->db->order_by('pesanan.create_time', 'asc');
-
-    $result = $this->db->get();
-
-    if ($result->num_rows() > 0) {
-        $orders = array();
-
-        foreach ($result->result_array() as $row) {
-            $nomor_pesanan = $row['id_pesanan'];
-
-            // Jika invoice belum ada dalam array, tambahkan
-            if (!isset($orders[$nomor_pesanan])) {
-                $orders[$nomor_pesanan] = array(
-                    'details' => array(),
-                    'total' => 0
-                );
-            }
-
-            $orders[$nomor_pesanan]['details'][] = array(
-                'nama_customer' => $row['nama_customer'],
-                'telepon' => $row['telepon'],
-                'status_pesanan' => $row['status_pesanan'],
-                'alamat_pengiriman' => $row['alamat_pengiriman'],
-                'nama_produk' => $row['nama_produk'],
-                'harga_produk' => $row['harga_produk'],
-                'qty_produk' => $row['qty_produk'],
-                'subtotal' => $row['harga_produk'] * $row['qty_produk']
-            );
-            $orders[$nomor_pesanan]['id_pesanan'] = $nomor_pesanan;
-            $orders[$nomor_pesanan]['status'] = $row['status_pesanan'];
-            $orders[$nomor_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
+        // Menambahkan kondisi pencarian berdasarkan nama_customer atau alamat_pengiriman
+        if (!empty($keyword)) {
+            $this->db->group_start();
+            $this->db->like('customer.nama_customer', $keyword);
+            $this->db->or_like('produk.nama_produk', $keyword);
+            $this->db->or_like('personal_info.alamat', $keyword);
+            $this->db->group_end();
         }
-        return $orders;
-    } else {
-        return array();
+
+        $this->db->order_by('pesanan.status_pesanan', 'asc');
+        $this->db->order_by('pesanan.create_time', 'asc');
+
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            $orders = array();
+
+            foreach ($result->result_array() as $row) {
+                $nomor_pesanan = $row['id_pesanan'];
+
+                // Jika invoice belum ada dalam array, tambahkan
+                if (!isset($orders[$nomor_pesanan])) {
+                    $orders[$nomor_pesanan] = array(
+                        'details' => array(),
+                        'total' => 0
+                    );
+                }
+
+                $orders[$nomor_pesanan]['details'][] = array(
+                    'nama_customer' => $row['nama_customer'],
+                    'telepon' => $row['telepon'],
+                    'status_pesanan' => $row['status_pesanan'],
+                    'alamat_pengiriman' => $row['alamat_pengiriman'],
+                    'nama_produk' => $row['nama_produk'],
+                    'harga_produk' => $row['harga_produk'],
+                    'qty_produk' => $row['qty_produk'],
+                    'subtotal' => $row['harga_produk'] * $row['qty_produk']
+                );
+                $orders[$nomor_pesanan]['id_pesanan'] = $nomor_pesanan;
+                $orders[$nomor_pesanan]['status'] = $row['status_pesanan'];
+                $orders[$nomor_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
+            }
+            return $orders;
+        } else {
+            return array();
+        }
     }
-}
 
 
 
@@ -107,8 +107,6 @@ class M_pesanan extends CI_Model
         $this->db->where('pesanan.id_customer', $id_customer);
         $this->db->order_by('pesanan.status_pesanan', 'asc');
         $this->db->order_by('pesanan.create_time', 'asc');
-
-
 
         $result = $this->db->get();
 
@@ -178,6 +176,7 @@ class M_pesanan extends CI_Model
                     'telepon' => $row['telepon'],
                     'status_pesanan' => $row['status_pesanan'],
                     'alamat_pengiriman' => $row['alamat_pengiriman'],
+                    'detail_alamat_pengiriman' => $row['detail_alamat_pengiriman'],
                     'nama_produk' => $row['nama_produk'],
                     'harga_produk' => $row['harga_produk'],
                     'qty_produk' => $row['qty_produk'],
@@ -237,36 +236,6 @@ class M_pesanan extends CI_Model
     {
         $this->db->insert('detail_pesanan', $order_data);
     }
-
-    // private function generateInvoiceNumber()
-    // {
-    //     $lastInvoiceNumber = $this->getLastInvoiceNumber();
-
-    //     // Mendapatkan angka terakhir dari nomor invoice
-    //     $lastInvoiceNumber = intval(str_replace('i', '', $lastInvoiceNumber));
-
-    //     // Menambahkan 1 ke angka terakhir
-    //     $nextInvoiceNumber = $lastInvoiceNumber + 1;
-
-    //     // Membentuk kembali nomor invoice
-    //     $invoiceNumber = 'i' . $nextInvoiceNumber;
-
-    //     return $invoiceNumber;
-    // }
-
-    // private function getLastInvoiceNumber()
-    // {
-    //     $result = $this->db->select('no_invoice')
-    //         ->from('pesanan')
-    //         ->order_by('no_invoice', 'DESC')
-    //         ->limit(1)
-    //         ->get()
-    //         ->row();
-
-    //     return ($result) ? $result->no_invoice : null;
-    // }
-
-    // M_pesanan.php
 
     public function getMonthlyOrders($monthYear)
     {
