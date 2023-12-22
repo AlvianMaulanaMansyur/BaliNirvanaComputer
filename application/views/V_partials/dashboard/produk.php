@@ -32,7 +32,6 @@
                         </tr>
                 </thead>
                 <tbody class="">
-                    <?php if (isset($produk) && !empty($produk)) ?>
                     <?php $no = 1 ?>
                     <?php foreach ($produk as $product) : ?>
                         <tr>
@@ -136,7 +135,8 @@
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>">Edit</button>
+                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>"><i class="fa-regular fa-pen-to-square"></i></button>
+                                                    <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>">Edit</button> -->
 
                                                     <!-- Display alert before deleting -->
                                                     <button class="btn btn-danger delete-product-item" data-id="<?php echo $result->id_produk; ?>" data-name="<?php echo $result->nama_produk; ?>">
@@ -283,6 +283,91 @@
 
                             <!-- Edit form in your view -->
                             <?php $existing_photos = $this->M_produk->getProductPhotos($key['id_produk']);
+                            foreach ($existing_photos as $photo) {
+                                echo '<img src="' . base_url($photo['url_foto']) . '" alt="Gambar" style="width: 100px;height: auto;">';
+                                // Add a hidden input for each existing photo URL
+                                echo '<input type="hidden" name="gambar_lama[]" value="' . $photo['url_foto'] . '">';
+                            } ?>
+
+
+                            <div class="mb-3">
+                                <label for="Foto_produk1" class="form-label">Foto Produk 1 (Wajib)</label>
+                                <input type="file" name="foto_produk1" class="form-control" id="Foto_produk1">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Foto_produk2" class="form-label">Foto Produk 2 (Opsional)</label>
+                                <input type="file" name="foto_produk2" class="form-control" id="Foto_produk2">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Foto_produk3" class="form-label">Foto Produk 3 (Opsional)</label>
+                                <input type="file" name="foto_produk3" class="form-control" id="Foto_produk3">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    <?php endforeach; ?>
+
+<?php elseif (isset($results) && !empty($results)) : ?>
+    <!-- <?php var_dump($results); ?> -->
+    <?php foreach ($results as $key) : ?>
+        <!-- Modal untuk Edit -->
+        <div class="modal fade" id="editModal<?php echo $key->id_produk ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit Produk</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form untuk Edit -->
+                        <form action="<?php echo base_url('dashboard/editProduk'); ?>" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id_produk" value="<?php echo $key->id_produk; ?>">
+                            <div class="mb-3">
+                                <label for="Id_produk" class="form-label">ID Produk</label>
+                                <input readonly type="text" name="id_produk" class="form-control" id="Id_produk" value="<?php echo $key->id_produk ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama_produk" class="form-label">Nama Produk</label>
+                                <input type="text" class="form-control" id="nama_produk" name="nama_produk" value="<?php echo $key->nama_produk; ?>" required>
+                            </div>
+
+                            <input hidden type="text" name="id_admin" class="form-control" id="Id_admin" value="<?php echo $key->id_admin ?>">
+
+                            <div class="mb-3">
+                                <label for="Category" class="form-label">Category</label>
+                                <select name="id_category" id="Category" class="form-select">
+                                    <?php foreach ($category as $cat) { ?>
+                                        <?php $selected = ($key->id_category == $cat['id_category']) ? "selected" : ""; ?>
+                                        <option value="<?php echo $cat['id_category'] ?>" <?php echo $selected ?>><?php echo $cat['nama_category'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Stok_produk" class="form-label">Stok Produk</label>
+                                <input type="number" name="stok_produk" class="form-control" id="Stok_produk" value="<?php echo $key->stok_produk ?>">
+                            </div>
+
+                            <label for="Harga" class="form-label">Harga Produk</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Rp</span>
+                                <input type="number" name="harga_produk" class="form-control" id="Harga" value="<?php echo $key->harga_produk ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Deskripsi Produk</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="deskripsi_produk"><?php echo $key->deskripsi_produk ?></textarea>
+                            </div>
+
+                            <!-- Edit form in your view -->
+                            <?php $existing_photos = $this->M_produk->getProductPhotos($key->id_produk);
                             foreach ($existing_photos as $photo) {
                                 echo '<img src="' . base_url($photo['url_foto']) . '" alt="Gambar" style="width: 100px;height: auto;">';
                                 // Add a hidden input for each existing photo URL

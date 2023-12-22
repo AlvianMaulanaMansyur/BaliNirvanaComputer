@@ -115,25 +115,26 @@ class M_pesanan extends CI_Model
             $orders = array();
 
             foreach ($result->result_array() as $row) {
-                $nomor_pesanan = $row['id_pesanan'];
+                $id_pesanan = $row['id_pesanan'];
 
                 // Jika invoice belum ada dalam array, tambahkan
-                if (!isset($orders[$nomor_pesanan])) {
-                    $orders[$nomor_pesanan] = array(
+                if (!isset($orders[$id_pesanan])) {
+                    $orders[$id_pesanan] = array(
                         'details' => array(),
                         'total' => 0
                     );
                 }
 
-                $orders[$nomor_pesanan]['details'][] = array(
+                $orders[$id_pesanan]['details'][] = array(
                     'nama_produk' => $row['nama_produk'],
                     'harga_produk' => $row['harga_produk'],
                     'qty_produk' => $row['qty_produk'],
                     'subtotal' => $row['harga_produk'] * $row['qty_produk'],
                 );
 
-                $orders[$nomor_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
-                $orders[$nomor_pesanan]['status_pesanan'] = $row['status_pesanan'];
+                $orders[$id_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
+                $orders[$id_pesanan]['status_pesanan'] = $row['status_pesanan'];
+                $orders[$id_pesanan]['status_pesanan'] = $row['create_time'];
             }
 
             return $orders;

@@ -64,7 +64,9 @@ $route['home'] = 'LandingPage/index';
 $route['shop'] = 'LandingPage/shop';
 $route['about'] = 'LandingPage/aboutUs';
 $route['contact'] = 'LandingPage/contactUs';
-$route['transaksi/(:num)'] = 'user/hlmtransaksi/$1';
+$route['buatpesanan'] = 'user/order';
+$route['pesanan'] = 'user/hlmorder';
+$route['orderid/(:num)'] = 'user/setOrderIdToSession/$1';
 $route['error_page'] = 'landingPage/error_page';
 
 // $route['dashboard/update_monthly_report'] = 'dashboard/update_monthly_report';

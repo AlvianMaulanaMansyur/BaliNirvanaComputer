@@ -215,6 +215,7 @@ class Dashboard extends CI_Controller
             // Kirim hasil pencarian ke tampilan
             $data['content'] = 'V_partials/dashboard/produk';
             $data['results'] = $results;
+            $data['category'] = $this->M_produk->getCategory();
         } else {
             // Jika pencarian kosong, ambil semua data pelanggan
             $data['content'] = 'V_partials/dashboard/produk';

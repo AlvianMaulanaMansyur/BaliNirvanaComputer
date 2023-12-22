@@ -10,7 +10,7 @@
                 <h3>Personal Info</h3>
             </div>
 
-            <form action="<?php echo base_url('user/transaksi/') ?>" method="post" enctype="multipart/form-data" class="">
+            <form action="<?php echo base_url('buatpesanan') ?>" method="post" enctype="multipart/form-data" class="">
 
                 <div class="row d-flex px-3 pt-2">
 
@@ -127,7 +127,7 @@
                         <h4 style="font-weight: 800;">Total : <?php echo $total ?></h4>
                     </div>
                     <div class="d-flex" style="justify-content: end;">
-                        <button type="submit" class="btn btn-warning col-lg-2 col-sm-4">Chekout!</button>
+                        <button type="submit" class="btn btn-warning col-lg-4 col-sm-4">Buat Pesanan</button>
                     </div>
                 </div>
             </div>

@@ -178,25 +178,36 @@ class User extends CI_Controller
     }
 
 
-    public function transaksi()
+    public function Order()
     {
         $id_pesanan = $this->M_pesanan->createOrder();
-        redirect('transaksi/' . $id_pesanan);
+        redirect('orderid/' . $id_pesanan);
     }
 
-    public function hlmTransaksi($id_pesanan)
+    public function setOrderIdToSession($id_pesanan) {
+        $this->session->set_userdata('order_id', $id_pesanan);
+        redirect('pesanan');
+    }
+
+    public function hlmOrder()
     {
+        $id_pesanan = $this->session->userdata('order_id');
+        // var_dump($id_pesanan);die;
+        $customer_id_login = $this->session->userdata('customer_id');
+    
         $order = $this->M_pesanan->getOrder($id_pesanan);
-        if (!empty($order)) {
+    
+        if (!empty($order) && $order[0]['id_customer'] == $customer_id_login) {
+            // Jika sesuai, tampilkan halaman transaksi
             $data = [
-                'title' => 'Transaksi',
-                'content' => 'V_user/transaksi',
+                'title' => 'Pesanan',
+                'content' => 'V_user/pesanan',
                 'order' => $order,
             ];
-
+    
             $this->load->view('template', $data);
         } else {
-            redirect('user');
+            redirect('error_page'); // Gantilah 'error_page' dengan alamat yang sesuai
         }
     }
 
@@ -205,8 +216,8 @@ class User extends CI_Controller
         $id = $this->session->userdata('customer_id');
         $order = $this->M_pesanan->getAllOrder($id);
         $data = [
-            'title' => 'Transaksi',
-            'content' => 'V_user/pesanan',
+            'title' => 'Daftar Pesanan',
+            'content' => 'V_user/daftar_pesanan',
             'orders' => $order,
         ];
 
