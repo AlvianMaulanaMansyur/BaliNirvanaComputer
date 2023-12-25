@@ -6,9 +6,9 @@
       <div class="carousel-item active">
         <img src="<?php echo base_url('assets/foto/gambarCarosel.jpeg') ?>" class="d-block w-100 rounded" alt="..." style="height: auto;">
       </div>
-      <div class="carousel-item">
+      <!-- <div class="carousel-item">
         <img src="<?php echo base_url('assets/foto/huawei1.jpg') ?>" class="d-block w-100 rounded" alt="...">
-      </div>
+      </div> -->
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -79,52 +79,35 @@
     </div>
   </div>
 
-  <div class=" row row-cols-2 row-cols-md-3 g-3 py-3">
-    <?php $i = 0;
-    $cards_per_page = 9; 
-    $jumlah_card = 0 ?>
+  <div id="produk" class=" row row-cols-2 row-cols-md-3 g-3 py-3">
 
     <?php foreach ($produk as $product) : ?>
-      <?php $i++;
-      $jumlah_card++;
-      ?>
-      <?php if ($i <= $cards_per_page) { ?>
-        <div data-aos="fade-up">
 
-          <div class="rkp card">
-            <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
+      <div data-aos="fade-up">
+
+        <div class="rkp card">
+          <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
             <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
-              <div class="rkp_body card-body">
-              </a>
-                <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
-              </div>
-              <div class="rkp_ket  mb-3">
-                <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
-
-                <div class="d-flex justify-content-end pe-1">
-                  <a href="<?php echo base_url('produk/') . $product['slug'] ?>" class="btn btn-primary"> Check</a>
-                </div>
-              </div>
-         
-          </div>
-
+            <div class="rkp_body card-body">
+          </a>
+          <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
         </div>
-      <?php } else {
-        if ($i % $cards_per_page === 0) {
-          echo '</div>'; // Menutup div row-cols-2 row-cols-md-3 g-3 py-3
-          echo '<div class="d-flex justify-content-between mt-3">';
-          if ($i > $cards_per_page) {
-            echo '<a href="?page=' . ($i / $cards_per_page) . '" class="btn btn-primary mx-1">&lt; Back</a>';
-          }
-          if ($i < $jumlah_card - $cards_per_page) {
-            echo '<a href="?page=' . ($i / $cards_per_page + 2) . '" class="btn btn-primary ml-auto mx-1">Next &gt;</a>';
-          }
-          echo '</div>';
-          echo '<div class="row row-cols-2 row-cols-md-3 g-3 py-3">';
-        }
-      }
-      ?>
-    <?php endforeach ?>
+        <div class="rkp_ket  mb-3">
+          <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
 
+          <div class="d-flex justify-content-end pe-1">
+            <a href="<?php echo base_url('produk/') . $product['slug'] ?>" class="btn btn-primary"> Check</a>
+          </div>
+        </div>
+
+      </div>
   </div>
+<?php endforeach ?>
+<div class="d-flex justify-content-center mt-3">
+
+</div>
+
+</div>
+</div>
+
 </div>

@@ -34,7 +34,7 @@ class User extends CI_Controller
             echo json_encode(['success' => true]);
         } else {
             header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'error_message' => 'Gagal menambahkan produk ke keranjang.']);
+            echo json_encode(['success' => false, 'error_message' => 'Gagal menambahkan produk ke keranjang. Jumlah produk di keranjang melebih stok']);
         }
     }
 
@@ -80,31 +80,31 @@ class User extends CI_Controller
         echo json_encode(['total_checked_price' => $total_checked_price]);
     }
 
-    // Controller
     public function updateQuantity($id_cart)
     {
-        $action = $this->input->post('action');
-
+        $newQuantity = intval($this->input->post('newQuantity'));
         $cart = $this->M_cart->getCartByID($id_cart);
-
+        
         if (!empty($cart)) {
             $qty_produk = $cart[0]['qty_produk'];
             $result = $this->M_produk->getDetailProdukByID($cart[0]['id_produk']);
             $stok_produk = $result['stok_produk'];
-            if ($action == 'increase' && $qty_produk < $stok_produk) {
-                $qty_produk++;
-            } else if ($action == 'decrease' && $qty_produk > 1) {
-                $qty_produk--;
-            } else {
+
+            if (is_numeric($newQuantity) && $newQuantity > 0 && $newQuantity <= $stok_produk) {
+                $qty_produk = $newQuantity;
+            } else if ($newQuantity > $stok_produk) {
+                $qty_produk = $stok_produk;
+            }
+            else {
                 header('Content-Type: application/json');
-                echo json_encode(['error' => ($action == 'increase' ? 'Qty melebihi stok' : 'Min qty adalah 1')]);
+                echo json_encode(['error' => 'Qty tidak valid']);
                 return;
             }
-
+        
             $this->M_cart->updateQuantity($id_cart, $qty_produk);
-
+        
             $updatedCart = $this->M_cart->getCartByID($id_cart);
-
+        
             header('Content-Type: application/json');
             echo json_encode($updatedCart[0]);
         } else {
@@ -112,6 +112,8 @@ class User extends CI_Controller
             echo json_encode(['error' => 'Cart not found']);
         }
     }
+    
+    
 
     public function deleteCart($id_cart)
     {
@@ -157,11 +159,15 @@ class User extends CI_Controller
                     redirect('user/getcart');
                 }
             }
-
+// var_dump($personal_info);die;
             // Lanjutkan ke proses checkout jika validasi berhasil
             if (!empty($personal_info)) {
+                $data['existingKecamatanId'] = $personal_info['id_kecamatan'];
+                $data['existingKotaId'] = $personal_info['id_kota_kab'];
                 $content = 'V_user/checkout1';
+
             } else {
+                $data['existing_personal_info'] = '';
                 $content = 'V_user/checkout';
             }
 
@@ -222,6 +228,10 @@ class User extends CI_Controller
         ];
 
         $this->load->view('template', $data);
+    }
+
+    public function Info() {
+        $this->load->view('customer/info');
     }
 }
 

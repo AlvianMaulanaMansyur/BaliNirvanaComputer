@@ -134,7 +134,7 @@ class M_pesanan extends CI_Model
 
                 $orders[$id_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
                 $orders[$id_pesanan]['status_pesanan'] = $row['status_pesanan'];
-                $orders[$id_pesanan]['status_pesanan'] = $row['create_time'];
+                $orders[$id_pesanan]['create_time'] = $row['create_time'];
             }
 
             return $orders;
@@ -142,6 +142,27 @@ class M_pesanan extends CI_Model
             return array();
         }
     }
+    // Di model M_pesanan, tambahkan fungsi berikut:
+
+    // Di model M_pesanan, update fungsi getOrderCount menjadi seperti berikut:
+
+    public function getOrderCount($id_customer)
+    {
+        $this->db->select('COUNT(DISTINCT id_pesanan) as order_count');
+        $this->db->from('pesanan');
+        $this->db->where('id_customer', $id_customer);
+
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            $row = $result->row_array();
+            return $row['order_count'];
+        } else {
+            return 0;
+        }
+    }
+
+
 
     public function getAllOrderForAdmin()
     {
@@ -207,7 +228,7 @@ class M_pesanan extends CI_Model
         // var_dump($personal_info);die;
         $order_data = array(
             'id_customer' => $customer_id,
-            'alamat_pengiriman' => $alamat . ', ' . $personal_info[0]['kecamatan'] . ', ' . $personal_info[0]['kota'] . ', ' . $personal_info[0]['kodepos'],
+            'alamat_pengiriman' => $alamat . ', ' . $personal_info['kecamatan'] . ', ' . $personal_info['kota'] . ', ' . $personal_info['kodepos'],
             'detail_alamat_pengiriman' => $detail_alamat,
             'status_pesanan' => '0',
         );

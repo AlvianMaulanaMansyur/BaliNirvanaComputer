@@ -29,6 +29,40 @@ class LandingPage extends CI_Controller
         $this->load->view('template', $data);
     }
 
+    // public function index($page = 1)
+    // {
+    //     $this->load->library('pagination');
+
+    //     // Set the number of products per page
+    //     // $config['total_rows'] = $this->M_produk->getTotalProductsForCustomer();
+    //     // $config['per_page'] = 9;
+
+    //     $config['total_rows'] = 200;
+    //     $config['per_page'] = 20;
+
+
+    //     // Get total number of products from your model
+    //     // var_dump($config['total_rows']);die;
+    //     $config['base_url'] = base_url('home/');
+
+    //     // Initialize pagination config
+    //     $this->pagination->initialize($config);
+    //     echo $this->pagination->create_links();
+    //     die;
+
+    //     // Get products for the current page
+    //     $data['produk'] = $this->M_produk->getProductsPerPageForCustomer($config['per_page'], $page);
+    //     $data['category'] = $this->M_produk->getCategory();
+
+    //     // Pass pagination links to the view
+    //     // print_r($data['pagination_links']);die;
+    //     // Load your view
+    //     $data['content'] = 'V_user/home';
+    //     $data['title'] = 'Home';
+    //     $this->load->view('template', $data);
+    // }
+
+
     public function shop()
     {
         $produk = $this->M_produk->getProdukForCustomer();
@@ -46,27 +80,28 @@ class LandingPage extends CI_Controller
     public function detailProduk($id)
     {
         $produk = $this->M_produk->getDetailProduk($id);
-    
+
         // Cek apakah produk ditemukan
         if (!$produk || empty($produk['fotos'])) {
             // Jika tidak ditemukan atau array 'fotos' kosong, arahkan ke halaman error atau halaman lain
             redirect('error_page'); // Sesuaikan 'error_page' dengan URL halaman yang sesuai
             return;
         }
-    
+
         $data = [
             'content' => 'V_produk/detailProduk',
             'title' => $produk['nama_produk'],
             'produk' => $produk,
         ];
-    
+
         $this->load->view('template', $data);
     }
 
-    public function error_page() {
+    public function error_page()
+    {
         $this->load->view('error_page');
     }
-    
+
 
 
     public function detailCategory($nama)
@@ -130,6 +165,21 @@ class LandingPage extends CI_Controller
             $data['results'] = $this->M_produk->searchProduk($keyword);
         }
         $this->load->view('template', $data);
+    }
+
+    // Contoh fungsi di controller untuk mengembalikan jumlah produk dalam keranjang dan pesanan
+    public function getCartAndOrderCount()
+    {
+        $id_customer = $this->session->userdata('customer_id');
+        $cartCount = $this->M_cart->getCartCount($id_customer);
+        $orderCount = $this->M_pesanan->getOrderCount($id_customer);
+
+        $response = [
+            'cartCount' => ($cartCount != null) ? $cartCount : 0,
+            'orderCount' => ($orderCount != null) ? $orderCount : 0,
+        ];
+
+        echo json_encode($response);
     }
 }
 

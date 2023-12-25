@@ -52,6 +52,19 @@ class M_produk extends CI_Model
         return $produk;
     }
 
+    public function getProdukById($id_produk)
+    {
+        $this->db->select('produk.*, category.nama_category');
+        $this->db->from('produk');
+        $this->db->join('category', 'produk.id_category = category.id_category');
+        $this->db->where('produk.id_produk', $id_produk);
+        
+        $result = $this->db->get();
+        $produk = $result->result_array();
+
+        return $produk[0];
+    }
+
     public function getProdukForCustomer()
     {
         $this->db->select('produk.*, category.nama_category, foto_produk.url_foto, foto_produk.urutan_foto');
@@ -60,6 +73,32 @@ class M_produk extends CI_Model
         $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
         $this->db->where('produk.stok_produk >', 0);
         $this->db->where('foto_produk.urutan_foto', 1);
+        $result = $this->db->get();
+        $produk = $result->result_array();
+        return $produk;
+    }
+
+    public function getTotalProductsForCustomer()
+    {
+        // Query untuk menghitung total produk
+        $this->db->select('COUNT(*) as total');
+        $query = $this->db->get('produk');
+        $result = $query->row_array();
+    
+        return $result['total'];
+    }
+    
+
+    public function getProductsPerPageForCustomer($limit, $offset)
+    {
+        // Get products for the current page
+        $this->db->select('produk.*, category.nama_category, foto_produk.url_foto, foto_produk.urutan_foto');
+        $this->db->from('produk');
+        $this->db->join('category', 'produk.id_category = category.id_category');
+        $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
+        $this->db->where('produk.stok_produk >', 0);
+        $this->db->where('foto_produk.urutan_foto', 1);
+        $this->db->limit($limit, $offset);
         $result = $this->db->get();
         $produk = $result->result_array();
         return $produk;
@@ -90,7 +129,8 @@ class M_produk extends CI_Model
 
         return $result[0];
     }
-    public function getDetailProdukByID($id) {
+    public function getDetailProdukByID($id)
+    {
         $this->db->select('produk.*, category.nama_category, foto_produk.url_foto, foto_produk.urutan_foto');
         $this->db->from('produk');
         $this->db->join('category', 'produk.id_category = category.id_category');
@@ -185,6 +225,9 @@ class M_produk extends CI_Model
 
     public function editProduk()
     {
+
+        $produk = $this->getProdukById($this->input->post('id_produk'));
+
         $config['upload_path'] = './assets/foto/';
         $config['allowed_types'] = 'jpg|png|jpeg';
 
@@ -220,6 +263,10 @@ class M_produk extends CI_Model
 
         // Jika produk belum memiliki slug, hasilkan slug baru
         $slug = empty($existingSlug) ? $this->generateSlug($this->input->post('nama_produk')) : $existingSlug;
+       
+        if($produk['nama_produk'] != $this->input->post('nama_produk')) {
+            $slug = $this->generateSlug($this->input->post('nama_produk'));
+        }
 
         $update_data = array(
             'nama_produk' => $this->input->post('nama_produk'),

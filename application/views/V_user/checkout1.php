@@ -2,7 +2,7 @@
 
 <section class="bg-light py-4">
     <div class="d-flex row" style="justify-content: center;">
-        <h1 class="col-10 pt-4">Checkout</h1>
+        <h1 class="col-10 pt-2" style="margin-left: 300px;">Checkout</h1>
         <div class="pt-3 pb-2 px-3 col-lg-4 col-sm-10">
 
             <div class="card">
@@ -96,41 +96,44 @@
             <div class="card">
 
                 <div class="card-body">
-                    <h5 class="card-title pt-">RINGKASAN</h5>
+                    <h5 class="card-title">RINGKASAN</h5>
 
                     <div class="">
                         <?php $total = 0; ?>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col-4">Nama Produk</th>
-                                    <th scope="col">Harga</th>
-                                    <th scope="col">Qty</th>
-                                    <th scope="col">Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
+                        <?php foreach ($cart as $key) { ?>
 
-                                <?php foreach ($cart as $key) { ?>
 
-                                    <tr>
-                                        <td class="col-5"><?php echo $key['nama_produk'] ?></th>
-                                        <td class="format"><?php echo $key['harga_produk'] ?></td>
+                            <div class="row d-flex pt-3">
+                                <div class="d-flex col-lg-7 col-md-9 col-sm-12">
+                                    <div>
+                                        <img src="<?php echo base_url($key['url_foto']) ?>" class="border rounded me-3" style="width: 100px; height: 100px;" />
+                                    </div>
+                                    <div>
+                                        <p class="mb-0"><?php echo $key['nama_produk'] ?></p>
+                                        <small class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $key['qty_produk'] ?></small>
+                                    </div>
+                                </div>
 
-                                        <td><?php echo $key['qty_produk'] ?></td>
-                                        <td class="format"><?php echo $key['harga_produk'] * $key['qty_produk'] ?></td>
+                                <div class="format col-lg-5 col-md-3 col-sm-12">
+                                    <p class="mb-0"><?php echo $key['harga_produk'] * $key['qty_produk'] ?></p>
+                                </div>
+                                <!-- <small class="text-muted text-nowrap"><span class="format"><?php echo $key['harga_produk'] ?></span>/item</small> -->
+                            </div>
 
-                                    </tr>
+                            <?php $total += $key['harga_produk'] * $key['qty_produk'] ?>
+                        <?php } ?>
 
-                                    <?php $total += $key['harga_produk'] * $key['qty_produk'] ?>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                        <div class="d-flex" style="justify-content: end;">
-                            <h4 style="font-weight: 800;">Total : <span class="format"><?php echo $total ?></span></h4>
+                        <div class="d-flex pt-3" style="justify-content: end;">
+                            <h5 style="font-weight: 800;">Total Harga:  <span class="format"><?php echo $total ?></span></h5>
                         </div>
                         <div class="d-flex" style="justify-content: end;">
-                            <button type="submit" class="btn btn-warning col-lg-4 col-sm-4">Buat Pesanan</button>
+                            <button type="submit" class="btn col-lg-4 col-sm-4" style="background: #D21312;color:white;">Buat Pesanan</button>
+                        </div>
+                        <div class="border-top mt-3 pt-4 mx-4 mb-4">
+                            <p><i class="fas fa-truck text-muted fa-lg"></i> Pengiriman Akan Dilakukan 1-2 Hari Setelah Pembayaran</p>
+                            <p class="text-muted">
+                                Proses pengiriman akan dilakukan setelah pihak pembeli melakukan pembayaran dan mengonfirmasi pembayaran kepada penjual yang dilakukan melalui whatsapp.
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -48,13 +48,13 @@ class M_personalInfo extends CI_Model {
 
     public function getPersonalInfoByIdCustomer($id_customer)
     {
-        $this->db->select('personal_info.*, kecamatan.kecamatan, kota_kab.kota');
+        $this->db->select('personal_info.*, kecamatan.*, kota_kab.*');
         $this->db->from('personal_info');
         $this->db->join('kecamatan', 'personal_info.id_kecamatan = kecamatan.id_kecamatan', 'left');
         $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
         $this->db->where('id_customer', $id_customer);
         $result = $this->db->get()->result_array();
-        return $result;
+        return $result[0];
     }
 
     public function kotaKec() {

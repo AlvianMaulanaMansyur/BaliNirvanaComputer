@@ -60,6 +60,7 @@ $route['checkout'] = 'user/checkout';
 $route['orders'] = 'user/orders';
 $route['search'] = 'LandingPage/search';
 
+$route['home/(:num)'] = 'LandingPage/index/$1';
 $route['home'] = 'LandingPage/index';
 $route['shop'] = 'LandingPage/shop';
 $route['about'] = 'LandingPage/aboutUs';

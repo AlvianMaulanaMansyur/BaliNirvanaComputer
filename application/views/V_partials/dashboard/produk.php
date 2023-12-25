@@ -77,8 +77,6 @@
                                 </div>
                             </div>
 
-
-
                             <td>
                                 <?php
                                 // Fetch and display photos for the current product
@@ -193,7 +191,6 @@
                         <label for="Stok_produk" class="form-label">Stok Produk</label>
                         <input type="number" name="stok_produk" class="form-control" id="Stok_produk" required>
                     </div>
-
 
                     <label for="Harga" class="form-label">Harga Produk</label>
                     <div class="input-group mb-3">

@@ -207,18 +207,44 @@ class M_cart extends CI_Model
         }
     }
 
+    // Di model M_pesanan, tambahkan fungsi baru untuk menghitung total quantity pada cart:
+
+    // Di model M_pesanan, ubah fungsi getCartCount:
+
+    public function getCartCount($id_customer)
+    {
+        $this->db->select('SUM(produk_has_cart.qty_produk) as cart_count');
+        $this->db->from('cart');
+        $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
+        $this->db->where('cart.id_customer', $id_customer);
+
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            $row = $result->row_array();
+            return $row['cart_count'];
+        } else {
+            return 0;
+        }
+    }
+
+
+
+
     public function getCheckout($id_customer)
     {
-        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk ,produk_has_cart.is_check, produk.nama_produk, produk.harga_produk,produk.stok_produk, customer.nama_customer, customer.email,customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, personal_info.alamat,personal_info.detail_alamat, kota_kab.kota, kota_kab.id_kota_kab, kecamatan.kecamatan');
+        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk ,produk_has_cart.is_check, produk.nama_produk, produk.harga_produk,produk.stok_produk, foto_produk.url_foto, customer.nama_customer, customer.email,customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, personal_info.alamat,personal_info.detail_alamat, kota_kab.kota, kota_kab.id_kota_kab, kecamatan.kecamatan');
         $this->db->from('cart');
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');
+        $this->db->join('foto_produk', 'produk_has_cart.id_produk = foto_produk.id_produk', 'left');
         $this->db->join('customer', 'cart.id_customer = customer.id_customer', 'left');
         $this->db->join('personal_info', 'customer.id_customer = personal_info.id_customer', 'left');
         $this->db->join('kecamatan', 'personal_info.id_kecamatan = kecamatan.id_kecamatan', 'left');
         $this->db->join('kota_kab', 'kota_kab.id_kota_kab = kecamatan.id_kota_kab', 'left');
         $this->db->where('cart.id_customer', $id_customer);
         $this->db->where('produk_has_cart.is_check', 1);
+        $this->db->where('foto_produk.urutan_foto', 1);
 
         $result = $this->db->get();
 

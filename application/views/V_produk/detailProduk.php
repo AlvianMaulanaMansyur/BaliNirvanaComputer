@@ -42,25 +42,25 @@
                                 <button class="btn btn-white border border-secondary px-3" type="button" id="decrementButton" data-mdb-ripple-color="dark" onclick="decrementQty()">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <input type="text" id="Qty_produk" class="form-control text-center border border-secondary" name="qty_produk" value="1" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                <input type="text" id="Qty_produk" class="form-control text-center border border-secondary" name="qty_produk" value="1" aria-label="Example text with button addon" aria-describedby="button-addon1" maxlength="3" />
                                 <button class="btn btn-white border border-secondary px-3" type="button" id="incrementButton" data-mdb-ripple-color="dark" onclick="incrementQty()">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </div>
-                            <div id="alertContainer"></div>
+                            <div id="alertContainer" style="width: 310px;"></div>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button>
+                            <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()" style="background-color: #D21312;"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button>
                             <!-- <button type="submit" class="btn btn-danger shadow-0"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button> -->
                         </div>
 
                         <h3 class="pt-3">Deskripsi</h3>
                         <p>
-<pre>
+                        <pre>
 <?php echo $produk['deskripsi_produk'] ?>
 </pre>
                         </p>
-                        
+
                     </div>
 
                 </form>
@@ -93,27 +93,29 @@
 
     function incrementQty() {
         var currentQty = parseInt(qtyInput.value);
+        var stokProduk = <?php echo $produk['stok_produk']; ?>;
 
-        if (isNaN(currentQty)) {
-            currentQty = 0;
+        if (isNaN(currentQty) || currentQty >= stokProduk) {
+            qtyInput.value = currentQty;
+        } else {
+            qtyInput.value = currentQty + 1;
         }
 
-        qtyInput.value = currentQty + 1;
+        // qtyInput.value = currentQty + 1;
         updateButtonState();
-        document.getElementById('alertContainer').innerHTML = '';
+        // document.getElementById('alertContainer').innerHTML = '';
     }
 
     function decrementQty() {
         var currentQty = parseInt(qtyInput.value);
 
         if (isNaN(currentQty) || currentQty <= 1) {
-            qtyInput.value = 0;
+            qtyInput.value = 1;
         } else {
             qtyInput.value = currentQty - 1;
         }
 
         updateButtonState();
-        document.getElementById('alertContainer').innerHTML = '';
     }
 
     function updateButtonState() {
@@ -121,9 +123,12 @@
         var stokProduk = <?php echo $produk['stok_produk']; ?>;
 
         // Disable incrementButton if the quantity reaches the stock limit
-        if (currentQty >= stokProduk) {
+        if (currentQty > stokProduk) {
             incrementButton.disabled = true;
-        } else {
+        } else if(currentQty == stokProduk) {
+            document.getElementById('alertContainer').innerHTML = '';
+            incrementButton.disabled = true;
+        } else if(currentQty < stokProduk) {
             incrementButton.disabled = false;
         }
 
@@ -148,7 +153,34 @@
         this.value = sanitizedValue;
 
         // Clear the alert container
-        document.getElementById('alertContainer').innerHTML = '';
+
+        var qtyProduk = document.getElementById('Qty_produk').value;
+        var stokProduk = <?php echo $produk['stok_produk']; ?>;
+
+        if (parseInt(qtyProduk) > stokProduk) {
+            // Tampilkan alert warning menggunakan Bootstrap
+            document.getElementById('alertContainer').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Jumlah melebihi stok yang tersedia.
+        </div>
+        `;
+            incrementButton.disabled = true;
+            decrementButton.disabled = false;
+
+        } else if (qtyProduk.trim() == '' || !/^[1-9]\d*$/.test(qtyProduk)) {
+            // Tampilkan alert warning menggunakan Bootstrap
+            document.getElementById('alertContainer').innerHTML = `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Jumlah pembelian minimal 1 
+        </div>
+        `;
+            incrementButton.disabled = false;
+            decrementButton.disabled = true;
+        } else {
+            document.getElementById('alertContainer').innerHTML = '';
+            incrementButton.disabled = false;
+        }
+
     };
 
     document.getElementById('Qty_produk').addEventListener('keydown', function(event) {

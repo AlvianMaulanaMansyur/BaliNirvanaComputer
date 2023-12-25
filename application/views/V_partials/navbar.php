@@ -1,5 +1,5 @@
 <div class="navbar animate__animated animate__fadeInDown">
-    <div class="logo"><a href="">Bali Nirvana <span>Computer</span></a></div>
+    <div class="logo"><a href="<?php echo site_url('') ?>">Bali Nirvana <span>Computer</span></a></div>
     <ul class="links">
         <li><a href="<?php echo site_url('home') ?>">Home</a></li>
         <li><a href="<?php echo site_url('shop') ?>">Shop</a></li>
@@ -13,10 +13,23 @@
     </form>
 
     <div class="icon">
-        <div class="search-icon"><i class="fa-solid fa-search"></i></div>
-        <li><a href="<?php echo base_url('cart') ?>"><i class="fa-solid fa-cart-shopping"></i></a></li>
-        <li><a href="<?php echo base_url('orders') ?>"><i class="fa-regular fa-bell"></i></a></li>
-       
+        <!-- Untuk Keranjang -->
+        <li>
+            <a href="<?php echo base_url('cart') ?>">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </a>
+        </li>
+
+        <!-- Untuk Lonceng (Orders) -->
+        <li>
+            <a href="<?php echo base_url('orders') ?>">
+                <i class="fa-regular fa-bell"></i>
+                <span class="order-count">0</span>
+            </a>
+        </li>
+
+
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -46,3 +59,31 @@
         <li><a href="#" class="action_btn">Account</a></li>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        updateCartAndOrderCount();
+
+        // ... (code lainnya)
+
+        // Fungsi untuk mengupdate jumlah produk dalam keranjang dan pesanan
+        function updateCartAndOrderCount() {
+            // Lakukan AJAX request untuk mengambil jumlah produk dari server
+            $.ajax({
+                url: '<?php echo base_url('LandingPage/getCartAndOrderCount'); ?>', // Ganti dengan URL yang sesuai
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    // Update jumlah produk dalam keranjang
+                    $('.cart-count').text(response.cartCount);
+
+                    // Update jumlah produk dalam pesanan
+                    $('.order-count').text(response.orderCount);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+</script>

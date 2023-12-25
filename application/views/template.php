@@ -27,6 +27,75 @@
         .foto-card {
             cursor: pointer;
         }
+
+        .table-header {
+            background: #000;
+            background-color: #000;
+        }
+
+        /* Styling untuk elemen li */
+        /* Styling untuk elemen li */
+        li {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+            /* Atur jarak antar ikon */
+        }
+
+        /* Styling untuk ikon keranjang dan lonceng */
+        .fa-cart-shopping,
+        .fa-bell {
+            font-size: 20px;
+            /* Sesuaikan dengan ukuran yang diinginkan */
+            position: relative;
+            /* Tetapkan posisi ke relatif */
+        }
+
+        /* Styling untuk span count */
+        .cart-count,
+        .order-count {
+            position: absolute;
+            top: -15px;
+            /* Sesuaikan dengan posisi vertikal */
+            right: -20px;
+            /* Sesuaikan dengan posisi horizontal */
+            background-color: red;
+            /* Warna latar belakang */
+            color: #fff;
+            /* Warna teks */
+            border-radius: 50%;
+            /* Untuk membuat sudut span menjadi lingkaran */
+            padding: 4px 8px;
+            /* Sesuaikan dengan kebutuhan Anda */
+            font-size: 12px;
+            /* Sesuaikan dengan ukuran yang diinginkan */
+        }
+
+        .table-rounded {
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            /* Sesuaikan dengan kebutuhan */
+        }
+
+        .table-rounded thead tr:first-child th:first-child {
+            border-top-left-radius: 8px;
+            /* Sesuaikan dengan kebutuhan */
+        }
+
+        .table-rounded thead tr:first-child th:last-child {
+            border-top-right-radius: 8px;
+            /* Sesuaikan dengan kebutuhan */
+        }
+
+        .table-rounded tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 8px;
+            /* Sesuaikan dengan kebutuhan */
+        }
+
+        .table-rounded tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 8px;
+            /* Sesuaikan dengan kebutuhan */
+        }
     </style>
 </head>
 
