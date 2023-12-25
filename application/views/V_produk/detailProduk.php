@@ -19,25 +19,25 @@
 
                 <form action="<?php echo base_url('user/insertcart/') . $produk['slug'] ?>" method="post" onsubmit="return validateAndSubmit()">
                     <div class="ps-lg-3">
-                        <h3 class="title text-dark">
+                        <h2 class="title text-dark">
                             <?php echo $produk['nama_produk'] ?>
-                        </h3>
+                        </h2>
 
                         <div class="mb-3">
-                            <span class="format"><?php echo $produk['harga_produk'] ?></span>
-                            <span class="text-muted">/per unit</span>
+                            <h5><span class="format"><?php echo $produk['harga_produk']?></span>
+                            <span class="text-muted">/item</span>
+                        </h5>
                         </div>
 
                         <div class="mb-3">
-                            Category : <?php echo $produk['nama_category'] ?>
+                            <h6 class=""><?php echo $produk['nama_category'] ?></h6>
                         </div>
 
                         <div class="mb-3">
-                            Stok : <?php echo $produk['stok_produk'] ?>
+                            Stok: <?php echo $produk['stok_produk'] ?>
                         </div>
 
                         <div class="col-md-4 col-6 mb-3">
-                            <label class="mb-2 d-block">Jumlah</label>
                             <div class="input-group mb-3" style="width: 170px;">
                                 <button class="btn btn-white border border-secondary px-3" type="button" id="decrementButton" data-mdb-ripple-color="dark" onclick="decrementQty()">
                                     <i class="fas fa-minus"></i>
@@ -50,7 +50,7 @@
                             <div id="alertContainer" style="width: 310px;"></div>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()" style="background-color: #D21312;"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button>
+                            <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()" style="background-color: #D21312;">Tambahkan ke <i class="me-1 fa-solid fa-cart-shopping"></i></button>
                             <!-- <button type="submit" class="btn btn-danger shadow-0"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button> -->
                         </div>
 

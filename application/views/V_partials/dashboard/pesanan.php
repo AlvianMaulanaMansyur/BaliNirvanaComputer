@@ -26,8 +26,8 @@
                         <h5>Alamat : <?php echo $order['details'][0]['alamat_pengiriman']; ?></h5>
                         <h5>Detail Alamat : <?php echo $order['details'][0]['detail_alamat_pengiriman']; ?></h5>
                         <h5>No. Telepon : <?php echo $order['details'][0]['telepon']; ?></h5>
-                        <table class="table table-secondary">   
-                            <thead>
+                        <table class="table">   
+                            <thead class="table-dark">
                                 <tr>
                                     <th scope="col">Nama Produk</th>
                                     <th scope="col">Harga</th>
@@ -35,7 +35,7 @@
                                     <th scope="col">Subtotal</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-group-divider">
+                            <tbody class="">
                                 <?php foreach ($order['details'] as $detail) { ?>
                                     <tr>
                                         <td><?php echo $detail['nama_produk'] ?></td>

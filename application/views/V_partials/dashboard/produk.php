@@ -5,25 +5,25 @@
                 <h1 class="h3 mb-0 text-gray-800 ">Data Produk</h1>
             </div>
 
-            <button type="button" class="btn btn-primary " style="margin-bottom:30px ;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="fa-solid fa-plus"></i> Tambah Produk
+            <button type="button" class="btn " style="margin-bottom:30px;background: #D21312;color: white;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="fa-solid fa-plus"></i> <span>Tambah Produk</span>
             </button>
 
             <?php echo form_open('Dashboard/search_produk', 'class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3  my-2 my-md-0 "'); ?>
             <div class="input-group d-flex" style="float:right">
                 <?php echo form_input('keyword', '', 'class="form-control" placeholder="Search for..." aria-label="Search for..."'); ?>
-                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn" type="submit" style="background: white;color: #D21312;border-color:#D21312"><i class="fas fa-search"></i></button>
             </div>
             <?php echo form_close(); ?>
 
             <table class="table table-striped">
-                <thead>
+                <thead class="table-dark">
                     <?php if (isset($produk) && !empty($produk)) : ?>
                         <tr>
                             <th>No</th>
                             <th>ID Produk</th>
                             <th>Category</th>
-                            <th>Nama Produk</th>
+                            <th scope="col-2">Nama Produk</th>
                             <th>Stok</th>
                             <th>Harga</th>
                             <th>Deskripsi Produk</th>
@@ -36,24 +36,26 @@
                     <?php foreach ($produk as $product) : ?>
                         <tr>
                             <td><?php echo $no++ ?></td>
-                            <td scope="row"> <?php echo $product['id_produk'] ?></td>
+                            <td scope=""> <?php echo $product['id_produk'] ?></td>
                             <td> <?php echo $product['nama_category'] ?></td>
-                            <td><?php echo $product['nama_produk'] ?></td>
+                            <td class="col-2"><?php echo $product['nama_produk'] ?></td>
                             <td><?php echo $product['stok_produk'] ?></td>
                             <td class="format"> <?php echo $product['harga_produk'] ?></td>
                             <td class="col-3">
                                 <div>
-                                    <pre>
-                                <?php
-                                $desc = $product['deskripsi_produk'];
-                                $trimmed_desc = substr($desc, 0, 200);
+                               
+                                <pre><?php
+                               $desc = $product['deskripsi_produk']; $trimmed_desc = substr($desc, 0, 200);
                                 echo '<p>' . $trimmed_desc . '</p>';
-                                ?></pre>
+                                ?></pre><h6><a href="#deskripsiModal<?php echo $product['id_produk']; ?>" data-bs-toggle="modal" style="font-size: 13px; color:#D21312">
+                                Lihat Selengkapnya
+                            </a></h6> 
                                 </div>
                                 <div class="d-flex" style="justify-content: end;">
-                                    <button type="button" class="btn btn-primary show-all-button" data-bs-toggle="modal" data-bs-target="#deskripsiModal<?php echo $product['id_produk']; ?>" style="font-size: 13px; border-radius: 20px; padding: 6px 12px;">
-                                        Detail desc..
-                                    </button>
+                                    <!-- <button type="button" class="btn btn-primary show-all-button" data-bs-toggle="modal" data-bs-target="#deskripsiModal<?php echo $product['id_produk']; ?>" style="font-size: 13px; border-radius: 20px; padding: 6px 12px;">
+                                        Lihat selengkapnya
+                                    </button> -->
+                                   
                                 </div>
                             </td>
 
@@ -66,7 +68,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                        <pre>
+                                            <pre>
                                             <p><?php echo $product['deskripsi_produk']; ?></p>
                                         </pre>
                                         </div>
@@ -133,7 +135,7 @@
                                                     ?>
                                                 </td>
                                                 <td>
-                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>"><i class="fa-regular fa-pen-to-square"></i></button>
+                                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>"><i class="fa-regular fa-pen-to-square"></i></button>
                                                     <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>">Edit</button> -->
 
                                                     <!-- Display alert before deleting -->

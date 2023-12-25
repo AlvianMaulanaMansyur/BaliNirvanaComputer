@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="col-4">
-                            <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+                            <button type="submit" id="submitButton" class="btn" style="background-color: #D21312;color:white">Submit</button>
                         </div>
                     </div>
 
@@ -50,8 +50,8 @@
                 <?php if (empty($monthly_orders)) : ?>
                     <p>Tidak ada pesanan yang selesai.</p>
                 <?php else : ?>
-                    <table class="table table-secondary">
-                        <thead>
+                    <table class="table">
+                        <thead class="table-dark">
                             <tr>
                                 <th>Customer Name</th>
                                 <th>No Pesanan</th>
@@ -88,7 +88,7 @@
 
             <?php if (!empty($monthly_orders)) : ?>
                 <div>
-                    <a href="<?php echo base_url('dashboard/saveaspdf'); ?>" class="btn btn-primary">Save as PDF</a>
+                    <a href="<?php echo base_url('dashboard/saveaspdf'); ?>" class="btn" style="background-color: white;color:#D21312;border-color:#D21312;">Save as PDF</a>
                 </div>
             <?php else : ?>
 

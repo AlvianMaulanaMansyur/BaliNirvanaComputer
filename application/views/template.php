@@ -7,6 +7,24 @@
 
 
     <style>
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Gaya checkbox ketika dicentang */
+        input[type="checkbox"]:checked {
+            background-color: #D21312;
+            border: none;
+            /* Warna latar belakang yang diinginkan */
+        }
+
         .container-fluid {
             min-height: 100vh;
             z-index: 1;
