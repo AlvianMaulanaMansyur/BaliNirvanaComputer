@@ -23,6 +23,7 @@ class M_personalInfo extends CI_Model {
             'id_customer' => $id,
             'id_kecamatan' => $this->input->post('id_kecamatan'),
         );
+        // var_dump($insert_data);die;
         
         if (empty($existing_personal_info)) {
             $this->db->insert('personal_info', $insert_data);

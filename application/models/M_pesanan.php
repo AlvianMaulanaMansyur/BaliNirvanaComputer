@@ -234,7 +234,6 @@ class M_pesanan extends CI_Model
     public function createOrder()
     {
         $customer_id = $this->session->userdata('customer_id');
-        // var_dump($customer_id);die;
 
         $cart_data = $this->M_cart->getCheckout($customer_id);
         $this->M_personalInfo->insertPersonalInfo();
@@ -248,7 +247,7 @@ class M_pesanan extends CI_Model
             'detail_alamat_pengiriman' => $detail_alamat,
             'status_pesanan' => '0',
         );
-
+        
         $this->insertOrder($order_data);
         $id_pesanan = $this->db->insert_id();
 

@@ -91,6 +91,6 @@
     <span>
         silahkan download invoice untuk melakukan pembayaran!</span>
         <h5 class="wa_pembayaran">Hubungi Wa Berikut Untuk Melakukan Pembayaran</h5>
-        <a href="https://wa.me/6287762722287?text= Hai" class="" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-whatsapp " style="color: #17c200;font-size: 80px;"></i></a>
+        <a href="https://wa.me/6287762722287?text= Hai" class="" style="right:0;bottom: 0;z-index: 1;margin:20px;" target="_blank"><i class="fa-brands fa-whatsapp " style="color: #17c200;font-size: 80px;"></i></a>
     </div>
 </section>
