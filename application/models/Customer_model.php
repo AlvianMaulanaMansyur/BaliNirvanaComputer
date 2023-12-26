@@ -28,10 +28,16 @@ class Customer_model extends CI_Model {
         $this->db->update('customer', $data);
     }
 
-    public function login($email, $password) {
+    public function get_email($email, $password) {
         $query = $this->db->get_where('customer', array('email' => $email, 'password_customer' => $password));
         return $query->row();
     }
+
+    public function get_username($username, $password){
+        $query = $this->db->get_where('customer', array('username' => $username, 'password_customer' => $password));
+        return $query->row();
+    }
+
     
 
     // public function register($data) {

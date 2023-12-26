@@ -23,6 +23,8 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!--  -->
 
+
+
     <link rel="stylesheet" href="<?php echo base_url('assets/css/navbar.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/footer.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/contact.css') ?>">
@@ -32,6 +34,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/transaksi.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/pre.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/info.css') ?>">
+
 
     <style>
         * {

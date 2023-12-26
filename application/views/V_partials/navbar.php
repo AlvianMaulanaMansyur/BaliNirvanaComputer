@@ -19,7 +19,7 @@
         <li>
             <a href="<?php echo base_url('cart') ?>">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span class="cart-count">0</span>
+                <span class="cart-count badge badge-light">0</span>
             </a>
         </li>
 
@@ -27,14 +27,18 @@
         <li>
             <a href="<?php echo base_url('orders') ?>">
                 <i class="fa-regular fa-bell"></i>
-                <span class="order-count">0</span>
+                <span class="order-count badge badge-light">0</span>
             </a>
         </li>
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                <li><a class="dropdown-item" href="">Profile</a></li>
+
                 <li><a class="dropdown-item" href="<?php echo base_url('profil') ?>">Settings</a></li>
+
                 <li>
                     <hr class="dropdown-divider" />
                 </li>

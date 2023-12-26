@@ -181,6 +181,8 @@ class LandingPage extends CI_Controller
 
         echo json_encode($response);
     }
+
+   
 }
 
 /* End of file LandingPage.php */
