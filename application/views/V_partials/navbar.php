@@ -1,7 +1,8 @@
 <div class="navbar animate__animated animate__fadeInDown">
     <div class="logo"><a href="<?php echo site_url('') ?>">Bali Nirvana <span>Computer</span></a></div>
     <ul class="links">
-        <li class="<?php echo ($this->uri->segment(1) == 'home') ? 'active' : ''; ?>"><a href="<?php echo site_url('home') ?>">Home</a></li>
+       
+        <li class="<?php echo ($this->uri->segment(1) == 'home' || $this->uri->segment(1) == '') ? 'active' : ''; ?>"><a href="<?php echo site_url('home') ?>">Home</a></li>
         <li class="<?php echo ($this->uri->segment(1) == 'shop') ? 'active' : ''; ?>"><a href="<?php echo site_url('shop') ?>">Shop</a></li>
         <li class="<?php echo ($this->uri->segment(1) == 'about') ? 'active' : ''; ?>"><a href="<?php echo site_url('about') ?>">About Us</a></li>
         <li class="<?php echo ($this->uri->segment(1) == 'contact') ? 'active' : ''; ?>"><a href="<?php echo site_url('contact') ?>">Contact Us</a></li>
