@@ -108,25 +108,25 @@
                                     <div>
                                         <img src="<?php echo base_url($key['url_foto']) ?>" class="border rounded me-3" style="width: 100px; height: 100px;" />
                                     </div>
+
                                     <div>
                                         <p class="mb-0"><?php echo $key['nama_produk'] ?></p>
                                         <small class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $key['qty_produk'] ?></small>
                                     </div>
                                 </div>
 
-                                <div class="format col-lg-5 col-md-3 col-sm-12">
-                                    <p class="mb-0"><?php echo $key['harga_produk'] * $key['qty_produk'] ?></p>
+                                <div class="col-lg-5 col-md-3 col-sm-12 pt-lg-0 pt-sm-3 ps-sm-3 ps-lg-0">
+                                    <h6 class="mb-0"><span class="format"><?php echo $key['harga_produk'] ?></span></h6>
                                 </div>
-                                <!-- <small class="text-muted text-nowrap"><span class="format"><?php echo $key['harga_produk'] ?></span>/item</small> -->
                             </div>
 
                             <?php $total += $key['harga_produk'] * $key['qty_produk'] ?>
                         <?php } ?>
 
-                        <div class="d-flex pt-3" style="justify-content: end;">
-                            <h5 style="font-weight: 800;">Total Harga:  <span class="format"><?php echo $total ?></span></h5>
+                        <div class="d-flex pt-5 me-lg-5 me-sm-0" style="justify-content: end;">
+                            <h5 style="font-weight: 500;">Total Harga:  <span class="format"><?php echo $total ?></span></h5>
                         </div>
-                        <div class="d-flex" style="justify-content: end;">
+                        <div class="d-flex me-lg-5 me-sm-0" style="justify-content: end;">
                             <button type="submit" class="btn col-lg-4 col-sm-4" style="background: #D21312;color:white;">Buat Pesanan</button>
                         </div>
                         <div class="border-top mt-3 pt-4 mx-4 mb-4">

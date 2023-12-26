@@ -1,19 +1,19 @@
 <section class="">
-    <div class="halaman_transaksi">
-        <h2 class="hlmn">Halaman Pesanan</h2>
+    <div class="py-3 container ps-lg-5 ps-sm-0 halaman_transaksi">
+        <h2 class=""> Pesanan</h2>
     </div>
-        <div class="container col-sm-12 col-md-7 col-lg-5 border border-1 border-dark p-4" style="border-radius: 15px;">
-    <div id="invoice" style="background-color: white;">
+    <div class="container col-sm-12 col-md-7 col-lg-5 border border-1 border-dark p-4" style="border-radius: 15px;">
+        <div id="invoice" style="background-color: white;">
 
-            <div class="d-flex border-bottom mb-2" style="justify-content: space-between; border-radius: 10px;">
+            <div class="d-flex mb-2" style="justify-content: space-between; border-radius: 10px;">
                 <h2 style="font-family: 'Poppins', sans-serif; font-weight: 400;">INVOICE</h2>
                 <h2 class="brand" style="font-family: 'Poppins', sans-serif; font-weight: 500;">Bali Nirvana <span style="font-weight: 500;"> Computer</span></h2>
             </div>
 
-            <div class="d-flex" style="justify-content: space-between;">
+            <div class="d-flex pt-3" style="justify-content: space-between;">
                 <div>
                     <div>
-                        <?php echo $order[0]['nama_customer'] ?>
+                        <h6><?php echo $order[0]['nama_customer'] ?></h6>
                     </div>
                     <div class="pe-5">
                         <?php echo $order[0]['alamat_pengiriman'] ?>
@@ -22,11 +22,27 @@
                         <?php echo $order[0]['detail_alamat_pengiriman'] ?>
                     </div>
                 </div>
-                <div class="">
+                <div class="" style="text-align: end;">
                     <?php
-                    echo 'Tanggal <br>';
-                    echo $order[0]['create_time']
-                    ?></div>
+                   setlocale(LC_TIME, 'id_ID');
+
+                   $formattedMonthYear = strftime("%A, %d %B %Y", strtotime($order[0]['create_time']));
+                   
+                    ?>
+                    <h6>Tanggal:</h6>
+                    <p>
+                        <?php
+                        echo $formattedMonthYear
+                        ?>
+                    </p>
+
+                    <div>
+                        <h6>No. Pesanan:</h6>
+                    <?php echo $order[0]['id_pesanan'] ?>
+                    </div>
+                </div>
+
+               
             </div>
 
             <div class="row d-flex">
@@ -38,30 +54,27 @@
                     <table class="table">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col-6">Nama Produk</th>
-                                <th scope="col-2">Qty</th>
-                                <th scope="col-4">Harga</th>
+                                <th class="w-50">Nama Produk</th>
+                                <th class="w-25">Qty</th>
+                                <th class="w-25">Harga</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider">
-
                             <?php foreach ($order as $key) { ?>
-
                                 <tr>
-                                    <td class="col-5"><?php echo $key['nama_produk'] ?></td>
+                                    <td><?php echo $key['nama_produk'] ?></td>
                                     <td><?php echo $key['qty_produk'] ?></td>
                                     <td>
                                         <div class="format"><?php echo $key['harga_produk'] * $key['qty_produk'] ?></div>
-                                        <!-- <small class="text-muted text-nowrap"><span class="format"><?php echo $key['harga_produk'] ?></span>/item</small> -->
                                     </td>
                                 </tr>
-
                                 <?php $total += $key['harga_produk'] * $key['qty_produk'] ?>
                             <?php } ?>
                         </tbody>
                     </table>
-                    <div class="d-flex" style="justify-content: right;">
-                        <h5>Total : <span class="format"><?php echo $total ?></span></h1>
+
+                    <div class="pt-3" style="text-align: end;">
+                        <h5>Total harga: <span class="format"><?php echo $total ?></span></h1>
                     </div>
                 </div>
             </div>
@@ -69,15 +82,15 @@
         </div>
 
     </div>
-    
+
     <div class="d-flex container mt-4 col-sm-12 col-md-7 col-lg-5" style="justify-content: right;">
-        <button id="downloadAsImage" class="col-4 btn btn-primary">Download Invoice</button>
+        <button id="downloadAsImage" class="btn" style="background: #D21312;color:white"><i class="fa-solid fa-download me-2"></i>Download Invoice</button>
     </div>
 
-    <div class="deskripsi_pembayaran" style="margin-top: 5px;">
-        silahkan download invoice untuk melakukan pembayaran!
-        <span></span>
+    <div class="d-flex container  col-lg-5 col-sm-10 flex-column align-items-center pt-3">
+    <span>
+        silahkan download invoice untuk melakukan pembayaran!</span>
         <h5 class="wa_pembayaran">Hubungi Wa Berikut Untuk Melakukan Pembayaran</h5>
-        <a hreaf="https://wa.me/628?text= Hai" class="" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i></a>
+        <a href="https://wa.me/6287762722287?text= Hai" class="" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-whatsapp " style="color: #17c200;font-size: 80px;"></i></a>
     </div>
 </section>

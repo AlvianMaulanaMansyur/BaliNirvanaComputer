@@ -250,6 +250,7 @@ class User extends CI_Controller
     {
         $id = $this->session->userdata('customer_id');
         $order = $this->M_pesanan->getAllOrder($id);
+
         $data = [
             'title' => 'Daftar Pesanan',
             'content' => 'V_user/daftar_pesanan',

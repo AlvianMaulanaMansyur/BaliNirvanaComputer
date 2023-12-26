@@ -253,6 +253,7 @@ class M_produk extends CI_Model
                 $gambar_paths[$i] = ''; // Set a default value or handle accordingly
             }
         }
+        
 
         $id_produk = $this->input->post('id_produk');
 
