@@ -52,7 +52,7 @@
                                     <td><?php echo $key['qty_produk'] ?></td>
                                     <td>
                                         <div class="format"><?php echo $key['harga_produk'] * $key['qty_produk'] ?></div>
-                                        <small class="text-muted text-nowrap"><span class="format"><?php echo $key['harga_produk'] ?></span>/item</small>
+                                        <!-- <small class="text-muted text-nowrap"><span class="format"><?php echo $key['harga_produk'] ?></span>/item</small> -->
                                     </td>
                                 </tr>
 
