@@ -5,7 +5,7 @@
         </div>
         <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body">
+            <div class="card-body login-card-body ">
                 <p class="login-box-msg">Silahkan Masuk Terlebih Dahulu</p>
                 <?php
                 if ($this->session->flashdata('error_message')) {
@@ -14,9 +14,10 @@
                 ?>
 
                 <?php echo form_open('AuthCustomer/process_login'); ?>
+
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Email" name="email">
-                    <div class="input-group-append">
+                    <input type="text" class="form-control" placeholder="Email or Username" name="email_or_username">
+                    <div class="input-group-append">    
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
                         </div>
@@ -41,12 +42,14 @@
                 </div>
                 <?php echo form_close(); ?>
 
+                <center>
                 <p class="mb-1">
-                    <a href="lupa_sandi.php">Lupa Sandi?</a>
+                    <a href="<?= base_url('AuthCustomer/forgotPassword') ; ?>">Lupa Sandi?</a>
                 </p>
-                <p class="mb-0">
+                <p class="mb-4">
                     <a href="<?= base_url('authCustomer/register'); ?>" class="text-center">Belum Punya Akun? DAFTAR</a>
                 </p>
+                </center>
             </div>
             <!-- /.login-card-body -->
         </div>

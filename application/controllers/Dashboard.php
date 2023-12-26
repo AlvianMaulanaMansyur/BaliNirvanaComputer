@@ -88,7 +88,7 @@ class Dashboard extends CI_Controller
         $category = $this->M_produk->getCategory();
 
         $data = [
-            'title' => 'Produck Stock',
+            'title' => 'Product Stock',
             'header' => 'V_partials/dashboard/header',
             'navbar' => 'V_partials/dashboard/navbar',
             'sidebar' => 'V_partials/dashboard/sidebar',
