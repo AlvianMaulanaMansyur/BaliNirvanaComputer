@@ -54,8 +54,7 @@
                                 <div class="d-flex" style="justify-content: end;">
                                     <!-- <button type="button" class="btn btn-primary show-all-button" data-bs-toggle="modal" data-bs-target="#deskripsiModal<?php echo $product['id_produk']; ?>" style="font-size: 13px; border-radius: 20px; padding: 6px 12px;">
                                         Lihat selengkapnya
-                                    </button> -->
-                                   
+                                    </button> -->     
                                 </div>
                             </td>
 

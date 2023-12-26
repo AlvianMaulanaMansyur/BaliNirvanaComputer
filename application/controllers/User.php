@@ -26,6 +26,35 @@ class User extends CI_Controller
         }
     }
 
+    public function userProfile()
+    {
+        // Memuat model
+        $this->load->model('Customer_model');
+
+        $id_customer = $this->session->userdata('customer_id');
+        $customer_data = $this->Customer_model->get_customer_data($id_customer);
+        // var_dump($customer_data);die;
+        $data = [
+            'title' => 'Profil Pengguna',
+            'content' => 'customer/info',
+            'customer_data' => $customer_data,
+        ];
+        // Menampilkan data
+        $this->load->view('template', $data);
+    }
+
+    public function editProfile($id_customer) {
+        // Ambil data dari formulir
+        $nama_customer = $this->input->post('nama_customer');
+        $telepon = $this->input->post('telepon');
+
+        // var_dump($nama_customer);die;
+
+        $this->Customer_model->editProfile($id_customer, $nama_customer, $telepon);
+
+        redirect('profil'); // Sesuaikan dengan nama controller dan method yang sesuai
+    }
+
     public function insertCart($id_produk)
     {
         $result = $this->M_cart->insertCart($id_produk);

@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/shop.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/transaksi.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/pre.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/info.css') ?>">
 
     <style>
         * {
