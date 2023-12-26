@@ -35,7 +35,7 @@ class User extends CI_Controller
         $customer_data = $this->Customer_model->get_customer_data($id_customer);
         // var_dump($customer_data);die;
         $data = [
-            'title' => 'Profil Pengguna',
+            'title' => 'Profile Pengguna',
             'content' => 'customer/info',
             'customer_data' => $customer_data,
         ];

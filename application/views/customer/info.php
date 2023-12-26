@@ -28,7 +28,7 @@
                         <!-- Form Row-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputName">Name</label>
-                            <input class="form-profile" id="inputFirstName" type="text" placeholder="Enter your name" value="<?php echo $customer_data['nama_customer']; ?>">
+                            <input class="form-profile" id="inputFirstName" type="text" placeholder="Enter your name" value="<?php echo $customer_data['nama_customer']; ?>" disabled>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Email</label>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">No. Telepon</label>
-                            <input class="form-profile" id="inputUsername" type="tel" placeholder="Enter your telepon" value="<?php echo $customer_data['telepon']; ?>">
+                            <input class="form-profile" id="inputUsername" type="tel" placeholder="Enter your telepon" value="<?php echo $customer_data['telepon']; ?>" disabled>
                         </div>
                         <a href="#modal<?php echo $customer_data['id_customer']; ?>" class="btn btn-primary" data-bs-toggle="modal">Edit</a>
                         <!-- Save changes button-->
