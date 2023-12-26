@@ -11,4 +11,5 @@ $config = array(
     'smtp_timeout' => '4', //in seconds
     'charset' => 'iso-8859-1',
     'wordwrap' => TRUE
+    
 );
