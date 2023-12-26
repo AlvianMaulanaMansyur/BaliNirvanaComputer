@@ -69,6 +69,7 @@ $route['buatpesanan'] = 'user/order';
 $route['pesanan'] = 'user/hlmorder';
 $route['orderid/(:num)'] = 'user/setOrderIdToSession/$1';
 $route['error_page'] = 'landingPage/error_page';
+$route['profil'] = 'user/userprofile';
 
 // $route['dashboard/update_monthly_report'] = 'dashboard/update_monthly_report';
 

@@ -9,6 +9,10 @@ a{
     font-family:'Poppins', sans-serif;
 }
 
+.navbar .links li.active a {
+    color:#D21312; /* Ganti dengan warna yang diinginkan */
+}
+
 
 a:hover{
     color:#D21312;
@@ -20,7 +24,10 @@ header{
 }
 .logo a{
     color: #D21312;
-    
+
+}
+.logo_singkat{
+    display: none;
 }
 .logo a span{
     color: black;
@@ -200,6 +207,22 @@ header{
 }
 
 @media(max-width: 690px){
+    .logo{
+        display: none;
+    }
+    .logo_singkat{
+        display: block;
+        padding-left: 1rem;
+    }
+    .logo_singkat a{
+        font-family: 'Poppins', sans-serif;
+        font-weight: 800;
+        font-size: 20px;
+        color: #D21312;
+    }
+    .logo_singkat a span{
+        color: black;
+    }
     .dropdown_menu{
         left: 1rem;
         width: unset;
@@ -227,4 +250,5 @@ header{
         margin-right: 5px;
 
     }
+    
 }
