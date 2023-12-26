@@ -23,20 +23,20 @@
                         <!-- Form Group (username)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Username</label>
-                            <input class="form-control" value="<?php echo $customer_data['username']; ?>" disabled>
+                            <input class="form-profile" value="<?php echo $customer_data['username']; ?>" disabled>
                         </div>
                         <!-- Form Row-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputName">Name</label>
-                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your name" value="<?php echo $customer_data['nama_customer']; ?>">
+                            <input class="form-profile" id="inputFirstName" type="text" placeholder="Enter your name" value="<?php echo $customer_data['nama_customer']; ?>">
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Email</label>
-                            <input class="form-control" id="inputUsername" type="email" placeholder="Enter your email" value="<?php echo $customer_data['email']; ?>" disabled>
+                            <input class="form-profile" id="inputUsername" type="email" placeholder="Enter your email" value="<?php echo $customer_data['email']; ?>" disabled>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">No. Telepon</label>
-                            <input class="form-control" id="inputUsername" type="tel" placeholder="Enter your telepon" value="<?php echo $customer_data['telepon']; ?>">
+                            <input class="form-profile" id="inputUsername" type="tel" placeholder="Enter your telepon" value="<?php echo $customer_data['telepon']; ?>">
                         </div>
                         <a href="#modal<?php echo $customer_data['id_customer']; ?>" class="btn btn-primary" data-bs-toggle="modal">Edit</a>
                         <!-- Save changes button-->
@@ -66,11 +66,11 @@
                 <?php echo form_open('user/editProfile/' . $customer_data['id_customer']); ?>
                 <div class="form-group mb-3">
                     <label for="exampleFormControlInput1">Nama</label>
-                    <input type="text" class="form-control" name="nama_customer" value="<?php echo $customer_data['nama_customer']; ?>">
+                    <input type="text" class="form-profile" name="nama_customer" value="<?php echo $customer_data['nama_customer']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">No. Telepon</label>
-                    <input type="tel" class="form-control" name="telepon" value="<?php echo $customer_data['telepon']; ?>">
+                    <input type="tel" class="form-profile" name="telepon" value="<?php echo $customer_data['telepon']; ?>">
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save</button>
