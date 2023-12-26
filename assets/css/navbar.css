@@ -9,6 +9,10 @@ a{
     font-family:'Poppins', sans-serif;
 }
 
+.navbar .links li.active a {
+    color:#D21312; /* Ganti dengan warna yang diinginkan */
+}
+
 
 a:hover{
     color:#D21312;

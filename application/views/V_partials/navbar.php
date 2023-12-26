@@ -1,10 +1,10 @@
 <div class="navbar animate__animated animate__fadeInDown">
     <div class="logo"><a href="<?php echo site_url('') ?>">Bali Nirvana <span>Computer</span></a></div>
     <ul class="links">
-        <li><a href="<?php echo site_url('home') ?>">Home</a></li>
-        <li><a href="<?php echo site_url('shop') ?>">Shop</a></li>
-        <li><a href="<?php echo site_url('about') ?>">About Us</a></li>
-        <li><a href="<?php echo site_url('contact') ?>">Contact Us</a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'home') ? 'active' : ''; ?>"><a href="<?php echo site_url('home') ?>">Home</a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'shop') ? 'active' : ''; ?>"><a href="<?php echo site_url('shop') ?>">Shop</a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'about') ? 'active' : ''; ?>"><a href="<?php echo site_url('about') ?>">About Us</a></li>
+        <li class="<?php echo ($this->uri->segment(1) == 'contact') ? 'active' : ''; ?>"><a href="<?php echo site_url('contact') ?>">Contact Us</a></li>
     </ul>
 
     <form action="<?php echo site_url('search'); ?>" method="get" class="form-search col-5 col-sm-4 col-lg-3">
