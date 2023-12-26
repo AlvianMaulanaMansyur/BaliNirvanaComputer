@@ -1,11 +1,11 @@
 <div class="container">
 <div class="title-brand mt-5">
-    <h5 class="selamat animate_animated animate_fadeInUp">Selamat datang di</h5>
-    <h2 class="brand animate_animated animate_fadeInUp">Bali Nirvana <span>Computer</span></h2>
-    <div class="gmbr_toko mt-3 animate_animated animate_fadeInDown">
+    <h5 class="selamat animate__animated animate__fadeInUp">Selamat datang di</h5>
+    <h2 class="brand animate__animated animate__fadeInUp">Bali Nirvana <span>Computer</span></h2>
+    <div class="gmbr_toko mt-3 animate__animated animate__fadeInDown">
         <img src="<?php echo base_url('assets/foto/komputer.jpeg'); ?> " alt="">
     </div>
-    <div class="deskripsi animate_animated animate_fadeInUp">
+    <div class="deskripsi animate__animated animate__fadeInUp">
         <p>
         Bali Nirvana Computer telah dibuka sejak tahun 2014,<br>
         merupakan salah satu toko aksesoris elektronik dan serta menjual laptop, pc. <br>
@@ -22,12 +22,12 @@
         </p>
     </div>
     <div class="visi">
-        <h5 class="visi_misi animate_animated animate_fadeInDown">Visi dan Misi <br>
+        <h5 class="visi_misi animate__animated animate__fadeInDown">Visi dan Misi <br>
             <span style="color: #D21312;" >
                 Bali Nirvana</span> Computer
             
         </h5>
-        <div class="deskripsi_visi animate_animated animate_fadeInUp">
+        <div class="deskripsi_visi animate__animated animate__fadeInUp">
             <p>
                 Visi: <br>
                 <span>
@@ -37,7 +37,7 @@
                 </span>
             </p>
         </div>
-        <div class="deskripsi_misi animate_animated animate_fadeInUp">
+        <div class="deskripsi_misi animate__animated animate__fadeInUp">
         
             <p>
                 Misi: <br>

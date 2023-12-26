@@ -7,11 +7,11 @@
 </div>
 </div>
 <div class="quick-link animate_animated animate_fadeInUp">
-    <div>Quick Links</div>
-    <a href="<?php echo site_url('home') ?>">Home</a>
-    <a href="<?php echo site_url('shop') ?>">Shop</a>
-    <a href="<?php echo site_url('about') ?>">About Us</a>
-    <a href="<?php echo site_url('contact') ?>">Contact US</a>
+<div>Quick Links</div>
+    <a class="<?php echo ($this->uri->segment(1) == 'home') ? 'active' : ''; ?>" href="<?php echo site_url('home') ?>">Home</a>
+    <a class="<?php echo ($this->uri->segment(1) == 'shop') ? 'active' : ''; ?>" href="<?php echo site_url('shop') ?>">Shop</a>
+    <a class="<?php echo ($this->uri->segment(1) == 'about') ? 'active' : ''; ?>" href="<?php echo site_url('about') ?>">About Us</a>
+    <a class="<?php echo ($this->uri->segment(1) == 'contact') ? 'active' : ''; ?>" href="<?php echo site_url('contact') ?>">Contact US</a>
 </div>
 <div class="contact animate_animated animate_fadeInUp">
     <div>Contact</div>
