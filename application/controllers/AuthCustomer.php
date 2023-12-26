@@ -13,7 +13,6 @@ class AuthCustomer extends CI_Controller
         $this->load->library('form_validation');
     }
 
-
     public function login()
     {
         if (($this->session->userdata('customer_id')) == null) {
