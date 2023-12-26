@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,codeigniter
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,visualstudiocode,codeigniter
 
+#File yang ingin di hide
+application/config/*
+
+git update-index --assume-unchanged application/config/email.php
+
+
 ### CodeIgniter ###
 */config/development
 */logs/log-*.php
