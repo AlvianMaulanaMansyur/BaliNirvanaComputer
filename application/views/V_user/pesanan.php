@@ -26,7 +26,7 @@
                     <?php
                    setlocale(LC_TIME, 'id_ID');
 
-                   $formattedMonthYear = strftime("%A, %d %B %Y", strtotime($order[0]['create_time']));
+                   $formattedMonthYear = strftime("%, %d %B %Y", strtotime($order[0]['create_time']));
                    
                     ?>
                     <h6>Tanggal:</h6>
