@@ -124,11 +124,11 @@ class AuthCustomer extends CI_Controller
             $email = $this->input->post('email');
             $user = $this->db->get_where('customer', ['email' => $email])->row_array();
 
-            $link = base_url('AuthCustomer/editPass');
-            $subject = 'lupa Password';
+            $link = base_url('AuthCustomer/Change_Password');
+            $subject = 'Password Recovery';
             $message =
                 "<html>
-                    <p>silahkan mengklik link di bawah ini untuk mengganti password anda </p>
+                    <p>silahkan klik link di bawah untuk mengganti password anda! </p>
                     <a href='$link'>ganti password</a>
                 <html>";
             if ($user) {
@@ -136,19 +136,53 @@ class AuthCustomer extends CI_Controller
                 $this->send_email($email, $subject, $message);
                 // $this->edit;
                 if (isset($email)) {
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">
-                        pliss check your email </div>');
+                    $this->session->set_flashdata('error_message', '<div class="alert alert-success" role="alert">
+                        please check your email! </div>');
                     redirect('AuthCustomer/forgotPassword');
                 } else {
                     redirect('AuthCustomer/login');
                 }
             } else {
-                $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
+                $this->session->set_flashdata('error_message', '<div class="alert alert-danger" role="alert">
                 your email was not found </div>');
                 redirect('AuthCustomer/forgotPassword');
             }
         }
         $this->load->view('customer/forgotPass', $data);
+    }
+
+    public function Change_Password()
+    {
+        $this->form_validation->set_rules('password_customer', 'Password Customer', 'trim|required|min_length[8]|matches[password1]', array(
+            'min_length' => 'password atleast contain 8 characters!',
+            'matches' => 'password is not the same'
+
+        ));
+        $this->form_validation->set_rules('password1', 'Password1', 'trim|required|min_length[8]|matches[password_customer]', array(
+            'min_length' => 'password atleast contain 8 characters!',
+            'matches' => 'password is not the same'
+        ));
+        if ($this->form_validation->run() == false) {
+        $data = [
+            'header' => 'V_partials/loginRegister/header',
+            'content' => 'V_partials/loginRegister/change_pass',
+            'js' => 'V_partials/loginRegister/js'
+        ];
+        $this->load->view('customer/forgotPass', $data);
+        } else  {
+            $password = $this->input->post('password_customer');
+            $email = $this->session->userdata('reset');
+
+            $this->db->set('password_customer', $password);
+            $this->db->where('email', $email);
+            $this->db->update('customer');
+
+            $this->session->unset_userdata('reset');
+
+            $this->session->set_flashdata('error_message', '<div class="alert alert-success" role="alert">
+            password has been changed!</div>');
+            redirect('AuthCustomer/login');
+        }
     }
 
     public function send_email($to, $subject, $message)

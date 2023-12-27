@@ -55,7 +55,7 @@ class M_personalInfo extends CI_Model {
         $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
         $this->db->where('id_customer', $id_customer);
         $result = $this->db->get()->result_array();
-        return $result[0];
+        return $result;
     }
 
     public function kotaKec() {

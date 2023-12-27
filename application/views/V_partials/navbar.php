@@ -2,7 +2,7 @@
     <div class="logo"><a href="<?php echo site_url('') ?>">Bali Nirvana <span>Computer</span></a></div>
     <div class="logo_singkat"><a href="<?php echo site_url('') ?>">BN<span>C</span></a></div>
     <ul class="links">
-       
+
         <li class="<?php echo ($this->uri->segment(1) == 'home' || $this->uri->segment(1) == '') ? 'active' : ''; ?>"><a href="<?php echo site_url('home') ?>">Home</a></li>
         <li class="<?php echo ($this->uri->segment(1) == 'shop') ? 'active' : ''; ?>"><a href="<?php echo site_url('shop') ?>">Shop</a></li>
         <li class="<?php echo ($this->uri->segment(1) == 'about') ? 'active' : ''; ?>"><a href="<?php echo site_url('about') ?>">About Us</a></li>
@@ -15,6 +15,7 @@
     </form>
 
     <div class="icon">
+    <div class="search-icon"><i class="fa-solid fa-search"></i></div>
         <!-- Untuk Keranjang -->
         <li>
             <a href="<?php echo base_url('cart') ?>">
@@ -26,7 +27,7 @@
         <!-- Untuk Lonceng (Orders) -->
         <li>
             <a href="<?php echo base_url('orders') ?>">
-                <i class="fa-regular fa-bell"></i>
+                <i class="fa-solid fa-box-open " style="font-size :  20px"></i>
                 <span class="order-count badge badge-light">0</span>
             </a>
         </li>
@@ -35,9 +36,8 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-                <li><a class="dropdown-item" href="">Profile</a></li>
 
-                <li><a class="dropdown-item" href="<?php echo base_url('profil') ?>">Settings</a></li>
+                <li><a class="dropdown-item" href="<?php echo base_url('profil') ?>">Profile</a></li>
 
                 <li>
                     <hr class="dropdown-divider" />
@@ -91,4 +91,40 @@
             });
         }
     });
+
+    
+        const toggleBtn = document.querySelector('.toggle_btn')
+        const toggleBtnIcon = document.querySelector('.toggle_btn i')
+        const dropDownMenu = document.querySelector('.dropdown_menu')
+        const searchForm = document.querySelector('.form-search');
+        const searchIcon = document.querySelector('.search-icon');
+        const searchIconI = document.querySelector('.search-icon i');
+
+        toggleBtn.onclick = function() {
+            dropDownMenu.classList.toggle('open')
+            const isOpen = dropDownMenu.classList.contains('open')
+
+            toggleBtnIcon.classList = isOpen ?
+                'fa-solid fa-x' :
+                'fa-solid fa-bars'
+        }
+
+        searchIcon.onclick = function() {
+            /**
+             * cek apakah class name dari icon i adalah x
+             * jika iya maka tutup search form dan ubah icon x menjadi icon search
+             */
+            if (searchIconI.className == 'fa-solid fa-x') {
+                searchForm.style.display = 'none';
+                searchIconI.className = 'fa-solid fa-search';
+
+                return;
+            }
+            /**
+             * munculkan search form dan ubah
+             * search icon menjadi x
+             */
+            searchForm.style.display = "flex"
+            searchIconI.className = 'fa-solid fa-x';
+        }
 </script>

@@ -35,7 +35,7 @@ class User extends CI_Controller
         $customer_data = $this->Customer_model->get_customer_data($id_customer);
         // var_dump($customer_data);die;
         $data = [
-            'title' => 'Profil Pengguna',
+            'title' => 'Profile Pengguna',
             'content' => 'customer/info',
             'customer_data' => $customer_data,
         ];
@@ -191,12 +191,9 @@ class User extends CI_Controller
 // var_dump($personal_info);die;
             // Lanjutkan ke proses checkout jika validasi berhasil
             if (!empty($personal_info)) {
-                $data['existingKecamatanId'] = $personal_info['id_kecamatan'];
-                $data['existingKotaId'] = $personal_info['id_kota_kab'];
                 $content = 'V_user/checkout1';
 
             } else {
-                $data['existing_personal_info'] = '';
                 $content = 'V_user/checkout';
             }
 

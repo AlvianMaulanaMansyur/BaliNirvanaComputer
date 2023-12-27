@@ -189,7 +189,6 @@ class M_pesanan extends CI_Model
         $this->db->order_by('pesanan.status_pesanan', 'asc');
         $this->db->order_by('pesanan.create_time', 'asc');
 
-
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
@@ -243,7 +242,7 @@ class M_pesanan extends CI_Model
         // var_dump($personal_info);die;
         $order_data = array(
             'id_customer' => $customer_id,
-            'alamat_pengiriman' => $alamat . ', ' . $personal_info['kecamatan'] . ', ' . $personal_info['kota'] . ', ' . $personal_info['kodepos'],
+            'alamat_pengiriman' => $alamat . ', ' . $personal_info[0]['kecamatan'] . ', ' . $personal_info[0]['kota'] . ', ' . $personal_info[0]['kodepos'],
             'detail_alamat_pengiriman' => $detail_alamat,
             'status_pesanan' => '0',
         );
