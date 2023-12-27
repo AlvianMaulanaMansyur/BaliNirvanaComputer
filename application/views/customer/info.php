@@ -5,7 +5,7 @@
             <div class="card mb-4 mb-xl-0 animate__animated animate__fadeInUp" style="border-radius: 20px;">
                 <div class="card-body" style="font-family: 'Poppins', sans-serif; ">
                     <!-- <?php var_dump($customer_data) ?> -->
-                    <div class="mb-4 text-center" style="font-size: 1.2rem; font-weight: 500;">Selamat datang, <?php echo $customer_data['username']; ?></div>
+                    <div class="mb-4 text-center" style="font-size: 1.2rem; font-weight: 500;">Selamat datang, <?php echo $customer_data['nama_customer']; ?></div>
                     <div class="" style="padding-bottom: 0.5rem;">
                         berikut kami tampilkan mengenai data personal info anda. <br>
                         <br>
@@ -43,7 +43,7 @@
                         <!-- <button class="btn btn-primary mb-4 mt-4" type="button">save</button> -->
                         <!-- back button -->
                         <div class="d-flex justify-content-end">
-                            <a href="home"><button class="btn btn-primary mb-4 " type="button" style="margin-top: -3.9rem;">back</button></a>
+                            <a href="home"><button class="btn btn-primary mb-4 " type="button" style="margin-top: -2.5rem;">back</button></a>
                         </div>
                     </form>
                 </div>

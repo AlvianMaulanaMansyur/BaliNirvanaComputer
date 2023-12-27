@@ -243,7 +243,7 @@ class M_pesanan extends CI_Model
         // var_dump($personal_info);die;
         $order_data = array(
             'id_customer' => $customer_id,
-            'alamat_pengiriman' => $alamat . ', ' . $personal_info['kecamatan'] . ', ' . $personal_info['kota'] . ', ' . $personal_info['kodepos'],
+            'alamat_pengiriman' => $alamat . ', ' . $personal_info[0]['kecamatan'] . ', ' . $personal_info[0]['kota'] . ', ' . $personal_info[0]['kodepos'],
             'detail_alamat_pengiriman' => $detail_alamat,
             'status_pesanan' => '0',
         );

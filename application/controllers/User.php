@@ -191,12 +191,9 @@ class User extends CI_Controller
 // var_dump($personal_info);die;
             // Lanjutkan ke proses checkout jika validasi berhasil
             if (!empty($personal_info)) {
-                $data['existingKecamatanId'] = $personal_info['id_kecamatan'];
-                $data['existingKotaId'] = $personal_info['id_kota_kab'];
                 $content = 'V_user/checkout1';
 
             } else {
-                $data['existing_personal_info'] = '';
                 $content = 'V_user/checkout';
             }
 

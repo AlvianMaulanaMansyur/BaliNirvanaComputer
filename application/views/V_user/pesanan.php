@@ -24,10 +24,9 @@
                 </div>
                 <div class="" style="text-align: end;">
                     <?php
-                   setlocale(LC_TIME, 'id_ID');
 
-                   $formattedMonthYear = strftime("%A, %d %B %Y", strtotime($order[0]['create_time']));
-                   
+                    $formattedMonthYear = date("l, d M Y", strtotime($order[0]['create_time']));
+
                     ?>
                     <h6>Tanggal:</h6>
                     <p>
@@ -38,11 +37,11 @@
 
                     <div>
                         <h6>No. Pesanan:</h6>
-                    <?php echo $order[0]['id_pesanan'] ?>
+                        <?php echo $order[0]['id_pesanan'] ?>
                     </div>
                 </div>
 
-               
+
             </div>
 
             <div class="row d-flex">
@@ -83,14 +82,20 @@
 
     </div>
 
-    <div class="d-flex container mt-4 col-sm-12 col-md-7 col-lg-5" style="justify-content: right;">
-        <button id="downloadAsImage" class="btn" style="background: #D21312;color:white"><i class="fa-solid fa-download me-2"></i>Download Invoice</button>
-    </div>
+    <div class=" container mt-4 col-sm-12 col-md-7 col-lg-5 " style="">
+        
+    <button id="downloadAsImage" class="btn btn-danger p-3 ">
+        <i class="fa-solid fa-download me-2 "></i>Download Invoice
+    </button>
+
+    <button class="btn btn-success  me-2 p-3">
+    <i class="fa-solid fa-comments-dollar"></i>
+        <a href="https://wa.me/6287762722287?text= Hai, Saya ingin melakukan checkout pada barang ini!" class="text-white" target="_blank">BAYAR SEKARANG!</a>
+    </button>
+</div>
+
 
     <div class="d-flex container  col-lg-5 col-sm-10 flex-column align-items-center pt-3">
-    <span>
-        silahkan download invoice untuk melakukan pembayaran!</span>
-        <h5 class="wa_pembayaran">Hubungi Wa Berikut Untuk Melakukan Pembayaran</h5>
-        <a href="https://wa.me/6287762722287?text= Hai" class="" style="right:0;bottom: 0;z-index: 1;margin:20px;" target="_blank"><i class="fa-brands fa-whatsapp " style="color: #17c200;font-size: 80px;"></i></a>
+
     </div>
 </section>
