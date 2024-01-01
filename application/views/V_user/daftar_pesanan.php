@@ -5,11 +5,11 @@
 </div>
 
 <div class="container d-flex flex-column align-items-center">
-   
+
     <?php $no = 1; ?>
     <?php foreach ($orders as $id => $order) { ?>
         <div class="card mb-3 col-lg-10 col-md-11 col-sm-12">
-            
+
             <div class="row d-flex px-3 pt-2">
                 <div class="col">
                     <div class="ps-4 pt-2 d-flex flex-sm-row flex-column align-items-start">
@@ -21,30 +21,31 @@
                     </div>
 
 
-                            <?php foreach ($order['details'] as $detail) { ?>
-                                
+                    <?php foreach ($order['details'] as $detail) { ?>
 
-                                    <div class="row d-flex pt-3">
-                                        <div class="d-flex col-lg-7 col-md-9 col-sm-12">
-                                            <div>
-                                                <img src="<?php echo base_url($detail['url_foto']) ?>" class="border rounded me-3" style="width: 100px; height: 100px;" />
-                                            </div>
 
-                                            <div>
-                                                <p class="mb-0"><?php echo $detail['nama_produk'] ?></p>
-                                                <small class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $detail['qty_produk'] ?></small>
-                                            </div>
-                                        </div>
+                        <div class="row d-flex pt-3">
+                            <div class="d-flex col-lg-7 col-md-6 col-sm-6 ps-5 mb-3">
+                                <div>
+                                    <img src="<?php echo base_url($detail['url_foto']) ?>" class="border rounded me-3" style="width: 100px; height: 100px;" />
+                                </div>
 
-                                        <div class="col-lg-5 col-md-3 col-sm-12 pt-lg-0 pt-sm-3 ps-sm-3 ps-lg-0">
-                                            <h6 class="mb-0"><span class="format"><?php echo $detail['harga_produk'] ?></span></h6>
-                                        </div>
-                                        <div class="mt-2 border border-1"></div>
-                                    </div>
+                                <div>
+                                    <p class="mb-0"><?php echo $detail['nama_produk'] ?></p>
+                                    <small class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $detail['qty_produk'] ?></small>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-6 col-sm-6">
+                                    <h6 class=""><span class="format"><?php echo $detail['harga_produk'] ?></span></h6>
+                            </div>
 
-                                
-                            <?php } ?>
-                       
+
+                            <div class="mt-2 border border-1"></div>
+                        </div>
+
+
+                    <?php } ?>
+
 
                     <div class="d-flex flex-column mb-4 pt-3" style="justify-content: center;align-items: end;">
                         <h5 class="">Total : <span class="format"><?php echo $order['total'] ?></span></h5>

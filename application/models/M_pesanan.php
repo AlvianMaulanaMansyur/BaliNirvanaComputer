@@ -189,7 +189,6 @@ class M_pesanan extends CI_Model
         $this->db->order_by('pesanan.status_pesanan', 'asc');
         $this->db->order_by('pesanan.create_time', 'asc');
 
-
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {

@@ -23,7 +23,7 @@
 
                                 <div class="ps-4 pt-2 d-flex flex-sm-row flex-column align-items-start">
                                     <?php
-                                    $formattedMonthYear = date("d F Y", strtotime($order[0]['create_time']));
+                                    $formattedMonthYear = date("d F Y", strtotime($order['create_time']));
                                     ?>
                                     <h5 class="me-2"><?php echo $formattedMonthYear ?></h5>
                                     <div class="" style="align-items: end;justify-content: end;">

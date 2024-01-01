@@ -24,9 +24,7 @@
                 </div>
                 <div class="" style="text-align: end;">
                     <?php
-
                     $formattedMonthYear = date("l, d M Y", strtotime($order[0]['create_time']));
-
                     ?>
                     <h6>Tanggal:</h6>
                     <p>
@@ -41,7 +39,7 @@
                     </div>
                 </div>
 
-
+               
             </div>
 
             <div class="row d-flex">
