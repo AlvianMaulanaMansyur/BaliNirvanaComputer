@@ -138,11 +138,11 @@
             <!-- ajdfadf -->
             <!-- </div>
         <button id="downloadAsImage" class="col-1">Download sebagai Gambar</button> -->
-            <div class="footer">
-                <?php $this->load->view('V_partials/footer'); ?>
-            </div>
     </div>
-
+    <div class="footer">
+        <?php $this->load->view('V_partials/footer'); ?>
+    </div>
+    
     <?php $this->load->view('V_partials/script');
     ?>
     <script>

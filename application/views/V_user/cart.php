@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="col-lg-3 col-sm-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
-                    <div class="input-group input-group-sm d-flex me-5 col-lg-8 col-sm-3 col-md-5 w-75 pt-3" style="justify-content: center;align-items: ;">
+                    <div class="input-group input-group-sm d-flex me-5 col-lg-8 col-sm-3 col-md-5 w-75 pt-3" style="justify-content: center;">
 
                         <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart'] ?>" data-stock="<?php echo $key['stok_produk'] ?>" onclick="validateAndSetQuantity(this, 'decrease', event)" <?php echo ($key['qty_produk'] <= 1) ? 'disabled' : ''; ?> style="height: 30px; width: 33%;" data-action='decrease'>
                             <i class="fa-solid fa-minus"></i>
@@ -60,13 +60,13 @@
 
                     </div>
 
-                    <div class="d-flex flex-column pt-3" style="justify-content: ;">
+                    <div class="d-flex flex-column pt-3">
                         <h6><span id="subtotal_<?php echo $key['id_cart']; ?>" class="format"><?php $key['harga_produk'] * $key['qty_produk']; ?></span></h6>
                         <small class="text-muted text-nowrap"><span class="format"><?php echo $key['harga_produk'] ?></span>/per item</small>
                     </div>
                 </div>
 
-                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2 pt-3" style="align-items: ;">
+                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2 pt-3" style="">
                     <div class="float-md-end">
                         <!--                   <a href="#!" class="btn btn-light border px-2 icon-hover-primary"><i class="fas fa-heart fa-lg px-1 text-secondary"></i></a> -->
                         <a href="<?php echo base_url('user/deleteCart/') . $key['id_cart'] ?>" class="btn btn-light border text-danger icon-hover-danger delete-cart-item"> Hapus</a>
