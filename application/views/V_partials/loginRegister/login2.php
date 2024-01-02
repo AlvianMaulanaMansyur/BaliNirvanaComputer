@@ -48,7 +48,7 @@
                 </p>
                 <p class="mb-4">
                     <a href="<?= base_url('authCustomer/register'); ?>" class="text-center">Belum Punya Akun? DAFTAR</a>
-                </p>
+                </p>    
                 </center>
             </div>
             <!-- /.login-card-body -->

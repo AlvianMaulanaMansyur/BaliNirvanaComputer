@@ -1,152 +1,181 @@
-.card-img-top{
-    border-radius: 15px;
-    padding: 20px;
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 
 }
-.card{
-    border-radius: 30px;
+
+.card {
+
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 
 }
-.col_kategori{
+
+.col_kategori {
     width: 14rem;
     margin-right: 1rem;
     margin-left: 1rem;
 }
-.btn-primary{
+
+.btn-primary {
     border-radius: 50px;
     width: 120px;
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background-color: black;
 }
-.box1{
-    width:100%;
-height:100px;
-background:#f8f8f8;
-border-radius: 20px;
-box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+
+.box1 {
+    width: 100%;
+    height: 100px;
+    background: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 }
-.rekomendasi{
+
+.rekomendasi {
     font-size: 2rem;
-   padding-top: 1.5rem;
-   font-weight: 600;
+    padding-top: 1.5rem;
+    font-weight: 600;
 }
-.rekomendasi:hover{
+
+.rekomendasi:hover {
     scale: 1.05;
     color: #2B2A4C;
 }
-.box2{
-    width:100%;
-height:195px;
-background:#f8f8f8;
-border-radius: 20px;
+
+.box2 {
+    width: 100%;
+    height: 195px;
+    background: #f8f8f8;
+    border-radius: 20px;
 }
-.pelanggan{
+
+.pelanggan {
     color: black;
     font-size: 1rem;
-    font-family:'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin-left: 19rem;
 }
-.bnc{
-    font-family:'Poppins', sans-serif;
+
+.bnc {
+    font-family: 'Poppins', sans-serif;
     font-size: 2rem;
     font-weight: bold;
     color: #D21312;
     margin-left: 19rem;
 }
-.bnc span{
+
+.bnc span {
     color: black;
 }
-.rkp{
-   width: 20rem; 
+
+.rkp {
+    width: 100rem;
 }
 
-@media(max-width: 1204px){
+@media(max-width: 1204px) {
     .co {
-        width: 8rem; /* Atur ukuran yang lebih kecil sesuai kebutuhan Anda */
+        width: 8rem;
+        /* Atur ukuran yang lebih kecil sesuai kebutuhan Anda */
     }
-    .col_kategori{
+
+    .col_kategori {
         width: 10rem;
         margin-right: 0.5rem;
         margin-left: 0.5rem;
     }
-    .box1{
-        width:100%;
-        height:50px;
+
+    .box1 {
+        width: 100%;
+        height: 50px;
     }
-    .rekomendasi{
+
+    .rekomendasi {
         padding-top: 0.5rem;
         font-weight: 600;
         font-size: 20px;
-     }
-     .box2{
-        width:100%;
-        height:165px;
     }
-    .bnc{
-        font-family:'Poppins', sans-serif;
+
+    .box2 {
+        width: 100%;
+        height: 165px;
+    }
+
+    .bnc {
+        font-family: 'Poppins', sans-serif;
         font-size: 1.5rem;
         font-weight: bold;
     }
-    .pelanggan{
+
+    .pelanggan {
         color: black;
         font-size: 14px;
-        font-family:'Poppins', sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
-    .rkp{
-        width: 14rem; 
-        
-     }
-     .rkp_body p{
+
+    .rkp {
+        width: 140rem;
+
+    }
+
+    .rkp_body p {
         font-size: 0.8rem;
-     }
-     .rkp_body h5{
+    }
+
+    .rkp_body h5 {
         font-size: 1rem;
-     }
-     .rkp_body .rkp_ket{
+    }
+
+    .rkp_body .rkp_ket {
         font-size: 1rem;
-     }
-     .rkp_body .rkp_ket btn{
+    }
+
+    .rkp_body .rkp_ket btn {
         width: 18px;
-     }
-     .pelanggan{
+    }
+
+    .pelanggan {
         color: black;
         font-size: 0.7rem;
-        font-family:'Poppins', sans-serif;
+        font-family: 'Poppins', sans-serif;
         margin-left: 0.5rem;
     }
-    .bnc{
-        font-family:'Poppins', sans-serif;
+
+    .bnc {
+        font-family: 'Poppins', sans-serif;
         font-size: 1rem;
         font-weight: bold;
         color: #D21312;
         margin-left: 0.5rem;
     }
 }
-@media(max-width: 690px){
-    .pelanggan{
+
+@media(max-width: 690px) {
+    .pelanggan {
         color: black;
         font-size: 0.7rem;
-        font-family:'Poppins', sans-serif;
+        font-family: 'Poppins', sans-serif;
         margin-left: 0.5rem;
     }
-    .bnc{
-        font-family:'Poppins', sans-serif;
+
+    .bnc {
+        font-family: 'Poppins', sans-serif;
         font-size: 1rem;
         font-weight: bold;
         color: #D21312;
         margin-left: 0.5rem;
     }
-    .box1{
-        width:100%;
-        height:40px;
+
+    .box1 {
+        width: 100%;
+        height: 40px;
     }
-    .box2{
-        width:100%;
-        height:153px;
+
+    .box2 {
+        width: 100%;
+        height: 153px;
     }
-    .rkp{
-        width: 187px;
-    }
+
 }
