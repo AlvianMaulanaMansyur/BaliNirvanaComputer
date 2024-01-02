@@ -87,10 +87,22 @@
 
         <div class="rkp card">
           <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
-            <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
+            <?php if ($product['stok_produk'] <= 0) : ?>
+              <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="opacity: 0.3;">
+
+            <?php else : ?>
+              <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar">
+            <?php endif ?>
             <div class="rkp_body card-body">
+
           </a>
-          <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
+          <div class="d-flex">
+            <h5 class="card-title me-2"><?php echo $product['nama_produk'] ?>
+            </h5>
+            <?php if ($product['stok_produk'] <= 0) : ?>
+              <smal class="text-muted">Stok Habis</small>
+              <?php endif ?>
+          </div>
         </div>
         <div class="rkp_ket  mb-3">
           <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
@@ -106,8 +118,6 @@
 <div class="d-flex justify-content-center mt-3">
 
 </div>
-
 </div>
 </div>
-
 </div>

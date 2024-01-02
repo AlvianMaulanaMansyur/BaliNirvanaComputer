@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins';
+}
+
+.container-fluid {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Style untuk checkbox */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+
+}
+
+/* Style untuk tanda centang pada checkbox yang tercentang */
+input[type="checkbox"]:checked {
+    background-color: #D21312;
+    /* Warna latar belakang saat tercentang */
+    border: none;
+    /* Warna border saat tercentang */
+}
+
+/* Style untuk tanda centang pada checkbox */
+input[type="checkbox"]:checked:after {
+    content: '\2714';
+    /* Unicode untuk tanda centang */
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container-fluid {
+    min-height: 100vh;
+    z-index: 1;
+}
+
+.footer {
+    position: relative;
+    background-color: #f8f8f8;
+    margin-top: auto;
+}
+
+.foto-card {
+    cursor: pointer;
+}
+
+li {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+    /* Atur jarak antar ikon */
+}
+
+/* Styling untuk ikon keranjang dan lonceng */
+.fa-cart-shopping,
+.fa-bell {
+    font-size: 20px;
+    /* Sesuaikan dengan ukuran yang diinginkan */
+    position: relative;
+    /* Tetapkan posisi ke relatif */
+}
+
+/* Styling untuk span count */
+.cart-count,
+.order-count {
+    position: absolute;
+    top: -15px;
+    /* Sesuaikan dengan posisi vertikal */
+    right: -20px;
+    /* Sesuaikan dengan posisi horizontal */
+    background-color: red;
+    /* Warna latar belakang */
+    color: #fff;
+    /* Warna teks */
+    border-radius: 50%;
+    /* Untuk membuat sudut span menjadi lingkaran */
+    padding: 4px 8px;
+    /* Sesuaikan dengan kebutuhan Anda */
+    font-size: 12px;
+    /* Sesuaikan dengan ukuran yang diinginkan */
+}

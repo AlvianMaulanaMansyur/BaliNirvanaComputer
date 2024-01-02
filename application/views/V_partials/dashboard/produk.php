@@ -57,112 +57,113 @@
                                         <!-- <button type="button" class="btn btn-primary show-all-button" data-bs-toggle="modal" data-bs-target="#deskripsiModal<?php echo $product['id_produk']; ?>" style="font-size: 13px; border-radius: 20px; padding: 6px 12px;">
                                         Lihat selengkapnya
 
-                                    </button> -->     
-                                </div>
-                            </td>
-
+                                    </button> -->
                                     </div>
                                 </td>
 
-                                <!-- Modal untuk menampilkan semua deskripsi -->
-                                <div class="modal fade" id="deskripsiModal<?php echo $product['id_produk']; ?>" tabindex="-1" aria-labelledby="deskripsiModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deskripsiModalLabel">Deskripsi Produk</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <pre>
+        </div>
+        </td>
+
+        <!-- Modal untuk menampilkan semua deskripsi -->
+        <div class="modal fade" id="deskripsiModal<?php echo $product['id_produk']; ?>" tabindex="-1" aria-labelledby="deskripsiModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deskripsiModalLabel">Deskripsi Produk</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <pre>
                                             <p><?php echo $product['deskripsi_produk']; ?></p>
                                         </pre>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <td>
+            <?php
+                            // Fetch and display photos for the current product
+                            $product_photos = $this->M_produk->getProductPhotos($product['id_produk']);
+                            foreach ($product_photos as $photo) {
+                                echo '<img src="' . base_url($photo['url_foto']) . '" alt="Gambar" style="width: 100px;height: auto;">';
+                            }
+            ?>
+        </td>
+        <td>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $product['id_produk']; ?>"><i class="fa-regular fa-pen-to-square"></i></button>
+
+            <!-- Display alert before deleting -->
+            <button class="btn btn-danger delete-product-item" data-id="<?php echo $product['id_produk']; ?>" data-name="<?php echo $product['nama_produk']; ?>"><i class="fa-solid fa-trash"></i>
+            </button>
+        </td>
+        </tr>
+
+    <?php endforeach; ?>
+<?php else : ?>
+    <tr>
+        <td colspan="10">
+            <?php if (isset($results) && !empty($results)) : ?>
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <th>No</th>
+                        <th>ID Produk</th>
+                        <th>Category</th>
+                        <th>Nama Produk</th>
+                        <th>Stok</th>
+                        <th>Harga</th>
+                        <th>Deskripsi Produk</th>
+                        <th>Foto Produk</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <?php $no = 1 ?>
+                        <?php foreach ($results as $result) : ?>
+                            <tr>
+                                <td><?php echo $no++; ?></td>
+                                <td><?php echo $result->id_produk ?></td>
+                                <td><?php echo $result->nama_category ?></td>
+                                <td><?php echo $result->nama_produk ?></td>
+                                <td><?php echo $result->stok_produk ?></td>
+                                <td><?php echo $result->harga_produk ?></td>
+
+                                <td><?php echo $result->deskripsi_produk ?></td>
                                 <td>
                                     <?php
                                     // Fetch and display photos for the current product
-                                    $product_photos = $this->M_produk->getProductPhotos($product['id_produk']);
+                                    $product_photos = $this->M_produk->getProductPhotos($result->id_produk);
                                     foreach ($product_photos as $photo) {
                                         echo '<img src="' . base_url($photo['url_foto']) . '" alt="Gambar" style="width: 100px;height: auto;">';
                                     }
                                     ?>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $product['id_produk']; ?>"><i class="fa-regular fa-pen-to-square"></i></button>
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>"><i class="fa-regular fa-pen-to-square"></i></button>
+                                    <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>">Edit</button> -->
 
                                     <!-- Display alert before deleting -->
-                                    <button class="btn btn-danger delete-product-item" data-id="<?php echo $product['id_produk']; ?>" data-name="<?php echo $product['nama_produk']; ?>"><i class="fa-solid fa-trash"></i>
+                                    <button class="btn btn-danger delete-product-item" data-id="<?php echo $result->id_produk; ?>" data-name="<?php echo $result->nama_produk; ?>">
+                                        Delete
                                     </button>
                                 </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <tr>
-                            <td colspan="10">
-                                <?php if (isset($results) && !empty($results)) : ?>
-                                    <table class="table table-striped">
-                                        <thead class="table-dark">
-                                            <th>No</th>
-                                            <th>ID Produk</th>
-                                            <th>Category</th>
-                                            <th>Nama Produk</th>
-                                            <th>Stok</th>
-                                            <th>Harga</th>
-                                            <th>Deskripsi Produk</th>
-                                            <th>Foto Produk</th>
-                                            <th>Action</th>
-                                        </thead>
-                                        <tbody>
-                                            <?php $no = 1 ?>
-                                            <?php foreach ($results as $result) : ?>
-                                                <tr>
-                                                    <td><?php echo $no++; ?></td>
-                                                    <td><?php echo $result->id_produk ?></td>
-                                                    <td><?php echo $result->nama_category ?></td>
-                                                    <td><?php echo $result->nama_produk ?></td>
-                                                    <td><?php echo $result->stok_produk ?></td>
-                                                    <td><?php echo $result->harga_produk ?></td>
-
-                                                    <td><?php echo $result->deskripsi_produk ?></td>
-                                                    <td>
-                                                        <?php
-                                                        // Fetch and display photos for the current product
-                                                        $product_photos = $this->M_produk->getProductPhotos($result->id_produk);
-                                                        foreach ($product_photos as $photo) {
-                                                            echo '<img src="' . base_url($photo['url_foto']) . '" alt="Gambar" style="width: 100px;height: auto;">';
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                        <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $result->id_produk; ?>">Edit</button> -->
-
-                                                        <!-- Display alert before deleting -->
-                                                        <button class="btn btn-danger delete-product-item" data-id="<?php echo $result->id_produk; ?>" data-name="<?php echo $result->nama_produk; ?>">
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else : ?>
-                <p>Tidak Ada data Barang yang tersedia</p>
-            <?php endif; ?>
-            </td>
-            </tr>
-        <?php endif; ?>
-        </tbody>
-        </table>
-        </div>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+<?php else : ?>
+    <p>Tidak Ada data Barang yang tersedia</p>
+<?php endif; ?>
+</td>
+</tr>
+<?php endif; ?>
+</tbody>
+</table>
     </div>
+</div>
 </div>
 
 <!-- Modal Insert-->
@@ -285,29 +286,72 @@
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="deskripsi_produk"><?php echo $key['deskripsi_produk'] ?></textarea>
                             </div>
 
-                            <!-- Edit form in your view -->
-                            <?php $existing_photos = $this->M_produk->getProductPhotos($key['id_produk']);
-                            foreach ($existing_photos as $photo) {
-                                echo '<img src="' . base_url($photo['url_foto']) . '" alt="Gambar" style="width: 100px;height: auto;">';
-                                // Add a hidden input for each existing photo URL
-                                echo '<input type="hidden" name="gambar_lama[]" value="' . $photo['url_foto'] . '">';
-                            } ?>
+                            <?php
+                            $existing_photos = $this->M_produk->getProductPhotos($key['id_produk']);
 
+                            // usort($existing_photos, function ($a, $b) {
+                            //     return $a['urutan_foto'] - $b['urutan_foto'];
+                            // });
 
-                            <div class="mb-3">
-                                <label for="Foto_produk1" class="form-label">Foto Produk 1 (Wajib)</label>
-                                <input type="file" name="foto_produk1" class="form-control" id="Foto_produk1">
-                            </div>
+                            $count_existing_photos = count($existing_photos);
+                            $photo_urls = [];
 
-                            <div class="mb-3">
-                                <label for="Foto_produk2" class="form-label">Foto Produk 2 (Opsional)</label>
-                                <input type="file" name="foto_produk2" class="form-control" id="Foto_produk2">
-                            </div>
+                            for ($i = 0; $i < 3; $i++) : ?>
 
-                            <div class="mb-3">
-                                <label for="Foto_produk3" class="form-label">Foto Produk 3 (Opsional)</label>
-                                <input type="file" name="foto_produk3" class="form-control" id="Foto_produk3">
-                            </div>
+                                <?php
+                                if ($i < $count_existing_photos) {
+                                    $photo = $existing_photos[$i];
+                                    // Simpan URL foto ke dalam array dengan kunci urutan_foto
+                                    $photo_urls[$photo['urutan_foto']] = $photo['url_foto'];
+                                } 
+                                ?>
+
+                                <?php if ($i == 0) : ?>
+                                    <!-- <?php var_dump($photo_urls[$i + 1]) ?> -->
+                                    <img src="<?php echo base_url($photo_urls[$i + 1]) ?>" alt="Gambar" style="width: 100px; height: auto;">
+                                    <div class="mb-3">
+                                        <label for="Foto_produk<?php echo $i + 1; ?>" class="form-label">
+                                            Foto Produk <?php echo $i + 1; ?> (Wajib)
+                                        </label>
+                                        <input type="file" name="foto_produk<?php echo $i + 1; ?>" class="form-control" id="Foto_produk<?php echo $i + 1; ?>">
+                                    </div>
+                                <?php elseif ($i == 1) : ?>
+                                    <!-- <?php var_dump($photo_urls[$i + 1]) ?> -->
+                                    <?php if (empty($photo_urls[$i + 1])) : ?>
+                                    <?php else : ?>
+                                        <img src="<?php echo base_url($photo_urls[$i + 1]) ?>" style="width: 100px; height: auto;">
+                                        <input type="checkbox" name="delete_foto<?php echo $i + 1 ?>" value="<?php echo $i + 1 ?>"> Hapus Foto
+                                    <?php endif ?>
+
+                                    <div class="mb-3">
+
+                                        <label for="Foto_produk<?php echo $i + 1; ?>" class="form-label">
+                                            Foto Produk <?php echo $i + 1; ?> (Opsional)
+                                        </label>
+
+                                        <input type="file" name="foto_produk<?php echo $i + 1; ?>" class="form-control" id="Foto_produk<?php echo $i + 1; ?>">
+                                    </div>
+
+                                <?php elseif ($i == 2) : ?>
+                                    <!-- <?php var_dump($photo_urls[$i + 1]) ?> -->
+
+                                    <?php if (empty($photo_urls[$i + 1])||$photo_urls[$i+1]==null) : ?>
+                                    <?php else : ?>
+                                        <img src="<?php echo base_url($photo_urls[$i + 1]) ?>" style="width: 100px; height: auto;">
+                                        <input type="checkbox" name="delete_foto<?php echo $i + 1 ?>" value="<?php echo $i + 1 ?>"> Hapus Foto
+                                    <?php endif ?>
+
+                                    <div class="mb-3">
+
+                                        <label for="Foto_produk<?php echo $i + 1; ?>" class="form-label">
+                                            Foto Produk <?php echo $i + 1; ?> (Opsional)
+                                        </label>
+
+                                        <input type="file" name="foto_produk<?php echo $i + 1; ?>" class="form-control" id="Foto_produk<?php echo $i + 1; ?>">
+                                    </div>
+                                <?php endif ?>
+                            <?php endfor ?>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -393,6 +437,7 @@
                                 <label for="Foto_produk3" class="form-label">Foto Produk 3 (Opsional)</label>
                                 <input type="file" name="foto_produk3" class="form-control" id="Foto_produk3">
                             </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -431,6 +476,19 @@
                 }
             });
         });
+        <?php if ($this->session->flashdata('error')) { ?>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '<?php echo $this->session->flashdata('error'); ?>'
+            });
+        <?php } elseif ($this->session->flashdata('success')) { ?>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '<?php echo $this->session->flashdata('success'); ?>'
+            });
+        <?php } ?>
     });
 </script>
 
