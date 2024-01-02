@@ -68,10 +68,7 @@
 <script>
     $(document).ready(function() {
         updateCartAndOrderCount();
-
-        // ... (code lainnya)
-
-        // Fungsi untuk mengupdate jumlah produk dalam keranjang dan pesanan
+        
         function updateCartAndOrderCount() {
             // Lakukan AJAX request untuk mengambil jumlah produk dari server
             $.ajax({

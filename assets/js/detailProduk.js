@@ -1,4 +1,3 @@
-    // Fungsi untuk mengganti gambar di detail produk
     document.querySelectorAll('.foto-card').forEach(function(fotoCard) {
         fotoCard.addEventListener('click', function() {
             var newSrc = this.getAttribute('data-src');

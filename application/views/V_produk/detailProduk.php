@@ -7,7 +7,6 @@
                     <img src="<?php echo base_url($produk['url_foto']); ?>" alt="Foto Produk" style="width: 500px;height: auto;">
                 </div>
                 <div class="row">
-                    <!-- Tampilkan semua foto dalam bentuk card -->
                     <?php foreach ($produk['fotos'] as $foto) : ?>
                         <div class="card mb-3 foto-card d-flex col-3 me-3 " style="align-items: center;" data-src="<?php echo base_url($foto['url_foto']); ?>">
                             <img src="<?php echo base_url($foto['url_foto']); ?>" class="card-img-top" alt="Foto Produk" style="width: auto;height: 140px;">
@@ -61,7 +60,6 @@
                             <?php else : ?>
                                 <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()" style="background-color: #D21312;">Tambahkan ke <i class="me-1 fa-solid fa-cart-shopping"></i></button>
                             <?php endif ?>
-                            <!-- <button type="submit" class="btn btn-danger shadow-0"><i class="me-1 fa-solid fa-cart-shopping"></i>Keranjang</button> -->
                         </div>
 
                         <h3 class="pt-3">Deskripsi</h3>
@@ -81,4 +79,3 @@
     </div>
     </div>
 </section>
-<!-- end detail 

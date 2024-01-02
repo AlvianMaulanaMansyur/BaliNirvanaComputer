@@ -20,13 +20,12 @@
 
     </div>
     <div class="footer">
-        <?php $this->load->view('V_partials/footer'); ?>
+        <?php $this->load->view('V_partials/footer') ?>
     </div>
-    
-    <?php $this->load->view('V_partials/script');
-    ?>
 
-    <script>
+    <?php $this->load->view('V_partials/script') ?>
+
+    <!-- <script>
         const toggleBtn = document.querySelector('.toggle_btn')
         const toggleBtnIcon = document.querySelector('.toggle_btn i')
         const dropDownMenu = document.querySelector('.dropdown_menu')
@@ -61,16 +60,13 @@
             searchForm.style.display = "flex"
             searchIconI.className = 'fa-solid fa-x';
         }
-    </script>
-    <!-- scrip review -->
+    </script> -->
 
-    <!-- endscrip review -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
     </script>
 
-    <!-- testimoni -->
 
 
 </body>
