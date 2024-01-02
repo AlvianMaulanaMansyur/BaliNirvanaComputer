@@ -230,6 +230,13 @@ class M_pesanan extends CI_Model
         }
     }
 
+    public function cancelOrder($idPesanan)
+    {
+        // Perbarui kolom 'dibatalkan' pada tabel 'pesanan'
+        $this->db->where('id_pesanan', $idPesanan);
+        $this->db->update('pesanan', ['status_pesanan' => 2]);
+    }
+
     public function createOrder()
     {
         $customer_id = $this->session->userdata('customer_id');
