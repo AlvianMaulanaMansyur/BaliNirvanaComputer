@@ -12,19 +12,17 @@
             <?php $this->load->view('V_partials/navbar'); ?>
         </div>
 
-        <div class="">
+        <div>
             <?php $this->load->view($content); ?>
         </div>
 
         <a href="https://wa.me/6287762722287/?text= Hai" class="position-fixed" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i>
 
-
     </div>
-
     <div class="footer">
         <?php $this->load->view('V_partials/footer'); ?>
     </div>
-
+    
     <?php $this->load->view('V_partials/script');
     ?>
 
