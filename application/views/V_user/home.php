@@ -1,14 +1,17 @@
 <div class="col-12 h-50 mb-5 animate__animated animate__fadeInUp" style="border: rounded; margin-top: 
 20px;">
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-
+  <div class="carousel-inner">
+      
       <div class="carousel-item active">
-        <img src="<?php echo base_url('assets/foto/gambarCarosel.jpeg') ?>" class="d-block w-100 rounded" alt="..." style="height: auto;">
+        <img src="<?php echo base_url('assets/foto/PROMO THIS MONTH.png') ?>" class="d-block w-100 rounded" alt="...">
+      </div> 
+      <div class="carousel-item ">
+        <img src="<?php echo base_url('assets/foto/bali.png') ?>" class="d-block w-100 rounded" alt="..." style="height: auto;">
       </div>
-      <!-- <div class="carousel-item">
-        <img src="<?php echo base_url('assets/foto/huawei1.jpg') ?>" class="d-block w-100 rounded" alt="...">
-      </div> -->
+      <div class="carousel-item ">
+        <img src="<?php echo base_url('assets/foto/bali (1).png') ?>" class="d-block w-100 rounded" alt="..." style="height: auto;">
+      </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
