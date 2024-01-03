@@ -37,9 +37,17 @@ class Dashboard extends CI_Controller
 
     public function delete($id)
     {
-        $this->M_produk->deleteProduk($id);
-        redirect('dashboard/getproduk');
+        if (!$this->M_produk->deleteProduk($id)) {
+            // Penghapusan produk gagal karena terdapat pesanan terkait
+            $this->session->set_flashdata('error', 'Produk tidak dapat dihapus karena terkait dengan pesanan atau berada dalam cart.');
+            redirect('dashboard/getproduk');
+        } else {
+            // Produk berhasil dihapus
+            $this->session->set_flashdata('success', 'Produk berhasil dihapus.');
+            redirect('dashboard/getproduk');
+        }
     }
+
 
     public function updateOrder($id_pesanan)
     {
@@ -267,11 +275,10 @@ class Dashboard extends CI_Controller
             'selected_month' => $formattedMonthYear,
         ];
 
-        if($selectedMonth == '') {
+        if ($selectedMonth == '') {
             $data['content'] = 'V_partials/dashboard/monthly_report';
         } else {
             $data['content'] = 'V_partials/dashboard/monthly_report_table';
-            
         }
         $this->load->view('master', $data);
     }

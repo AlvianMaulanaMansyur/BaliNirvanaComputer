@@ -2,7 +2,7 @@
     <div class="mb-1 pt-1" style="opacity: 70%;">
         <br>
         <center>
-            <img src="assets/foto/empty-cart.png" alt="Cart Kosong" width="290" height="290" >
+            <img src="<?php echo base_url('assets/foto/empty-cart.png')?>" alt="Cart Kosong" width="290" height="290" >
         </center>
         <h4>Keranjang belanja Anda kosong</h4>
     </div>

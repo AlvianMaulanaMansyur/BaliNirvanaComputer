@@ -96,24 +96,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        // Menangani perubahan pada elemen select bulan dan tahun
-        $('#month').on('change', function() {
-            // Memeriksa apakah kedua pilihan sudah dipilih
-            var isMonthSelected = $('#month').val() == '';
-
-            // Mengaktifkan atau menonaktifkan tombol submit berdasarkan hasil pemeriksaan
-            $('#submitButton').prop('disabled', (isMonthSelected));
-        });
-
-        $('#year').on('change', function() {
-            // Memeriksa apakah kedua pilihan sudah dipilih
-            var isYearSelected = $('#year').val() == '';
-
-            // Mengaktifkan atau menonaktifkan tombol submit berdasarkan hasil pemeriksaan
-            $('#submitButton').prop('disabled', (isYearSelected));
-        });
-    });
-</script>

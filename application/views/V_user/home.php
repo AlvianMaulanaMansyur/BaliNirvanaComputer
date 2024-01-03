@@ -47,8 +47,8 @@
       <?php foreach ($category as $key) : ?>
         <div class="col_kategori">
           <a href="<?php echo base_url('category/') . strtolower($key['nama_category']) ?>">
-            <div class="card">
-              <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top" alt="">
+            <div class="card d-flex justify-content-center align-items-center pt-4">
+              <img src="<?php echo base_url($key['foto_category']); ?>" class="card-img-top " alt="" style="width:100px; height:100px; text-align:center;">
               <div class="card-body">
                 <h5 class="card-title"></h5>
                 <h5 class="card-title text-center"><a href="<?php echo base_url('category/') . strtolower($key['nama_category']) ?>"><?php echo $key['nama_category'] ?></a></h5>
@@ -87,10 +87,24 @@
 
         <div class="card" style="width: auto; height: auto; overflow: hidden; border: 1px solid #ccc; border-radius:10px;">
           <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
-            <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%;height: 100%;  object-fit: cover;">
+
+            <?php if ($product['stok_produk'] <= 0) : ?>
+              <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="opacity: 0.3; width: 100%;height: 100%;  object-fit: cover;">
+
+            <?php else : ?>
+              <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%;height: 100%;  object-fit: cover;">
+            <?php endif ?>
+
             <div class="rkp_body card-body">
+
           </a>
-          <h5 class="card-title"><?php echo $product['nama_produk'] ?></h5>
+          <div class="d-flex">
+            <h5 class="card-title me-2"><?php echo $product['nama_produk'] ?>
+            </h5>
+            <?php if ($product['stok_produk'] <= 0) : ?>
+              <smal class="text-muted">Stok Habis</small>
+              <?php endif ?>
+          </div>
         </div>
         <div class="rkp_ket  mb-3">
           <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
@@ -106,8 +120,6 @@
 <div class="d-flex justify-content-center mt-3">
 
 </div>
-
 </div>
 </div>
-
 </div>

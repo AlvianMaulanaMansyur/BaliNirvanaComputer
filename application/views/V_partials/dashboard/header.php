@@ -17,13 +17,20 @@
     <!-- Tambahkan script SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/pre.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/input.css') ?>">
+    
+    <script>
+        var base_url = '<?php echo base_url(); ?>';
+    </script>
 
     <style>
-    .disabled-link {
-        pointer-events: none; /* Menonaktifkan interaksi mouse */
-        opacity: 0.5; /* Menjadikan link menjadi semi-transparan */
-    }
-</style>
+        .disabled-link {
+            pointer-events: none;
+            /* Menonaktifkan interaksi mouse */
+            opacity: 0.5;
+            /* Menjadikan link menjadi semi-transparan */
+        }
+    </style>
 
 </head>
 

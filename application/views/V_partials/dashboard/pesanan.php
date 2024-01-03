@@ -5,7 +5,9 @@
             <?php echo form_open('Dashboard/search_pesanan', 'class=""'); ?>
             <div class="input-group" style="width: 230px;">
                 <?php echo form_input('keyword', '', 'class="form-control" placeholder="Search for..." aria-label="Search for..."'); ?>
-                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                <!-- <button class="btn btn-danger"  type="submit"><i class="fas fa-search"></i></button> -->
+                <button class="btn" type="submit" style="background: white;color: #D21312;border-color:#D21312"><i class="fas fa-search"></i></button>
+
             </div>
             <?php echo form_close(); ?>
         </div>
@@ -91,34 +93,5 @@
 
 
 <script>
-    function confirmUpdateOrder(orderId, orderStatus) {
-        // Pengecekan status pesanan
-        if (orderStatus == 1) {
-            Swal.fire({
-                title: "Pesanan Sudah Lunas",
-                text: "Pesanan ini sudah lunas dan tidak dapat diubah lagi.",
-                icon: "info",
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "OK"
-            });
-            return;
-        }
-
-        // Konfirmasi untuk pesanan yang belum lunas
-        Swal.fire({
-            title: "Update Order?",
-            text: "Apakah Anda yakin ingin mengupdate pesanan ini?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Ya, update!",
-            cancelButtonText: "Batal"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirect ke halaman updateOrder jika konfirmasi diterima
-                window.location.href = '<?php echo base_url("dashboard/updateOrder/"); ?>' + orderId;
-            }
-        });
-    }
+   
 </script>
