@@ -47,6 +47,7 @@
             <div id="monthlyReportContainer" class="pt-4">
 
                 <h2><?php echo $selected_month ?></h2>
+                <div class="table-responsive">
                 <?php if (empty($monthly_orders)) : ?>
                     <p>Tidak ada pesanan yang selesai.</p>
                 <?php else : ?>
@@ -84,6 +85,7 @@
                         </tbody>
                     </table>
                 <?php endif; ?>
+                </div>
             </div>
 
             <?php if (!empty($monthly_orders)) : ?>

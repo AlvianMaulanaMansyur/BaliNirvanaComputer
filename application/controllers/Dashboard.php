@@ -168,6 +168,7 @@ class Dashboard extends CI_Controller
             $this->load->view('V_partials/admin/edit', $data);
         }
     }
+
     public function search_Customer()
     {
         // Ambil data pencarian dari form
@@ -355,6 +356,19 @@ class Dashboard extends CI_Controller
 
         $this->load->view('master', $data);
     }
+
+    public function cancelOrder()
+    {
+        $idPesanan = $this->input->post('idPesanan');
+
+        // Lakukan pembaruan di database untuk menandai pesanan sebagai dibatalkan
+        $this->M_pesanan->cancelOrder($idPesanan);
+
+        // Respon dengan pesan sukses
+        echo json_encode(['sukses' => true]);
+    }
+    
+    
 
     public function logout()
     {
