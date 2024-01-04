@@ -12,6 +12,7 @@ class Dashboard extends CI_Controller
         $this->load->library('session');
         $this->load->model('M_produk');
         $this->load->model('M_pesanan');
+        $this->load->model('M_personalInfo');
         $this->load->library('form_validation');
         $this->load->library('PDF');
 
@@ -145,8 +146,36 @@ class Dashboard extends CI_Controller
         }
     }
 
+    public function Category()
+    {
+        $category = $this->M_produk->getCategory();
+
+        $data = [
+            'title' => 'Product Stock',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'content' => 'V_partials/dashboard/category',
+            'js' => 'V_partials/dashboard/js',
+            'category' => $category,
+            'active_tab' => 'category'
+        ];
+        $this->load->view('master', $data);
+    }
+
     public function addCategory() {
-        
+        $this->M_produk->addCategory();
+        redirect('dashboard/category');
+    }
+    public function editCategory() {
+        $this->M_produk->editCategory();
+        redirect('dashboard/category');
+    }
+
+    public function deleteCategory($id_category) {
+        $this->M_produk->deleteCategory($id_category);
+        redirect('dashboard/category');
     }
 
     public function update_customer()
@@ -243,6 +272,34 @@ class Dashboard extends CI_Controller
     {
         $this->admin_model->delete_customer($id_customer);
         redirect('dashboard/admin');
+    }
+
+    public function kotaDanKecamatan() {
+        $kotaKec = $this->M_personalInfo->kotaKec();
+        $kota = $this->M_personalInfo->getKota();
+        $data = [
+            'title' => 'Produck Stock',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'js' => 'V_partials/dashboard/js',
+            'content' => 'V_partials/dashboard/kotaDanKecamatan',
+            'kotaKec' => $kotaKec,
+            'kota' => $kota,
+            'active_tab' => 'kotaDanKecamatan'
+        ];
+        $this->load->view('master', $data);
+    }
+
+    public function addKota() {
+        $this->M_personalInfo->addKota();
+        redirect('dashboard/kotadankecamatan');
+    }
+
+    public function addKecamatan() {
+        $this->M_personalInfo->addKecamatan();
+        redirect('dashboard/kotadankecamatan');
     }
 
     public function monthlyReport()

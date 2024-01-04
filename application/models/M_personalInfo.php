@@ -58,6 +58,25 @@ class M_personalInfo extends CI_Model {
         return $result;
     }
 
+    public function addKota() {
+        $kota = $this->input->post('kota');
+        $data = [
+            'kota' => $kota,
+        ];
+        $this->db->insert('kota_kab', $data);
+    }
+
+    public function addKecamatan() {
+        $id_kota_kab = $this->input->post('id_kota_kab');
+        $kecamatan = $this->input->post('kecamatan');
+
+        $data = [
+            'id_kota_kab' => $id_kota_kab,
+            'kecamatan' => $kecamatan,
+        ];
+        $this->db->insert('kecamatan', $data);
+    }
+
     public function kotaKec() {
         $this->db->select('kecamatan.*, kota_kab.kota');
         $this->db->from('kecamatan');
