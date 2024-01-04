@@ -53,18 +53,19 @@ $results = isset($results) ? $results : null;
         <!-- Tampilkan hasil pencarian jika ditemukan -->
 
 
-<div class=" row row-cols-xs-2 row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 pb-5 ">
-                <?php foreach ($results as $product) : ?>
-                     <div data-aos="fade-up">
+        <div class=" row row-cols-xs-2 row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 pb-5 ">
+            <?php foreach ($results as $product) : ?>
+                <div data-aos="fade-up">
+
+                    <div class="card" style="width: auto; height: auto; overflow: hidden; border: 1px solid #ccc;border-radius: 10px;">
 
                         <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
                             <?php if ($product['stok_produk'] <= 0) : ?>
-                                <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="opacity: 0.3; width: 100%;height: 100%;  object-fit: cover;">
+                                <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="opacity: 0.3;  width: 100%;height: 100%;  object-fit: cover;">
 
                             <?php else : ?>
                                 <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%;height: 100%;  object-fit: cover;">
                             <?php endif ?>
-
                             <div class="rkp_body card-body">
 
                         </a>
@@ -79,8 +80,8 @@ $results = isset($results) ? $results : null;
                     <div class="rkp_ket  mb-3">
                         <h5 class="format" style="margin-left: 15px;"><?php echo '<span id="price_' . $product['id_produk'] . '" class="price">' . ($product['harga_produk']) . '</span>'; ?></h5>
 
-                        <div class="d-flex justify-content-end mx-5">
-                            <a href="<?php echo base_url('produk/') . $product['slug'] ?>" class="btn btn-primary"> Check</a>
+                        <div class="d-flex justify-content-end pe-3">
+                            <a href="<?php echo base_url('produk/') . $product['slug'] ?>" class="btn btn-primary" style="background: #d21312 ; border:none;"><i class="fa-solid fa-cart-shopping"></i></a>
                         </div>
                     </div>
 
@@ -94,7 +95,7 @@ $results = isset($results) ? $results : null;
         <?php foreach ($produk as $product) : ?>
             <div data-aos="fade-up">
 
-            <div class="card" style="width: auto; height: auto; overflow: hidden; border: 1px solid #ccc;border-radius: 10px;">
+                <div class="card" style="width: auto; height: auto; overflow: hidden; border: 1px solid #ccc;border-radius: 10px;">
 
                     <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
                         <?php if ($product['stok_produk'] <= 0) : ?>

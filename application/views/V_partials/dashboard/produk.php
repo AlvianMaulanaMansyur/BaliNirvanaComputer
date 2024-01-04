@@ -5,9 +5,15 @@
                 <h1 class="h3 mb-0 text-gray-800 ">Data Produk</h1>
             </div>
 
-            <button type="button" class="btn " style="margin-bottom:30px;background: #D21312;color: white;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <div class="d-flex">
+            <button type="button" class="btn" style="margin-bottom:30px;background: #D21312;color: white;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <i class="fa-solid fa-plus"></i> <span>Tambah Produk</span>
             </button>
+            
+            <button type="button" class="btn" style="margin-bottom:30px;background: #212529;color: white;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="fa-solid fa-plus"></i> <span>Tambah Produk</span>
+            </button>
+            </div>
 
             <?php echo form_open('Dashboard/search_produk', 'class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3  my-2 my-md-0 "'); ?>
             <div class="input-group d-flex" style="float:right">

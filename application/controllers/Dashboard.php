@@ -110,7 +110,6 @@ class Dashboard extends CI_Controller
         $this->load->view('master', $data);
     }
 
-
     public function edit($id_customer)
     {
         $customer = $this->admin_model->get_customer($id_customer);
@@ -144,6 +143,10 @@ class Dashboard extends CI_Controller
             ];
             $this->admin_model->update_customer($id_customer, $data_to_save);
         }
+    }
+
+    public function addCategory() {
+        
     }
 
     public function update_customer()
@@ -360,14 +363,9 @@ class Dashboard extends CI_Controller
     public function cancelOrder()
     {
         $idPesanan = $this->input->post('idPesanan');
-
-        // Lakukan pembaruan di database untuk menandai pesanan sebagai dibatalkan
         $this->M_pesanan->cancelOrder($idPesanan);
-
-        // Respon dengan pesan sukses
         echo json_encode(['sukses' => true]);
     }
-    
     
 
     public function logout()

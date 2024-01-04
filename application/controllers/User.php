@@ -141,8 +141,6 @@ class User extends CI_Controller
             echo json_encode(['error' => 'Cart not found']);
         }
     }
-    
-    
 
     public function deleteCart($id_cart)
     {
@@ -188,7 +186,6 @@ class User extends CI_Controller
                     redirect('user/getcart');
                 }
             }
-// var_dump($personal_info);die;
             // Lanjutkan ke proses checkout jika validasi berhasil
             if (!empty($personal_info)) {
                 $content = 'V_user/checkout1';

@@ -70,7 +70,7 @@ class M_produk extends CI_Model
         $this->db->from('produk');
         $this->db->join('category', 'produk.id_category = category.id_category');
         $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
-        // $this->db->where('produk.stok_produk >', 0);
+        $this->db->where('produk.stok_produk >', 0);
         $this->db->where('foto_produk.urutan_foto', 1);
         $result = $this->db->get();
         $produk = $result->result_array();
@@ -396,6 +396,10 @@ class M_produk extends CI_Model
             }
         }
         return true;
+    }
+
+    public function addCategory() {
+        
     }
     
     public function getCategory()
