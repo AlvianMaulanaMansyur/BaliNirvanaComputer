@@ -70,7 +70,7 @@ class M_produk extends CI_Model
         $this->db->from('produk');
         $this->db->join('category', 'produk.id_category = category.id_category');
         $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
-        // $this->db->where('produk.stok_produk >', 0);
+        $this->db->where('produk.stok_produk >', 0);
         $this->db->where('foto_produk.urutan_foto', 1);
         $result = $this->db->get();
         $produk = $result->result_array();
@@ -396,6 +396,92 @@ class M_produk extends CI_Model
             }
         }
         return true;
+    }
+
+    public function addCategory() {
+        $config['upload_path'] = './assets/foto/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+    
+        $this->load->library('upload', $config);
+    
+        // Check if the photo is selected
+        if (empty($_FILES['foto_category']['name'])) {
+            echo "Please select a file for foto_category.";
+            
+        }
+    
+        if (!$this->upload->do_upload('foto_category')) {
+            $error = array('error' => $this->upload->display_errors());
+            echo $error['error'];
+            die;
+        }
+    
+        $data['upload_data'] = $this->upload->data();
+        $gambar_path = 'assets/foto/' . $data['upload_data']['file_name'];
+    
+        $insert_data = array(
+            'nama_category' => $this->input->post('nama_category'),
+            'foto_category' => $gambar_path,
+        );
+    
+        $result = $this->db->insert('category', $insert_data);
+        return $result;
+    }    
+
+    public function editCategory() {
+        $config['upload_path'] = './assets/foto/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+    
+        $this->load->library('upload', $config);
+    
+        $id_category = $this->input->post('id_category');
+    
+        // Check if a new photo is selected
+        if (!empty($_FILES['foto_category']['name'])) {
+            if (!$this->upload->do_upload('foto_category')) {
+                $error = array('error' => $this->upload->display_errors());
+                echo $error['error'];
+                die;
+            }
+    
+            $data['upload_data'] = $this->upload->data();
+            $gambar_path = 'assets/foto/' . $data['upload_data']['file_name'];
+    
+            // Remove old photo if it exists
+            $old_photo_path = $this->db->get_where('category', array('id_category' => $id_category))->row('foto_category');
+            if (!empty($old_photo_path) && file_exists($old_photo_path)) {
+                unlink($old_photo_path);
+            }
+        } else {
+            // No new photo selected, keep the existing photo
+            $gambar_path = $this->db->get_where('category', array('id_category' => $id_category))->row('foto_category');
+        }
+    
+        $edit_data = array(
+            'nama_category' => $this->input->post('nama_category'),
+            'foto_category' => $gambar_path,
+        );
+    
+        $this->db->where('id_category', $id_category);
+        $result = $this->db->update('category', $edit_data);
+    
+        return $result;
+    }    
+
+    public function deleteCategory($category_id) {
+        // Get the photo path before deleting the category
+        $photo_path = $this->db->get_where('category', array('id_category' => $category_id))->row('foto_category');
+    
+        // Delete the category
+        $this->db->where('id_category', $category_id);
+        $result = $this->db->delete('category');
+    
+        // Remove the photo file if it exists
+        if (!empty($photo_path) && file_exists($photo_path)) {
+            unlink($photo_path);
+        }
+    
+        return $result;
     }
     
     public function getCategory()
