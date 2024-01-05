@@ -16,8 +16,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Data Barang
                 </a>
-<<<<<<< HEAD
-=======
+
                 <a style="<?php echo ($active_tab == 'category') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/category') ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Data Kategori
@@ -48,7 +47,6 @@
 
                     </nav>
                 </div>
->>>>>>> a55bbb0811c3ae47d202c6510a9070473da44dfb
                 <div class="sb-sidenav-menu-heading">Report</div>
                 <a style="<?php echo ($active_tab == 'monthlyReport') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/monthlyReport') ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
