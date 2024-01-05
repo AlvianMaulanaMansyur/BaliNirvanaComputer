@@ -70,7 +70,7 @@
                                     <h5 class="pt-3">Total harga: <span class="format"><?php echo $order['total'] ?></span></h5>
                                     <div class="d-flex">
                                         <?php if ($order['status'] == 0) : ?>
-                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="confirmCancelOrder(<?php echo $order['id_pesanan']; ?>)">
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2" onclick="confirmCancelOrder(<?php echo $order['id_pesanan']; ?>)">
                                                 <h6>Batalkan Pesanan</h6>
                                             </a>
                                         <?php else : ?>

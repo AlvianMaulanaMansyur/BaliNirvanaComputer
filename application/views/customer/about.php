@@ -3,7 +3,7 @@
         <h5 class="selamat animate__animated animate__fadeInUp">Selamat datang di</h5>
         <h2 class="brand animate__animated animate__fadeInUp">Bali Nirvana <span>Computer</span></h2>
         <div class="gmbr_toko mt-3 animate__animated animate__fadeInDown">
-            <img src="<?php echo base_url('assets/foto/komputer.jpeg'); ?> " alt="">
+            <img src="<?php echo base_url('assets/foto/TENTANG KAMI.png'); ?> " alt="">
         </div>
         <div class="deskripsi animate__animated animate__fadeInUp">
             <p>

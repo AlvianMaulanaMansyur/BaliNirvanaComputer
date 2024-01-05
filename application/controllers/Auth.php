@@ -23,21 +23,9 @@ class Auth extends CI_Controller
             ];
             $this->load->view('loginAdmin', $data);
         } else {
-            redirect('dashboard/admin');
+            redirect('dashboard/orders');
         }
     }
-
-
-    public function sess()
-    {
-
-        if ($this->session->userdata('logged_in')) {
-            redirect('dashboard/admin');
-        } else {
-            redirect('auth/login');
-        }
-    }
-
 
     public function process_login()
     {
@@ -53,7 +41,7 @@ class Auth extends CI_Controller
                 'logged_in' => true
             );
             $this->session->set_userdata($admin_data);
-            redirect('dashboard/admin');
+            redirect('dashboard/orders');
         } else {
             // Tampilkan pesan error jika login gagal
             $this->session->set_flashdata('error_message', 'Incorrect Username or Password!');
