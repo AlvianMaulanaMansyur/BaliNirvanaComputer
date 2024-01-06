@@ -16,7 +16,7 @@
                 <?php echo form_open('AuthCustomer/process_login'); ?>
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Email or Username" name="email_or_username">
+                    <input type="text" class="form-control" placeholder="Email or Username" name="email_or_username" value="<?= set_value('email_or_username')?>">
                     <div class="input-group-append">    
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>

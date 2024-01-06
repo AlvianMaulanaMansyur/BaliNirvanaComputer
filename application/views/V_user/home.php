@@ -1,11 +1,11 @@
 <div class="col-12 h-50 mb-5 animate__animated animate__fadeInUp" style="border: rounded; margin-top: 
 20px;">
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-      
+    <div class="carousel-inner">
+
       <div class="carousel-item active">
         <img src="<?php echo base_url('assets/foto/PROMO THIS MONTH.png') ?>" class="d-block w-100 rounded" alt="...">
-      </div> 
+      </div>
       <div class="carousel-item ">
         <img src="<?php echo base_url('assets/foto/bali.png') ?>" class="d-block w-100 rounded" alt="..." style="height: auto;">
       </div>
@@ -78,35 +78,34 @@
 <div class="container py-5">
   <div data-aos="fade-up">
     <div class="box1">
-      <h1 class="rekomendasi text-center">Rekomendasi Produk</h1>
+      <h1 class="rekomendasi text-center">Produk Teratas kami</h1>
     </div>
   </div>
 
   <div id="produk" class="row row-cols-xs-2 row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 pb-5 mt-2 ">
 
-    <?php foreach ($produk as $product) : ?>
+    <?php
+    $limit = 8; // Tentukan jumlah maksimal card yang ingin ditampilkan
+    $ProdukLimited = array_slice($produk, 0, $limit);
 
+    foreach ($ProdukLimited as $product) :
+    ?>
       <div data-aos="fade-up">
-
         <div class="card" style="width: auto; height: auto; overflow: hidden; border: 1px solid #ccc; border-radius:10px;">
           <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
-
             <?php if ($product['stok_produk'] <= 0) : ?>
-              <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="opacity: 0.3; width: 100%;height: 100%;  object-fit: cover;">
-
+              <img src="<?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="opacity: 0.3; width: 100%;height: 100%;  object-fit: cover; aspect-ratio: 1 / 1">
             <?php else : ?>
-              <img src=" <?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%;height: 100%;  object-fit: cover;">
+              <img src="<?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width:100%; height:100%; object-fit: cover; aspect-ratio: 1 / 1">
             <?php endif ?>
 
             <div class="rkp_body card-body">
-
           </a>
           <div class="d-flex">
-            <h5 class="card-title me-2"><?php echo $product['nama_produk'] ?>
-            </h5>
+            <h5 class="card-title me-2"><?php echo $product['nama_produk'] ?></h5>
             <?php if ($product['stok_produk'] <= 0) : ?>
-              <smal class="text-muted">Stok Habis</small>
-              <?php endif ?>
+              <small class="text-muted">Stok Habis</small>
+            <?php endif ?>
           </div>
         </div>
         <div class="rkp_ket  mb-3">
@@ -116,13 +115,19 @@
             <a href="<?php echo base_url('produk/') . $product['slug'] ?>" class="btn btn-primary" style="background: #d21312 ; border:none;"><i class="fa-solid fa-cart-shopping"></i></a>
           </div>
         </div>
-
       </div>
   </div>
 <?php endforeach ?>
-<div class="d-flex justify-content-center mt-3">
+</div>
 
-</div>
-</div>
-</div>
+<div class="tombol">
+
+  <button class="learn-more">
+    <a class="<?php echo ($this->uri->segment(1) == 'shop') ? 'active' : ''; ?>" href="<?php echo site_url('shop'); ?>">
+    <span class="circle" aria-hidden="true">
+      <span class="icon arrow"></span>
+    </span>
+    <span class="button-text">Produk Lainnya</span>
+    </a>
+  </button>
 </div>

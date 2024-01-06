@@ -41,7 +41,12 @@
                         <!-- Di dalam halaman PHP -->
                         <div id="stokProduk" data-stok="<?php echo $produk['stok_produk']; ?>"></div>
 
-
+                        <h3 class="pt-3">Deskripsi</h3>
+                        <p>
+                        <pre>
+<?php echo $produk['deskripsi_produk'] ?>
+</pre>
+                        </p>
                         <div class="col-md-4 col-6 mb-3">
                             <div class="input-group mb-3" style="width: 170px;">
                                 <button class="btn btn-white border border-secondary px-3" type="button" id="decrementButton" data-mdb-ripple-color="dark" onclick="decrementQty()">
@@ -56,18 +61,13 @@
                         </div>
                         <div>
                             <?php if ($produk['stok_produk'] <= 0) : ?>
-                                <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()" style="background-color: #D21312;" disabled>Tambahkan ke <i class="me-1 fa-solid fa-cart-shopping"></i></button>
+                                <button type="button" class="btn btn-danger btn-lg shadow-0" onclick="validateAndSubmit()" style="background-color: #D21312;" disabled><i class="me-1 fa-solid fa-cart-shopping"></i>Masukan Keranjang</button>
                             <?php else : ?>
-                                <button type="button" class="btn btn-danger shadow-0" onclick="validateAndSubmit()" style="background-color: #D21312;">Tambahkan ke <i class="me-1 fa-solid fa-cart-shopping"></i></button>
+                                <button type="button" class="btn btn-danger  btn-lg shadow-0" onclick="validateAndSubmit()" style="background-color: #D21312;"><i class="me-1 fa-solid fa-cart-shopping"></i>Masukkan Keranjang </button>
                             <?php endif ?>
                         </div>
 
-                        <h3 class="pt-3">Deskripsi</h3>
-                        <p>
-                        <pre>
-<?php echo $produk['deskripsi_produk'] ?>
-</pre>
-                        </p>
+                      
 
                     </div>
 
