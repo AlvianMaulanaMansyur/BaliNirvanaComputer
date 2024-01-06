@@ -277,6 +277,7 @@ class Dashboard extends CI_Controller
     public function kotaDanKecamatan() {
         $kotaKec = $this->M_personalInfo->kotaKec();
         $kota = $this->M_personalInfo->getKota();
+        $kecamatan = $this->M_personalInfo->getKecamatan();
         $data = [
             'title' => 'Produck Stock',
             'header' => 'V_partials/dashboard/header',
@@ -287,6 +288,7 @@ class Dashboard extends CI_Controller
             'content' => 'V_partials/dashboard/kotaDanKecamatan',
             'kotaKec' => $kotaKec,
             'kota' => $kota,
+            'kecamatan' => $kecamatan,
             'active_tab' => 'kotaDanKecamatan'
         ];
         $this->load->view('master', $data);
@@ -294,6 +296,16 @@ class Dashboard extends CI_Controller
 
     public function addKota() {
         $this->M_personalInfo->addKota();
+        redirect('dashboard/kotadankecamatan');
+    }
+
+    public function editKota() {
+        $this->M_personalInfo->editKota();
+        redirect('dashboard/kotadankecamatan');
+    }
+
+    public function deleteKota($id_kota) {
+        $this->M_personalInfo->deleteKota($id_kota);
         redirect('dashboard/kotadankecamatan');
     }
 

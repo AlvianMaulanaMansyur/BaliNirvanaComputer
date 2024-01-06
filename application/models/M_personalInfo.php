@@ -66,6 +66,30 @@ class M_personalInfo extends CI_Model {
         $this->db->insert('kota_kab', $data);
     }
 
+    public function editKota() {
+        $id_kota_kab = $this->input->post('id_kota_kab');
+        $kota = $this->input->post('kota');
+        $data = [
+            'kota' => $kota,
+        ];
+        $this->db->where('id_kota_kab', $id_kota_kab);
+        $this->db->update('kota_kab', $data);
+    }
+
+    public function deleteKota($id_kota) {
+        // Get the id_kota_kab before deleting the kota
+        $this->db->where('id_kota_kab', $id_kota);
+        $id_kota_kab = $this->db->get('kota_kab')->row('id_kota_kab');
+    
+        // Delete all kecamatan associated with the obtained id_kota_kab
+        $this->db->where('id_kota_kab', $id_kota_kab);
+        $this->db->delete('kecamatan');
+
+        // Delete the kota
+        $this->db->where('id_kota_kab', $id_kota);
+        $this->db->delete('kota_kab');
+    }
+
     public function addKecamatan() {
         $id_kota_kab = $this->input->post('id_kota_kab');
         $kecamatan = $this->input->post('kecamatan');
