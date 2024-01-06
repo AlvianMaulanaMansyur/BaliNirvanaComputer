@@ -94,9 +94,9 @@
         <div class="card" style="width: auto; height: auto; overflow: hidden; border: 1px solid #ccc; border-radius:10px;">
           <a href="<?php echo base_url('produk/') . $product['slug'] ?>">
             <?php if ($product['stok_produk'] <= 0) : ?>
-              <img src="<?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="opacity: 0.3; width: 100%;height: 100%;  object-fit: cover;">
+              <img src="<?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="opacity: 0.3; width: 100%;height: 100%;  object-fit: cover; aspect-ratio: 1 / 1">
             <?php else : ?>
-              <img src="<?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%;height: 100%;  object-fit: cover;">
+              <img src="<?php echo base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width:100%; height:100%; object-fit: cover; aspect-ratio: 1 / 1">
             <?php endif ?>
 
             <div class="rkp_body card-body">

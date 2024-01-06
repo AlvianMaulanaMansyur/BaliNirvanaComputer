@@ -15,7 +15,7 @@ $results = isset($results) ? $results : null;
                     <div class="col_kategori">
                         <a href="<?= base_url('category/') . strtolower($key['nama_category']) ?>">
                             <div class="card d-flex justify-content-center align-items-center pt-4">
-                                <img src="<?= base_url($key['foto_category']); ?>" class="card-img-top" alt="" style="width: 100px; height: 100px; text-align: center;">
+                                <img src="<?= base_url($key['foto_category']); ?>" class="card-img-top" alt="" style="width: 100px; height: 100px; aspect-ratio: 1 / 1; ">
                                 <div class="card-body">
                                     <h5 class="card-title text-center">
                                         <a href="<?= base_url('category/') . strtolower($key['nama_category']) ?>">
@@ -46,7 +46,7 @@ $results = isset($results) ? $results : null;
             <?php elseif ($results) : ?>
                 Hasil Pencarian
             <?php else : ?>
-                Produk - Produk
+                Katalog Produk
             <?php endif; ?>
         </h3>
     </div>
@@ -60,7 +60,7 @@ $results = isset($results) ? $results : null;
                 <div data-aos="fade-up">
                     <div class="card" style="width: auto; height: auto; overflow: hidden; border: 1px solid #ccc; border-radius: 10px;">
                         <a href="<?= base_url('produk/') . $product['slug'] ?>">
-                            <img src="<?= base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%; height: 100%; object-fit: cover; opacity: <?= ($product['stok_produk'] <= 0) ? '0.3' : '1' ?>;">
+                            <img src="<?= base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 1 / 1; ; opacity: <?= ($product['stok_produk'] <= 0) ? '0.3' : '1' ?>;">
                         </a>
                         <div class="rkp_body card-body">
                             <h5 class="card-title me-2"><?= $product['nama_produk'] ?></h5>
@@ -85,7 +85,7 @@ $results = isset($results) ? $results : null;
                 <div data-aos="fade-up">
                     <div class="card" style="width: auto; height: auto; overflow: hidden; border: 1px solid #ccc; border-radius: 10px;">
                         <a href="<?= base_url('produk/') . $product['slug'] ?>">
-                            <img src="<?= base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%; height: 100%; object-fit: cover; opacity: <?= ($product['stok_produk'] <= 0) ? '0.3' : '1' ?>;">
+                            <img src="<?= base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 1 / 1; ;opacity: <?= ($product['stok_produk'] <= 0) ? '0.3' : '1' ?>;">
                         </a>
                         <div class="rkp_body card-body">
                             <h5 class="card-title me-2"><?= $product['nama_produk'] ?></h5>
