@@ -1,5 +1,5 @@
 <div class="footer-brand ">
-    <div data-aos="fade-up" data-aos-duration="3000">
+    <div data-aos="fade-up">
         <a class="footer-brand-bn" href="#">Bali Nirvana<span> Computer</span></a>
         <div class="footer-brand-text">
             <a>Bali Nirvana Computer Lebih dekat, Lebih lengkap,<div> Lebih murah.</div></a>
@@ -7,7 +7,7 @@
     </div>
 </div>
 <div class="quick-link animate_animated animate_fadeInUp">
-    <div class="d-flex" data-aos="fade-up" data-aos-duration="3000">
+    <div class="d-flex" data-aos="fade-up" >
         <div >
             <div>Quick Links</div>
             <a class="<?php echo ($this->uri->segment(1) == 'home') ? 'active' : ''; ?>" href="<?php echo site_url('home') ?>">Home</a>

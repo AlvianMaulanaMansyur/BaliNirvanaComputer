@@ -80,7 +80,7 @@
 
     </div>
 
-    <div class=" container mt-4 col-sm-12 col-md-7 col-lg-5 " style="">
+    <div class=" container mt-4 col-sm-12 col-md-7 col-lg-5">
         
     <button id="downloadAsImage" class="btn btn-danger p-3 ">
         <i class="fa-solid fa-download me-2 "></i>Download Invoice

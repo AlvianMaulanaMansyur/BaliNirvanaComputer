@@ -18,7 +18,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="text" class="form-control" name="password_customer" value="<?php echo $customer->password_customer; ?>" required>
+                    <input type="text" class="form-control" name="password_customer" value="<?php echo $customer->password_customer; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="nama_customer" class="form-label">Nama Customer</label>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="Email" class="form-label">Email</label>
-                    <input type="Text" class="form-control" name="email" value="<?php echo $customer->email; ?>" required>
+                    <input type="Text" class="form-control" name="email" value="<?php echo $customer->email; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="Telepon" class="form-label">Telepon</label>

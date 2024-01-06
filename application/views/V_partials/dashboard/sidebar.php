@@ -2,6 +2,11 @@
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
+                <div class="sb-sidenav-menu-heading">Order List</div>
+                <a style="<?php echo ($active_tab == 'OrderList') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/orders') ?>">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                    Daftar Pesanan
+                </a>
                 <div class="sb-sidenav-menu-heading">Core</div>
                 <a style="<?php echo ($active_tab == 'admin') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?= base_url('dashboard/admin'); ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -11,6 +16,17 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Data Barang
                 </a>
+
+                <a style="<?php echo ($active_tab == 'category') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/category') ?>">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Data Kategori
+                </a>
+
+                <a style="<?php echo ($active_tab == 'kotaDanKecamatan') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/kotaDanKecamatan') ?>">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Data Kota&Kecamatan
+                </a>
+
                 <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
@@ -35,11 +51,6 @@
                 <a style="<?php echo ($active_tab == 'monthlyReport') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/monthlyReport') ?>">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Monthly Report
-                </a>
-                <div class="sb-sidenav-menu-heading">Order List</div>
-                <a style="<?php echo ($active_tab == 'OrderList') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/orders') ?>">
-                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                    Daftar Pesanan
                 </a>
             </div>
         </div>

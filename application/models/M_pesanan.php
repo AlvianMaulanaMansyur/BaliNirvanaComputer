@@ -187,7 +187,7 @@ class M_pesanan extends CI_Model
         $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
         $this->db->where('foto_produk.urutan_foto', 1);
         $this->db->order_by('pesanan.status_pesanan', 'asc');
-        $this->db->order_by('pesanan.create_time', 'asc');
+        $this->db->order_by('pesanan.create_time', 'desc');
 
         $result = $this->db->get();
 
@@ -228,6 +228,13 @@ class M_pesanan extends CI_Model
         } else {
             return array();
         }
+    }
+
+    public function cancelOrder($idPesanan)
+    {
+        // Perbarui kolom 'dibatalkan' pada tabel 'pesanan'
+        $this->db->where('id_pesanan', $idPesanan);
+        $this->db->update('pesanan', ['status_pesanan' => 2]);
     }
 
     public function createOrder()

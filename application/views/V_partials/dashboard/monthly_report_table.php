@@ -47,6 +47,7 @@
             <div id="monthlyReportContainer" class="pt-4">
 
                 <h2><?php echo $selected_month ?></h2>
+                <div class="table-responsive">
                 <?php if (empty($monthly_orders)) : ?>
                     <p>Tidak ada pesanan yang selesai.</p>
                 <?php else : ?>
@@ -84,6 +85,7 @@
                         </tbody>
                     </table>
                 <?php endif; ?>
+                </div>
             </div>
 
             <?php if (!empty($monthly_orders)) : ?>
@@ -96,24 +98,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        // Menangani perubahan pada elemen select bulan dan tahun
-        $('#month').on('change', function() {
-            // Memeriksa apakah kedua pilihan sudah dipilih
-            var isMonthSelected = $('#month').val() == '';
-
-            // Mengaktifkan atau menonaktifkan tombol submit berdasarkan hasil pemeriksaan
-            $('#submitButton').prop('disabled', (isMonthSelected));
-        });
-
-        $('#year').on('change', function() {
-            // Memeriksa apakah kedua pilihan sudah dipilih
-            var isYearSelected = $('#year').val() == '';
-
-            // Mengaktifkan atau menonaktifkan tombol submit berdasarkan hasil pemeriksaan
-            $('#submitButton').prop('disabled', (isYearSelected));
-        });
-    });
-</script>

@@ -16,7 +16,7 @@
                 <?php echo form_open('AuthCustomer/process_login'); ?>
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Email or Username" name="email_or_username">
+                    <input type="text" class="form-control" placeholder="Email or Username" name="email_or_username" value="<?= set_value('email_or_username')?>">
                     <div class="input-group-append">    
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -48,7 +48,7 @@
                 </p>
                 <p class="mb-4">
                     <a href="<?= base_url('authCustomer/register'); ?>" class="text-center">Belum Punya Akun? DAFTAR</a>
-                </p>
+                </p>    
                 </center>
             </div>
             <!-- /.login-card-body -->

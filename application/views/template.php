@@ -5,118 +5,6 @@
 <head>
     <?php $this->load->view('V_partials/header'); ?>
 
-
-    <style>
-        input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 3px;
-            outline: none;
-            cursor: pointer;
-        }
-
-        /* Gaya checkbox ketika dicentang */
-        input[type="checkbox"]:checked {
-            background-color: #D21312;
-            border: none;
-            /* Warna latar belakang yang diinginkan */
-        }
-
-        .container-fluid {
-            min-height: 100vh;
-            z-index: 1;
-        }
-
-        .footer {
-            position: relative;
-            background-color: #f8f8f8;
-            margin-top: auto;
-        }
-
-        .blur-effect {
-            filter: blur(1px);
-            /* pointer-events: none; */
-            /* Adjust the blur effect as needed */
-        }
-
-        .foto-card {
-            cursor: pointer;
-        }
-
-        .table-header {
-            background: #000;
-            background-color: #000;
-        }
-
-        /* Styling untuk elemen li */
-        /* Styling untuk elemen li */
-        li {
-            position: relative;
-            display: inline-block;
-            margin-right: 20px;
-            /* Atur jarak antar ikon */
-        }
-
-        /* Styling untuk ikon keranjang dan lonceng */
-        .fa-cart-shopping,
-        .fa-bell {
-            font-size: 20px;
-            /* Sesuaikan dengan ukuran yang diinginkan */
-            position: relative;
-            /* Tetapkan posisi ke relatif */
-        }
-
-        /* Styling untuk span count */
-        .cart-count,
-        .order-count {
-            position: absolute;
-            top: -15px;
-            /* Sesuaikan dengan posisi vertikal */
-            right: -20px;
-            /* Sesuaikan dengan posisi horizontal */
-            background-color: red;
-            /* Warna latar belakang */
-            color: #fff;
-            /* Warna teks */
-            border-radius: 50%;
-            /* Untuk membuat sudut span menjadi lingkaran */
-            padding: 4px 8px;
-            /* Sesuaikan dengan kebutuhan Anda */
-            font-size: 12px;
-            /* Sesuaikan dengan ukuran yang diinginkan */
-        }
-
-        .table-rounded {
-            border-collapse: separate;
-            border-spacing: 0 8px;
-            /* Sesuaikan dengan kebutuhan */
-        }
-
-        .table-rounded thead tr:first-child th:first-child {
-            border-top-left-radius: 8px;
-            /* Sesuaikan dengan kebutuhan */
-        }
-
-        .table-rounded thead tr:first-child th:last-child {
-            border-top-right-radius: 8px;
-            /* Sesuaikan dengan kebutuhan */
-        }
-
-        .table-rounded tbody tr:last-child td:first-child {
-            border-bottom-left-radius: 8px;
-            /* Sesuaikan dengan kebutuhan */
-        }
-
-        .table-rounded tbody tr:last-child td:last-child {
-            border-bottom-right-radius: 8px;
-            /* Sesuaikan dengan kebutuhan */
-        }
-    </style>
-</head>
-
 <body>
 
     <div class="container-fluid d-flex flex-column">
@@ -124,28 +12,20 @@
             <?php $this->load->view('V_partials/navbar'); ?>
         </div>
 
-        <div class="">
+        <div>
             <?php $this->load->view($content); ?>
         </div>
 
-        <!-- <a href="https://wa.me/?text= Hai" class="position-fixed" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i></a> -->
-
         <a href="https://wa.me/6287762722287/?text= Hai" class="position-fixed" style="right:0;bottom: 0;z-index: 1;margin:20px;"><i class="fa-brands fa-square-whatsapp " style="color: #17c200;font-size: 100px;"></i>
 
-
-            <!-- <div id="invoice"> -->
-            <!-- Informasi invoice di sini -->
-            <!-- ajdfadf -->
-            <!-- </div>
-        <button id="downloadAsImage" class="col-1">Download sebagai Gambar</button> -->
     </div>
     <div class="footer">
-        <?php $this->load->view('V_partials/footer'); ?>
+        <?php $this->load->view('V_partials/footer') ?>
     </div>
-    
-    <?php $this->load->view('V_partials/script');
-    ?>
-    <script>
+
+    <?php $this->load->view('V_partials/script') ?>
+
+    <!-- <script>
         const toggleBtn = document.querySelector('.toggle_btn')
         const toggleBtnIcon = document.querySelector('.toggle_btn i')
         const dropDownMenu = document.querySelector('.dropdown_menu')
@@ -180,34 +60,13 @@
             searchForm.style.display = "flex"
             searchIconI.className = 'fa-solid fa-x';
         }
-    </script>
-    <!-- scrip review -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#testimonial-slider").owlCarousel({
-                items: 3,
-                itemsDesktop: [1000, 3],
-                itemsDesktopSmall: [980, 2],
-                itemsTablet: [768, 2],
-                itemsMobile: [650, 1],
-                pagination: true,
-                navigation: false,
-                slideSpeed: 1000,
-                autoPlay: true
-            });
-        });
-    </script>
+    </script> -->
 
-
-    <!-- endscrip review -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
     </script>
 
-    <!-- testimoni -->
 
 
 </body>

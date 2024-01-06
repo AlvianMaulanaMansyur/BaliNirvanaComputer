@@ -1,4 +1,4 @@
-<div class="navbar animate__animated animate__fadeInDown">
+<div class="navbar animate__animated animate__fadeInDown">  
     <div class="logo"><a href="<?php echo site_url('') ?>">Bali Nirvana <span>Computer</span></a></div>
     <div class="logo_singkat"><a href="<?php echo site_url('') ?>">BN<span>C</span></a></div>
     <ul class="links">
@@ -68,10 +68,7 @@
 <script>
     $(document).ready(function() {
         updateCartAndOrderCount();
-
-        // ... (code lainnya)
-
-        // Fungsi untuk mengupdate jumlah produk dalam keranjang dan pesanan
+        
         function updateCartAndOrderCount() {
             // Lakukan AJAX request untuk mengambil jumlah produk dari server
             $.ajax({
@@ -92,7 +89,6 @@
         }
     });
 
-    
         const toggleBtn = document.querySelector('.toggle_btn')
         const toggleBtnIcon = document.querySelector('.toggle_btn i')
         const dropDownMenu = document.querySelector('.dropdown_menu')

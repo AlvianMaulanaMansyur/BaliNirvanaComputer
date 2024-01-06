@@ -5,7 +5,9 @@
             <?php echo form_open('Dashboard/search_pesanan', 'class=""'); ?>
             <div class="input-group" style="width: 230px;">
                 <?php echo form_input('keyword', '', 'class="form-control" placeholder="Search for..." aria-label="Search for..."'); ?>
-                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                <!-- <button class="btn btn-danger"  type="submit"><i class="fas fa-search"></i></button> -->
+                <button class="btn" type="submit" style="background: white;color: #D21312;border-color:#D21312"><i class="fas fa-search"></i></button>
+
             </div>
             <?php echo form_close(); ?>
         </div>
@@ -66,18 +68,38 @@
 
                                 <div class="d-flex flex-column me-3 mb-2" style="align-items: end;">
                                     <h5 class="pt-3">Total harga: <span class="format"><?php echo $order['total'] ?></span></h5>
-                                    <a href="javascript:void(0);" class="btn btn-sm <?php echo ($order['status'] == 0) ? ' btn-warning' : 'btn-success'; ?> <?php echo ($order['status'] == 1) ? 'disabled-link' : ''; ?>" style="display: flex; justify-content: center; align-items: center;" onclick="confirmUpdateOrder(<?php echo $order['id_pesanan']; ?>, <?php echo $order['status']; ?>)">
-                                        <h6>
-                                            <?php
-                                            $status = $order['status'];
-                                            if ($status == 0) {
-                                                echo 'Belum Lunas';
-                                            } else {
-                                                echo 'Sudah Lunas';
-                                            }
-                                            ?>
-                                        </h6>
-                                    </a>
+                                    <div class="d-flex">
+                                        <?php if ($order['status'] == 0) : ?>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2" onclick="confirmCancelOrder(<?php echo $order['id_pesanan']; ?>)">
+                                                <h6>Batalkan Pesanan</h6>
+                                            </a>
+                                        <?php else : ?>
+                                        <?php endif ?>
+                                        <a href="javascript:void(0);" class="btn btn-sm <?php
+                                                                                        if ($order['status'] == 0) {
+                                                                                            echo 'btn-warning';
+                                                                                        } elseif ($order['status'] == 1) {
+                                                                                            echo 'btn-success disabled-link';
+                                                                                        } elseif ($order['status'] == 2) {
+                                                                                            echo 'btn-danger disabled-link';
+                                                                                        }
+                                                                                        ?>" style="display: flex; justify-content: center; align-items: center;" onclick="confirmUpdateOrder(<?php echo $order['id_pesanan']; ?>, <?php echo $order['status']; ?>)">
+                                            <h6>
+                                                <?php
+                                                $status = $order['status'];
+                                                if ($status == 0) {
+                                                    echo 'Belum Lunas';
+                                                } elseif ($status == 1) {
+                                                    echo 'Sudah Lunas';
+                                                } elseif ($status == 2) {
+                                                    echo 'Pesanan Dibatalkan';
+                                                } else {
+                                                    // Jika ada nilai status lain yang belum ditangani
+                                                }
+                                                ?>
+                                            </h6>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -89,36 +111,31 @@
     </div>
 </div>
 
-
 <script>
-    function confirmUpdateOrder(orderId, orderStatus) {
-        // Pengecekan status pesanan
-        if (orderStatus == 1) {
-            Swal.fire({
-                title: "Pesanan Sudah Lunas",
-                text: "Pesanan ini sudah lunas dan tidak dapat diubah lagi.",
-                icon: "info",
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "OK"
+    function confirmCancelOrder(idPesanan) {
+        if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
+            // Lakukan permintaan AJAX untuk memperbarui status pesanan
+            $.ajax({
+                url: '<?php echo base_url('Dashboard/cancelOrder'); ?>',
+                type: 'POST',
+                data: {
+                    idPesanan: idPesanan
+                },
+                dataType: 'JSON',
+                success: function(response) {
+                    if (response.sukses) {
+                        // Opsional, perbarui antarmuka pengguna untuk menunjukkan pembatalan pesanan
+                        alert('Pesanan berhasil dibatalkan.');
+                        // Muat ulang atau perbarui daftar pesanan
+                        location.reload();
+                    } else {
+                        alert('Gagal membatalkan pesanan. Silakan coba lagi.');
+                    }
+                },
+                error: function() {
+                    alert('Terjadi kesalahan. Silakan coba lagi nanti.');
+                }
             });
-            return;
         }
-
-        // Konfirmasi untuk pesanan yang belum lunas
-        Swal.fire({
-            title: "Update Order?",
-            text: "Apakah Anda yakin ingin mengupdate pesanan ini?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Ya, update!",
-            cancelButtonText: "Batal"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirect ke halaman updateOrder jika konfirmasi diterima
-                window.location.href = '<?php echo base_url("dashboard/updateOrder/"); ?>' + orderId;
-            }
-        });
     }
 </script>
