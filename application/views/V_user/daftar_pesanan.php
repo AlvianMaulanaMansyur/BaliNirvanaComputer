@@ -32,11 +32,18 @@
 
                                 <div>
                                     <p class="mb-0"><?php echo $detail['nama_produk'] ?></p>
-                                    <small class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $detail['qty_produk'] ?></small>
+                                    <small class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $detail['qty_produk'] ?></small><br>
+
+                                    <?php if ($detail['deleted'] == 1) : ?>
+                                        <small class="mb-0 text-danger text-nowrap">Produk sudah dihapus!</small>
+                                    <?php elseif ($detail['stok_produk'] <= 0) : ?>
+                                        <small class="mb-0 text-danger text-nowrap">Stok habis!</small>
+                                    <?php endif ?>
                                 </div>
+
                             </div>
                             <div class="col-lg-5 col-md-6 col-sm-6">
-                                    <h6 class=""><span class="format"><?php echo $detail['harga_produk'] ?></span></h6>
+                                <h6 class=""><span class="format"><?php echo $detail['harga_produk'] ?></span></h6>
                             </div>
 
 
@@ -54,11 +61,13 @@
                                         if ($order['status_pesanan'] == 1) {
                                             echo 'Selesai';
                                         ?>
-                            <?php } else {
+                            <?php } elseif ($order['status_pesanan'] == 0) {
                                             echo 'Belum Selesai';
                             ?>
                                 <button class="btn" onclick="redirectToOrder(<?php echo $id ?>)" style="background: #D21312;color:white;--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" style="">Lanjutkan Transaksi</button>
 
+                            <?php } elseif ($order['status_pesanan'] == 2) { ?>
+                                <?php echo 'Dibatalkan'; ?>
                             <?php } ?>
                         </h6>
                     </div>

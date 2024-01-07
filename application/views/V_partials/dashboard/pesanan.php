@@ -54,7 +54,12 @@
 
                                             <div>
                                                 <h6 class="mb-0"><?php echo $detail['nama_produk'] ?></h6>
-                                                <span class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $detail['qty_produk'] ?></span>
+                                                <small class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $detail['qty_produk'] ?></small><br>
+                                                <?php if ($detail['deleted'] == 1) : ?>
+                                                    <small class="mb-0 text-danger text-nowrap">Produk sudah dihapus!</small>
+                                                <?php elseif ($detail['stok_produk'] <= 0) : ?>
+                                                    <small class="mb-0 text-danger text-nowrap">Stok habis!</small>
+                                                <?php endif ?>
                                             </div>
                                         </div>
 

@@ -43,48 +43,53 @@
                 </form>
             </div>
 
-
             <div id="monthlyReportContainer" class="pt-4">
 
                 <h2><?php echo $selected_month ?></h2>
                 <div class="table-responsive">
-                <?php if (empty($monthly_orders)) : ?>
-                    <p>Tidak ada pesanan yang selesai.</p>
-                <?php else : ?>
-                    <table class="table">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Customer Name</th>
-                                <th>No Pesanan</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Subtotal</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $total = 0; ?>
-                            <?php foreach ($monthly_orders as $order) : ?>
+                    <?php if (empty($monthly_orders)) : ?>
+                        <p>Tidak ada pesanan yang selesai.</p>
+                    <?php else : ?>
+                        <table class="table">
+                            <thead class="table-dark">
                                 <tr>
-                                    <?php
-                                    // Mengambil tanggal dari database atau sumber lain
-                                    $datetimeFromDatabase = $order['create_time'];
-
-                                    $dateWithoutTime = date('d-m-Y', strtotime($datetimeFromDatabase));
-                                    ?>
-                                    <td><?php echo $order['nama_customer']; ?></td>
-                                    <td><?php echo $order['id_pesanan']; ?></td>
-                                    <td><?php echo $order['nama_produk']; ?></td>
-                                    <td><?php echo $order['qty_produk']; ?></td>
-                                    <?php $sub = $order['harga_produk'] * $order['qty_produk']; ?>
-                                    <td class="format"><?php echo $sub ?></td>
-                                    <td><?php echo $dateWithoutTime; ?></td>
+                                    <th>Nama Customer</th>
+                                    <th>No Pesanan</th>
+                                    <th>Nama Produk</th>
+                                    <th>Jumlah</th>
+                                    <th>Tanggal</th>
+                                    <th>Subtotal</th>
                                 </tr>
-                                <?php $total += $sub; ?>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php endif; ?>
+                            </thead>
+                            <tbody>
+                                <?php $total = 0; ?>
+                                <?php foreach ($monthly_orders as $order) : ?>
+                                    <tr>
+                                        <?php
+                                        // Mengambil tanggal dari database atau sumber lain
+                                        $datetimeFromDatabase = $order['create_time'];
+
+                                        $dateWithoutTime = date('d-m-Y', strtotime($datetimeFromDatabase));
+                                        ?>
+                                        <td><?php echo $order['nama_customer']; ?></td>
+                                        <td><?php echo $order['id_pesanan']; ?></td>
+                                        <td><?php echo $order['nama_produk']; ?></td>
+                                        <td><?php echo $order['qty_produk']; ?></td>
+                                        <?php $sub = $order['harga_produk'] * $order['qty_produk']; ?>
+                                        <td><?php echo $dateWithoutTime; ?></td>
+                                        <td class="format"><?php echo $sub ?></td>
+                                    </tr>
+                                    <?php $total += $sub; ?>
+                                <?php endforeach; ?>
+                                <tr>
+                                    <td colspan="5" align="right"><strong class="h6">Total Penjualan:</strong></td>
+                                    <td class="format"><strong><?php echo $total; ?></strong></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    <?php endif; ?>
                 </div>
             </div>
 

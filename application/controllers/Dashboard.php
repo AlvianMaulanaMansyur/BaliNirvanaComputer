@@ -313,6 +313,15 @@ class Dashboard extends CI_Controller
         $this->M_personalInfo->addKecamatan();
         redirect('dashboard/kotadankecamatan');
     }
+    public function editKecamatan() {
+        $this->M_personalInfo->editKecamatan();
+        redirect('dashboard/kotadankecamatan');
+    }
+
+    public function deleteKecamatan($id_kecamatan) {
+        $this->M_personalInfo->deleteKecamatan($id_kecamatan);
+        redirect('dashboard/kotadankecamatan');
+    }
 
     public function monthlyReport()
     {

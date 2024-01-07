@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo $selected_month ?></title>
 </head>
+
 <style>
     table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
     }
+
     th,
     td {
         padding: 12px;
@@ -30,19 +32,54 @@
     tr:hover {
         background-color: #f5f5f5;
     }
+
+    .date {
+        width: 90px;
+    }
+
+    .bali-nirvana {
+        color: #D21312;
+        font-weight: 500;
+    }
+
+    .computer {
+        color: black;
+        font-weight: 500;
+    }
+
+    .header-container {
+        margin-bottom: 0px;
+    }
+
+    .brand {
+        display: inline-block;
+    }
+
+    .bulan-laporan-bulanan {
+        display: inline-block;
+        margin-right: 220px;
+        padding-left: 20px;
+    }
 </style>
 
 <body>
-    <h2>Monthly Report <?php echo $selected_month ?></h2>
-    <table class="table">
+    <div class="header-container" style="border-bottom: 1px;">
+        <h2 class="bulan-laporan-bulanan">Laporan Bulanan</h2>
+        <h2 class="brand"><span class="bali-nirvana">Bali Nirvana</span> <span class="computer">Computer</span></h2>
+        <h3>
+            <?php echo $selected_month ?>
+        </h3>
+    </div>
+        
+    <table>
         <thead>
             <tr>
-                <th>Customer Name</th>
+                <th>Nama Customer</th>
                 <th>No Pesanan</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
+                <th>Nama Produk</th>
+                <th>Jumlah</th>
+                <th class="date">Tanggal</th>
                 <th>Subtotal</th>
-                <th>Date</th>
             </tr>
         </thead>
         <tbody>
@@ -59,17 +96,19 @@
                     <td><?php echo $order['nama_produk']; ?></td>
                     <td><?php echo $order['qty_produk']; ?></td>
                     <?php $sub = $order['harga_produk'] * $order['qty_produk']; ?>
+                    <td class="date"><?php echo $dateWithoutTime; ?></td>
                     <td class="format"><?php echo $this->pdf->formatCurrency($sub) ?></td>
-
-                    <td><?php echo $dateWithoutTime; ?></td>
                 </tr>
                 <?php $total += $sub; ?>
 
 
             <?php endforeach; ?>
+            <tr>
+                <td colspan="5" align="right"><strong class="h6">Total Penjualan:</strong></td>
+                <td class="format"><strong><?php echo $this->pdf->formatCurrency($total); ?></strong></td>
+            </tr>
         </tbody>
     </table>
-    <h5>Total Penjualan : <span class="format"><?php echo $this->pdf->formatCurrency($total) ?></span></h5>
 </body>
 
 </html>

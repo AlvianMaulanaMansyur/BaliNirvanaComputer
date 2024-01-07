@@ -43,7 +43,8 @@ class User extends CI_Controller
         $this->load->view('template', $data);
     }
 
-    public function editProfile($id_customer) {
+    public function editProfile($id_customer)
+    {
         // Ambil data dari formulir
         $nama_customer = $this->input->post('nama_customer');
         $telepon = $this->input->post('telepon');
@@ -88,17 +89,24 @@ class User extends CI_Controller
 
     public function updateIsCheck($id_cart)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $is_checked = $this->input->post('is_check') ? 1 : 0;
-            $isUpdateSuccessful = $this->M_cart->updateIsCheck($id_cart, $is_checked);
-
-            $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode(['success' => $isUpdateSuccessful]));
+        $cart = $this->M_cart->getCartByID($id_cart);
+    
+        if (isset($cart[0]) && $cart[0]['deleted'] == 0) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $is_checked = $this->input->post('is_check') ? 1 : 0;
+                $isUpdateSuccessful = $this->M_cart->updateIsCheck($id_cart, $is_checked);
+    
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(['success' => $isUpdateSuccessful]));
+            } else {
+                show_404();
+            }
         } else {
             show_404();
         }
     }
+    
 
     public function updateTotalCheckedPrice()
     {
@@ -113,29 +121,32 @@ class User extends CI_Controller
     {
         $newQuantity = intval($this->input->post('newQuantity'));
         $cart = $this->M_cart->getCartByID($id_cart);
-        
-        if (!empty($cart)) {
-            $qty_produk = $cart[0]['qty_produk'];
-            $result = $this->M_produk->getDetailProdukByID($cart[0]['id_produk']);
-            $stok_produk = $result['stok_produk'];
 
-            if (is_numeric($newQuantity) && $newQuantity > 0 && $newQuantity <= $stok_produk) {
-                $qty_produk = $newQuantity;
-            } else if ($newQuantity > $stok_produk) {
-                $qty_produk = $stok_produk;
-            }
-            else {
+        if (!empty($cart)) {
+            if ($cart[0]['deleted'] == 0) {
+                $qty_produk = $cart[0]['qty_produk'];
+                $result = $this->M_produk->getDetailProdukByID($cart[0]['id_produk']);
+                $stok_produk = $result['stok_produk'];
+
+                if (is_numeric($newQuantity) && $newQuantity > 0 && $newQuantity <= $stok_produk) {
+                    $qty_produk = $newQuantity;
+                } else if ($newQuantity > $stok_produk) {
+                    $qty_produk = $stok_produk;
+                } else {
+                    header('Content-Type: application/json');
+                    echo json_encode(['error' => 'Qty tidak valid']);
+                    return;
+                }
+
+                $this->M_cart->updateQuantity($id_cart, $qty_produk);
+
+                $updatedCart = $this->M_cart->getCartByID($id_cart);
+
                 header('Content-Type: application/json');
-                echo json_encode(['error' => 'Qty tidak valid']);
-                return;
+                echo json_encode($updatedCart[0]);
+            } else {
+
             }
-        
-            $this->M_cart->updateQuantity($id_cart, $qty_produk);
-        
-            $updatedCart = $this->M_cart->getCartByID($id_cart);
-        
-            header('Content-Type: application/json');
-            echo json_encode($updatedCart[0]);
         } else {
             header('Content-Type: application/json');
             echo json_encode(['error' => 'Cart not found']);
@@ -189,7 +200,6 @@ class User extends CI_Controller
             // Lanjutkan ke proses checkout jika validasi berhasil
             if (!empty($personal_info)) {
                 $content = 'V_user/checkout1';
-
             } else {
                 $content = 'V_user/checkout';
             }
@@ -213,7 +223,8 @@ class User extends CI_Controller
         redirect('orderid/' . $id_pesanan);
     }
 
-    public function setOrderIdToSession($id_pesanan) {
+    public function setOrderIdToSession($id_pesanan)
+    {
         $this->session->set_userdata('order_id', $id_pesanan);
         redirect('pesanan');
     }
@@ -223,9 +234,9 @@ class User extends CI_Controller
         $id_pesanan = $this->session->userdata('order_id');
         // var_dump($id_pesanan);die;
         $customer_id_login = $this->session->userdata('customer_id');
-    
+
         $order = $this->M_pesanan->getOrder($id_pesanan);
-    
+
         if (!empty($order) && $order[0]['id_customer'] == $customer_id_login) {
             // Jika sesuai, tampilkan halaman transaksi
             $data = [
@@ -233,7 +244,7 @@ class User extends CI_Controller
                 'content' => 'V_user/pesanan',
                 'order' => $order,
             ];
-    
+
             $this->load->view('template', $data);
         } else {
             redirect('error_page'); // Gantilah 'error_page' dengan alamat yang sesuai
@@ -254,7 +265,8 @@ class User extends CI_Controller
         $this->load->view('template', $data);
     }
 
-    public function Info() {
+    public function Info()
+    {
         $this->load->view('customer/info');
     }
 }
