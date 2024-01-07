@@ -161,10 +161,10 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="<?php echo base_url('dashboard/addkecamatan') ?>" method="post">
-
+                                <form action="<?php echo base_url('dashboard/editkecamatan') ?>" method="post">
+                                <label for="kota" class="form-label">Nama Kota</label>
                                     <div class="mb-3">
-                                        <select name="id_kota_kab" id="" class="form-control">
+                                        <select name="id_kota_kab" id="kota" class="form-control">
                                             <?php foreach ($kota as $kotas) : ?>
                                                 <?php $selected = ($kotas['id_kota_kab'] == $kotaKeca['id_kota_kab']) ? "selected" : ""; ?>
                                                 <option value="<?php echo $kotas['id_kota_kab'] ?>" <?php echo $selected ?>><?php echo $kotas['kota'] ?></option>
@@ -172,6 +172,8 @@
                                         </select>
                                     </div>
 
+                                <input type="text" name="id_kecamatan" value="<?php echo $kotaKeca['id_kecamatan'] ?>" hidden>
+                                    
                                     <div class="mb-3">
                                         <label for="kecamatan" class="form-label">Nama Kecamatan</label>
                                         <input type="text" name="kecamatan" class="form-control" id="kecamatan" value="<?php echo $kotaKeca['kecamatan'] ?>" required>
@@ -199,7 +201,7 @@
             var kotaName = $(this).data('name');
 
             Swal.fire({
-                title: "Hapus Produk?",
+                title: "Hapus Kota?",
                 text: "Anda yakin ingin menghapus kota '" + kotaName + "'?, maka akan menghapus semua kecamatan yang berkaitan!",
                 icon: "warning",
                 showCancelButton: true,
@@ -211,6 +213,29 @@
                 if (result.isConfirmed) {
                     // Redirect to delete endpoint
                     window.location.href = "<?php echo base_url('dashboard/deletekota/') ?>" + kotaId;
+                }
+            });
+        });
+
+        $('.delete-kecamatan').on('click', function(e) {
+            e.preventDefault();
+
+            var kecamatanId = $(this).data('id');
+            var kecamatanName = $(this).data('name');
+
+            Swal.fire({
+                title: "Hapus Kecamatan?",
+                text: "Anda yakin ingin menghapus kecamatan '" + kecamatanName + "'?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to delete endpoint
+                    window.location.href = "<?php echo base_url('dashboard/deletekecamatan/') ?>" + kecamatanId;
                 }
             });
         });

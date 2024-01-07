@@ -8,6 +8,7 @@
                 <?php
                 // Add these lines inside your foreach loop
                 $isStockEmpty = $key['stok_produk'] == 0;
+                $isProductDeleted = $key['deleted'] == 1;
                 $disableCheckbox = $isStockEmpty ? 'disabled' : '';
                 $disableQuantityButtons = $isStockEmpty ? 'disabled' : '';
 
@@ -20,8 +21,9 @@
                     <div class="col-lg-5">
                         <div class="me-lg-5">
                             <div class="d-flex">
+                                <!-- <?php echo $key['deleted'] ?> -->
                                 <div class="d-flex align-items-center">
-                                    <input class="me-3 checkbox-produt" type="checkbox" data-id="<?php echo $key['id_cart']; ?>" data-initial-stock="<?php echo $key['stok_produk']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk']) ? 'disabled' : ''; ?>>
+                                    <input class="me-3 checkbox-produt" type="checkbox" data-id="<?php echo $key['id_cart']; ?>" data-initial-stock="<?php echo $key['stok_produk']; ?>" <?php echo ($key['is_check'] == 1 && $key['stok_produk'] > 0 && $key['deleted']==0) ? 'checked' : ''; ?> onchange="updateIsCheck(this)" <?php echo ($key['stok_produk'] == 0 || $key['qty_produk'] > $key['stok_produk'] || $key['deleted']==1) ? 'disabled' : ''; ?>>
                                 </div>
 
                                 <a href="<?php echo base_url('produk/') . $key['slug'] ?>" class="nav-link">
@@ -29,8 +31,6 @@
                                     <div class="">
                                         <?php echo $key['nama_produk'] ?>
                                 </a>
-                                <!-- <p class="text-muted"><?php echo $key['nama_category'] ?></p> -->
-
 
                                 <?php if ($key['qty_produk'] > $key['stok_produk'] && !$isStockEmpty) : ?>
                                     <p class="stock-warning">Jumlah melebihi stok! Tidak bisa dicheckout. (stok <?php echo $key['stok_produk'] ?>)</p>
@@ -38,6 +38,10 @@
 
                                 <?php if ($isStockEmpty) : ?>
                                     <p class="stock-warning">Maaf stok barang habis</p>
+                                <?php endif; ?>
+
+                                <?php if ($isProductDeleted) : ?>
+                                    <p class="stock-warning" style="color: red;">Maaf produk telah dihapus!</p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -47,17 +51,16 @@
                 <div class="col-lg-3 col-sm-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
                     <div class="input-group input-group-sm d-flex me-5 col-lg-8 col-sm-3 col-md-5 w-75 pt-3" style="justify-content: center;">
 
-                        <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart'] ?>" data-stock="<?php echo $key['stok_produk'] ?>" onclick="validateAndSetQuantity(this, 'decrease', event)" <?php echo ($key['qty_produk'] <= 1) ? 'disabled' : ''; ?> style="height: 30px; width: 33%;" data-action='decrease'>
+                        <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart'] ?>" data-stock="<?php echo $key['stok_produk'] ?>" data-delete="<?php echo $key['deleted'] ?>" onclick="validateAndSetQuantity(this, 'decrease', event)" <?php echo ($key['qty_produk'] <= 1 || $key['deleted']==1) ? 'disabled' : ''; ?> style="height: 30px; width: 33%;" data-action='decrease'>
                             <i class="fa-solid fa-minus"></i>
                         </button>
 
-                        <input type="text" id="qty_<?php echo $key['id_cart']; ?>" class="form-control text-center border border-secondary" name="qty_produk" value="<?php echo $key['qty_produk']; ?>" aria-label="Example text with button addon" aria-describedby="button-addon1" style="height: 30px; width: 33%; text-align: center;" oninput="validateAndSetQuantity(this, 'input', event)" maxlength="3" data-id="<?php echo $key['id_cart']; ?>" data-stock="<?php echo $key['stok_produk']; ?>" />
+                        <input type="text" id="qty_<?php echo $key['id_cart']; ?>" class="form-control text-center border border-secondary" name="qty_produk" value="<?php echo $key['qty_produk']; ?>" data-delete="<?php echo $key['deleted'] ?>" aria-label="Example text with button addon" aria-describedby="button-addon1" style="height: 30px; width: 33%; text-align: center;" oninput="validateAndSetQuantity(this, 'input', event)" maxlength="3" data-id="<?php echo $key['id_cart']; ?>" data-stock="<?php echo $key['stok_produk']; ?>" <?php echo ($key['deleted']==1) ? 'disabled' : ''; ?> />
 
-                        <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart']; ?>" data-stock="<?php echo $key['stok_produk']; ?>" onclick="validateAndSetQuantity(this, 'increase', event)" <?php echo ($key['qty_produk'] >= $key['stok_produk']) ? 'disabled' : ''; ?> style="height: 30px; width: 33%; text-align: center;" data-action='increase'>
+                        <button class="quantity-control btn btn-white border border-secondary px-3" data-id="<?php echo $key['id_cart']; ?>" data-stock="<?php echo $key['stok_produk']; ?>" data-delete="<?php echo $key['deleted'] ?>" onclick="validateAndSetQuantity(this, 'increase', event)" <?php echo ($key['qty_produk'] >= $key['stok_produk'] || $key['deleted']==1) ? 'disabled' : ''; ?> style="height: 30px; width: 33%; text-align: center;" data-action='increase'>
                             <i class="fa-solid fa-plus"></i>
                         </button>
                         <small id="quantityMessage_<?php echo $key['id_cart']; ?>" class="text-danger"></small>
-
                     </div>
 
                     <div class="d-flex flex-column pt-3">
@@ -66,9 +69,9 @@
                     </div>
                 </div>
 
-                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2 pt-3" style="">
+                <div class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2 pt-3">
                     <div class="float-md-end">
-                        <!--                   <a href="#!" class="btn btn-light border px-2 icon-hover-primary"><i class="fas fa-heart fa-lg px-1 text-secondary"></i></a> -->
+    
                         <a href="<?php echo base_url('user/deleteCart/') . $key['id_cart'] ?>" class="btn btn-light border text-danger icon-hover-danger delete-cart-item"> Hapus</a>
                     </div>
                 </div>

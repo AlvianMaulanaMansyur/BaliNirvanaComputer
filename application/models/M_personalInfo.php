@@ -101,6 +101,24 @@ class M_personalInfo extends CI_Model {
         $this->db->insert('kecamatan', $data);
     }
 
+    public function editKecamatan() {
+        $id_kota_kab = $this->input->post('id_kota_kab');
+        $kecamatan = $this->input->post('kecamatan');
+        $id_kecamatan = $this->input->post('id_kecamatan');
+
+        $data = [
+            'id_kota_kab' => $id_kota_kab,
+            'kecamatan' => $kecamatan,
+        ];
+        $this->db->where('id_kecamatan', $id_kecamatan);
+        $this->db->update('kecamatan', $data);
+    }
+
+    public function deleteKecamatan($id_kecamatan) {
+        $this->db->where('id_kecamatan', $id_kecamatan);
+        $this->db->delete('kecamatan');
+    }
+    
     public function kotaKec() {
         $this->db->select('kecamatan.*, kota_kab.kota');
         $this->db->from('kecamatan');

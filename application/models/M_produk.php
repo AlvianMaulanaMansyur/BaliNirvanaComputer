@@ -45,6 +45,8 @@ class M_produk extends CI_Model
         $this->db->select('produk.*, category.nama_category');
         $this->db->from('produk');
         $this->db->join('category', 'produk.id_category = category.id_category');
+        $this->db->where('produk.deleted', 0);
+
         $result = $this->db->get();
         $produk = $result->result_array();
 
@@ -57,6 +59,7 @@ class M_produk extends CI_Model
         $this->db->from('produk');
         $this->db->join('category', 'produk.id_category = category.id_category');
         $this->db->where('produk.id_produk', $id_produk);
+        $this->db->where('produk.deleted', 0);
 
         $result = $this->db->get();
         $produk = $result->result_array();
@@ -72,6 +75,8 @@ class M_produk extends CI_Model
         $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
         $this->db->where('produk.stok_produk >', 0);
         $this->db->where('foto_produk.urutan_foto', 1);
+        $this->db->where('produk.deleted', 0);
+
         $result = $this->db->get();
         $produk = $result->result_array();
         return $produk;
@@ -286,19 +291,20 @@ class M_produk extends CI_Model
         return $id_produk;
     }
 
-    public function deleteProductPhoto($id_produk, $urutan_foto) {
+    public function deleteProductPhoto($id_produk, $urutan_foto)
+    {
         // Dapatkan URL foto dari database berdasarkan urutan foto
         $photo = $this->db->get_where('foto_produk', ['id_produk' => $id_produk, 'urutan_foto' => $urutan_foto])->row();
-    
+
         // Hapus foto dari penyimpanan
         if ($photo) {
             unlink($photo->url_foto);
         }
-    
+
         // Hapus catatan foto dari database
         $this->db->delete('foto_produk', ['id_produk' => $id_produk, 'urutan_foto' => $urutan_foto]);
     }
-    
+
 
     // Fungsi untuk mendapatkan slug yang sudah ada
     private function getExistingSlug($id_produk)
@@ -356,37 +362,19 @@ class M_produk extends CI_Model
 
     public function deleteProduk($id_produk)
     {
-        // Periksa apakah ada pesanan terkait
-        $jumlahPesanan = $this->db->where('id_produk', $id_produk)->count_all_results('detail_pesanan') > 0;
-    
-        if ($jumlahPesanan) {
-            // Jika ada pesanan, hentikan penghapusan dan kirim sinyal kesalahan
-            return false;
-        }
+        // Get photo information
+        $foto_info = $this->db->select('urutan_foto, url_foto')->where('id_produk', $id_produk)->get('foto_produk')->result();
 
-        // $isInCart = $this->db->where('id_produk', $id_produk)->count_all_results('produk_has_cart') > 0;
-
-        // if ($isInCart) {
-        //     // Produk berada dalam cart, hentikan penghapusan dan kirim sinyal kesalahan
-        //     return false;
-        // }    
-
-        $stok_produk = $this->db->select('stok_produk')->where('id_produk', $id_produk)->get('produk')->row()->stok_produk;
-
-        if ($stok_produk > 0) {
-            // Jika stok masih tersedia, hentikan penghapusan dan kirim sinyal kesalahan
-            return false;
-        }
-    
-        // Tidak ada pesanan terkait, lanjutkan dengan penghapusan
-        $foto_info = $this->db->select('url_foto')->where('id_produk', $id_produk)->get('foto_produk')->result();
-    
+        // Delete all photos with urutan_foto other than 1
         $this->db->where('id_produk', $id_produk);
+        $this->db->where('urutan_foto <>', 1);
         $this->db->delete('foto_produk');
-    
+
+        // Delete the product
         $this->db->where('id_produk', $id_produk);
-        $this->db->delete('produk');
-    
+        $this->db->update('produk', ['deleted' => 1, 'slug' => null]);
+
+        // Remove the files associated with deleted photos
         foreach ($foto_info as $foto) {
             if ($foto && !empty($foto->url_foto)) {
                 $foto_path = './' . $foto->url_foto;
@@ -395,47 +383,49 @@ class M_produk extends CI_Model
                 }
             }
         }
+
         return true;
     }
 
-    public function addCategory() {
+    public function addCategory()
+    {
         $config['upload_path'] = './assets/foto/';
         $config['allowed_types'] = 'jpg|png|jpeg';
-    
+
         $this->load->library('upload', $config);
-    
+
         // Check if the photo is selected
         if (empty($_FILES['foto_category']['name'])) {
             echo "Please select a file for foto_category.";
-            
         }
-    
+
         if (!$this->upload->do_upload('foto_category')) {
             $error = array('error' => $this->upload->display_errors());
             echo $error['error'];
             die;
         }
-    
+
         $data['upload_data'] = $this->upload->data();
         $gambar_path = 'assets/foto/' . $data['upload_data']['file_name'];
-    
+
         $insert_data = array(
             'nama_category' => $this->input->post('nama_category'),
             'foto_category' => $gambar_path,
         );
-    
+
         $result = $this->db->insert('category', $insert_data);
         return $result;
-    }    
+    }
 
-    public function editCategory() {
+    public function editCategory()
+    {
         $config['upload_path'] = './assets/foto/';
         $config['allowed_types'] = 'jpg|png|jpeg';
-    
+
         $this->load->library('upload', $config);
-    
+
         $id_category = $this->input->post('id_category');
-    
+
         // Check if a new photo is selected
         if (!empty($_FILES['foto_category']['name'])) {
             if (!$this->upload->do_upload('foto_category')) {
@@ -443,10 +433,10 @@ class M_produk extends CI_Model
                 echo $error['error'];
                 die;
             }
-    
+
             $data['upload_data'] = $this->upload->data();
             $gambar_path = 'assets/foto/' . $data['upload_data']['file_name'];
-    
+
             // Remove old photo if it exists
             $old_photo_path = $this->db->get_where('category', array('id_category' => $id_category))->row('foto_category');
             if (!empty($old_photo_path) && file_exists($old_photo_path)) {
@@ -456,34 +446,35 @@ class M_produk extends CI_Model
             // No new photo selected, keep the existing photo
             $gambar_path = $this->db->get_where('category', array('id_category' => $id_category))->row('foto_category');
         }
-    
+
         $edit_data = array(
             'nama_category' => $this->input->post('nama_category'),
             'foto_category' => $gambar_path,
         );
-    
+
         $this->db->where('id_category', $id_category);
         $result = $this->db->update('category', $edit_data);
-    
-        return $result;
-    }    
 
-    public function deleteCategory($category_id) {
+        return $result;
+    }
+
+    public function deleteCategory($category_id)
+    {
         // Get the photo path before deleting the category
         $photo_path = $this->db->get_where('category', array('id_category' => $category_id))->row('foto_category');
-    
+
         // Delete the category
         $this->db->where('id_category', $category_id);
         $result = $this->db->delete('category');
-    
+
         // Remove the photo file if it exists
         if (!empty($photo_path) && file_exists($photo_path)) {
             unlink($photo_path);
         }
-    
+
         return $result;
     }
-    
+
     public function getCategory()
     {
         $result = $this->db->get('category');

@@ -56,7 +56,6 @@ class M_cart extends CI_Model
         }
     }
 
-
     public function insertCart($slug)
     {
         $produk = $this->M_produk->getDetailProduk($slug);
@@ -186,7 +185,7 @@ class M_cart extends CI_Model
 
     public function getCart($id_customer)
     {
-        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, produk.stok_produk, category.nama_category, foto_produk.url_foto, foto_produk.urutan_foto, produk.slug');
+        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.harga_produk, produk.stok_produk, produk.deleted, category.nama_category, foto_produk.url_foto, foto_produk.urutan_foto, produk.slug');
         $this->db->from('cart');
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');
@@ -259,7 +258,7 @@ class M_cart extends CI_Model
 
     public function getCartByID($id_cart)
     {
-        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.slug, produk.harga_produk,foto_produk.url_foto,foto_produk.urutan_foto, produk.stok_produk');
+        $this->db->select('cart.*, produk_has_cart.id_produk, produk_has_cart.qty_produk, produk_has_cart.is_check, produk.nama_produk, produk.slug, produk.harga_produk,foto_produk.url_foto,foto_produk.urutan_foto, produk.stok_produk, produk.deleted');
         $this->db->from('cart');
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');

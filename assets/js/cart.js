@@ -106,7 +106,7 @@
     function updateIsCheck(checkbox) {
         var id_cart = $(checkbox).data('id');
         var is_check = checkbox.checked ? 1 : 0;
-
+        console.log('halo')
         $.ajax({
             url: base_url + 'user/updateIsCheck/' + id_cart,
             type: 'POST',
@@ -114,6 +114,7 @@
                 is_check: is_check
             },
             success: function(response) {
+                console.log('hilo');
                 updateTotalCheckedPrice();
             },
             error: function(error) {
@@ -198,6 +199,7 @@
             // If the target is none of the above, return
             return;
         }
+
         var currentValue = parseInt(inputElement.value) || 0;
         var id_cart = inputElement.getAttribute('data-id');
         var stock = parseInt(inputElement.getAttribute('data-stock'));
