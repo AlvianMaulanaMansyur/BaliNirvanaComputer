@@ -63,7 +63,7 @@ $results = isset($results) ? $results : null;
                             <img src="<?= base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 1 / 1; ; opacity: <?= ($product['stok_produk'] <= 0) ? '0.3' : '1' ?>;">
                         </a>
                         <div class="rkp_body card-body">
-                            <h5 class="card-title me-2"><?= $product['nama_produk'] ?></h5>
+                            <h5 class="card-title me-2" style=" overflow:hidden ;text-overflow:ellipsis; white-space: nowrap;"><?= $product['nama_produk'] ?></h5>
                             <?php if ($product['stok_produk'] <= 0) : ?>
                                 <small class="text-muted">Stok Habis</small>
                             <?php endif ?>
@@ -87,8 +87,8 @@ $results = isset($results) ? $results : null;
                         <a href="<?= base_url('produk/') . $product['slug'] ?>">
                             <img src="<?= base_url($product['url_foto']); ?>" class="card-img-top" alt="Gambar" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 1 / 1; ;opacity: <?= ($product['stok_produk'] <= 0) ? '0.3' : '1' ?>;">
                         </a>
-                        <div class="rkp_body card-body">
-                            <h5 class="card-title me-2"><?= $product['nama_produk'] ?></h5>
+                        <div class="rkp_body card-body" >
+                            <h5 class="card-title me-2" style=" overflow:hidden ;text-overflow:ellipsis; white-space: nowrap;"><?= $product['nama_produk'] ?></h5>
                             <?php if ($product['stok_produk'] <= 0) : ?>
                                 <small class="text-muted">Stok Habis</small>
                             <?php endif ?>
