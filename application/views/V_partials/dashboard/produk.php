@@ -203,6 +203,7 @@
             </div>
             <div class="modal-body">
                 <form action="<?php echo base_url('dashboard/insertProduk') ?>" method="post" enctype="multipart/form-data">
+                
                     <div>
                         <input hidden readonly type="text" name="id_admin" class="form-control" id="Id_admin" value="1">
                     </div>

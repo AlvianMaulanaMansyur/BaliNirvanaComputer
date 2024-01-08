@@ -495,6 +495,7 @@ class M_produk extends CI_Model
         return $result;
     }
 
+    // M_produk.php model, around line 528
     public function updateStok($id_pesanan)
     {
         $this->db->select('pesanan.id_pesanan, detail_pesanan.id_produk, detail_pesanan.qty_produk, produk.stok_produk');
@@ -507,13 +508,44 @@ class M_produk extends CI_Model
         $stok = $result->result_array();
 
         foreach ($stok as $key) {
-            $this->db->where('produk.id_produk', $key['id_produk']);
-            $kurang = $key['stok_produk'] - $key['qty_produk'];
-            $this->db->update('produk', array('stok_produk' => $kurang));
+            if (isset($key['nama_produk'])) { // Check if 'nama_produk' index exists
+                $this->db->where('produk.id_produk', $key['id_produk']);
+                $kurang = $key['stok_produk'] - $key['qty_produk'];
+                if ($kurang < 0) {
+                    $this->db->update('produk', array('stok_produk' => $kurang));
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     }
 
-    //search untuk mencari data barang di admin dashboard
+
+    public function checkExceedsStock($id_pesanan)
+    {
+        $this->db->select('detail_pesanan.id_produk, detail_pesanan.qty_produk, produk.stok_produk');
+        $this->db->from('detail_pesanan');
+        $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
+        $this->db->where('detail_pesanan.id_pesanan', $id_pesanan);
+
+        $result = $this->db->get();
+        $stok = $result->result_array();
+
+        foreach ($stok as $key) {
+            if ($key['qty_produk'] > $key['stok_produk']) {
+                $productName = $key['nama_produk'];
+                $message = "Quantity of $productName exceeds available stock.";
+                header('Content-Type: application/json');
+                http_response_code(400); // Set appropriate HTTP response code
+                echo json_encode(['message' => $message]);
+                exit();
+            }
+        }
+
+        return false; // Quantity is within stock limits
+    }
+
     public function search_data_produk($keyword)
     {
         $this->db->select('produk. *, category.nama_category');

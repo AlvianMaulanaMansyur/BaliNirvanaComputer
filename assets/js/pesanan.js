@@ -26,5 +26,13 @@ function confirmUpdateOrder(orderId, orderStatus) {
             // Redirect ke halaman updateOrder jika konfirmasi diterima
             window.location.href = base_url + 'dashboard/updateOrder/' + orderId;
         }
+    }).catch((error) => {
+        // If there is an error, display the error message using SweetAlert
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.responseJSON.message, // Assuming the server sends an error message
+        });
     });
+    
 }
