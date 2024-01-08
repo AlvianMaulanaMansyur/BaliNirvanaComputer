@@ -102,7 +102,7 @@
             <div class="rkp_body card-body">
           </a>
           <div class="d-flex">
-            <h5 class="card-title me-2"><?php echo $product['nama_produk'] ?></h5>
+            <h5 class="card-title me-2" style=" overflow:hidden ;text-overflow:ellipsis; white-space: nowrap;"><?php echo $product['nama_produk'] ?></h5>
             <?php if ($product['stok_produk'] <= 0) : ?>
               <small class="text-muted">Stok Habis</small>
             <?php endif ?>
