@@ -1,18 +1,18 @@
 function confirmUpdateOrder(orderId, orderStatus) {
-    // Pengecekan status pesanan
-    if (orderStatus == 1) {
-        Swal.fire({
-            title: "Pesanan Sudah Lunas",
-            text: "Pesanan ini sudah lunas dan tidak dapat diubah lagi.",
-            icon: "info",
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "OK"
-        });
-        return;
-    }
+	// Pengecekan status pesanan
+	if (orderStatus == 1) {
+		Swal.fire({
+			title: "Pesanan Sudah Lunas",
+			text: "Pesanan ini sudah lunas dan tidak dapat diubah lagi.",
+			icon: "info",
+			confirmButtonColor: "#3085d6",
+			confirmButtonText: "OK",
+		});
+		return;
+	}
 
-    // Konfirmasi untuk pesanan yang belum lunas
-    Swal.fire({
+	// Konfirmasi untuk pesanan yang belum lunas
+	Swal.fire({
         title: "Update Order?",
         text: "Apakah Anda yakin ingin mengupdate pesanan ini?",
         icon: "warning",
@@ -20,19 +20,42 @@ function confirmUpdateOrder(orderId, orderStatus) {
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Ya, update!",
-        cancelButtonText: "Batal"
+        cancelButtonText: "Batal",
     }).then((result) => {
         if (result.isConfirmed) {
-            // Redirect ke halaman updateOrder jika konfirmasi diterima
-            window.location.href = base_url + 'dashboard/updateOrder/' + orderId;
+            // If confirmed, send AJAX request to updateOrder endpoint
+            $.ajax({
+                url: base_url + "dashboard/updateOrder/" + orderId,
+                type: "POST",
+                dataType: "JSON",
+                success: function (response) {
+                    if (response.berhasil) {
+                        Swal.fire({
+                            title: "Sukses!",
+                            text: response.message,
+                            icon: "success",
+                        }).then(() => {
+                            // Redirect to orders page after successful update
+                            window.location.href = base_url + "dashboard/orders";
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Gagal!",
+                            text: response.message,
+                            icon: "error",
+                        });
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Terjadi kesalahan saat mengupdate pesanan.",
+                        icon: "error",
+                    });
+                },
+            });
         }
-    }).catch((error) => {
-        // If there is an error, display the error message using SweetAlert
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: error.responseJSON.message, // Assuming the server sends an error message
-        });
     });
     
 }

@@ -24,7 +24,6 @@ class M_pesanan extends CI_Model
         $this->db->where('produk.stok_produk > ', 0);
         $this->db->where('produk.deleted = ', 0);
 
-
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
@@ -50,7 +49,6 @@ class M_pesanan extends CI_Model
         $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
         $this->db->where('foto_produk.urutan_foto', 1);
 
-        // Menambahkan kondisi pencarian berdasarkan nama_customer atau alamat_pengiriman
         if (!empty($keyword)) {
             $this->db->group_start();
             $this->db->like('customer.nama_customer', $keyword);
@@ -89,8 +87,8 @@ class M_pesanan extends CI_Model
                     'qty_produk' => $row['qty_produk'],
                     'subtotal' => $row['harga_produk'] * $row['qty_produk'],
                     'url_foto' => $row['url_foto'],
-
                 );
+
                 $orders[$nomor_pesanan]['id_pesanan'] = $nomor_pesanan;
                 $orders[$nomor_pesanan]['status'] = $row['status_pesanan'];
                 $orders[$nomor_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
@@ -101,8 +99,6 @@ class M_pesanan extends CI_Model
             return array();
         }
     }
-
-
 
     public function getAllOrder($id_customer)
     {
@@ -135,19 +131,19 @@ class M_pesanan extends CI_Model
                         'total' => 0
                     );
                 }
-                if ($row['status_pesanan'] == 0) {
-                    if ($row['stok_produk'] <= 0 || $row['deleted'] == 1) {
-                        $harga = 0;
-                    } else {
-                        $harga = $row['harga_produk'];
-                    }
-                } else {
-                    $harga = $row['harga_produk'];
-                }
+                // if ($row['status_pesanan'] == 0) {
+                //     if ($row['stok_produk'] <= 0 || $row['deleted'] == 1) {
+                //         $harga = 0;
+                //     } else {
+                //         $harga = $row['harga_produk'];
+                //     }
+                // } else {
+                //     $harga = $row['harga_produk'];
+                // }
 
                 $orders[$id_pesanan]['details'][] = array(
                     'nama_produk' => $row['nama_produk'],
-                    'harga_produk' => $harga,
+                    'harga_produk' => $row['harga_produk'],
                     'qty_produk' => $row['qty_produk'],
                     'subtotal' => $row['harga_produk'] * $row['qty_produk'],
                     'url_foto' => $row['url_foto'],
@@ -155,7 +151,7 @@ class M_pesanan extends CI_Model
                     'deleted' => $row['deleted']
                 );
 
-                $orders[$id_pesanan]['total'] += $harga * $row['qty_produk'];
+                $orders[$id_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
                 $orders[$id_pesanan]['status_pesanan'] = $row['status_pesanan'];
                 $orders[$id_pesanan]['create_time'] = $row['create_time'];
             }
@@ -165,9 +161,6 @@ class M_pesanan extends CI_Model
             return array();
         }
     }
-    // Di model M_pesanan, tambahkan fungsi berikut:
-
-    // Di model M_pesanan, update fungsi getOrderCount menjadi seperti berikut:
 
     public function getOrderCount($id_customer)
     {
@@ -184,8 +177,6 @@ class M_pesanan extends CI_Model
             return 0;
         }
     }
-
-
 
     public function getAllOrderForAdmin()
     {
@@ -218,15 +209,15 @@ class M_pesanan extends CI_Model
                     );
                 }
 
-                if ($row['status_pesanan'] == 0) {
-                    if ($row['stok_produk'] <= 0 || $row['deleted'] == 1) {
-                        $harga = 0;
-                    } else {
-                        $harga = $row['harga_produk'];
-                    }
-                } else {
-                    $harga = $row['harga_produk'];
-                }
+                // if ($row['status_pesanan'] == 0) {
+                //     if ($row['stok_produk'] <= 0 || $row['deleted'] == 1) {
+                //         $harga = 0;
+                //     } else {
+                //         $harga = $row['harga_produk'];
+                //     }
+                // } else {
+                //     $harga = $row['harga_produk'];
+                // }
 
                 $orders[$nomor_pesanan]['details'][] = array(
                     'nama_customer' => $row['nama_customer'],
@@ -235,7 +226,7 @@ class M_pesanan extends CI_Model
                     'alamat_pengiriman' => $row['alamat_pengiriman'],
                     'detail_alamat_pengiriman' => $row['detail_alamat_pengiriman'],
                     'nama_produk' => $row['nama_produk'],
-                    'harga_produk' => $harga,
+                    'harga_produk' => $row['harga_produk'],
                     'qty_produk' => $row['qty_produk'],
                     'subtotal' => $row['harga_produk'] * $row['qty_produk'],
                     'url_foto' => $row['url_foto'],
@@ -245,7 +236,7 @@ class M_pesanan extends CI_Model
                 );
                 $orders[$nomor_pesanan]['id_pesanan'] = $nomor_pesanan;
                 $orders[$nomor_pesanan]['status'] = $row['status_pesanan'];
-                $orders[$nomor_pesanan]['total'] += $harga * $row['qty_produk'];
+                $orders[$nomor_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
                 $orders[$nomor_pesanan]['create_time'] = $row['create_time'];
             }
             return $orders;

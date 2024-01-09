@@ -52,38 +52,36 @@ class Dashboard extends CI_Controller
 
     public function updateOrder($id_pesanan)
     {
-        $this->db->select('pesanan.*,detail_pesanan.*, produk.*');
+        $this->db->select('pesanan.*, detail_pesanan.*, produk.*');
         $this->db->from('pesanan');
         $this->db->join('detail_pesanan', 'pesanan.id_pesanan = pesanan.id_pesanan', 'left');
         $this->db->join('produk', 'produk.id_produk = detail_pesanan.id_produk', 'left');
         $this->db->where('pesanan.id_pesanan', $id_pesanan);
+
         $result = $this->db->get();
         $status = $result->result_array();
 
-
         if ($status[0]['status_pesanan'] == 0) {
-            // Check if quantity exceeds stock
-            if ($status[0]['stok_produk'] > 0) {
-
-                $stok = $this->M_produk->updateStok($id_pesanan);
-
-                if ($stok) {
+            if ($status[0]['deleted'] == 0) {
+                if ($this->M_produk->updateStok($id_pesanan)) {
                     $data = [
                         'status_pesanan' => '1',
                     ];
                     $this->db->where('id_pesanan', $id_pesanan);
                     $this->db->update('pesanan', $data);
+                    echo json_encode(['berhasil' => true, 'message' => 'Pesanan ini telah lunas!']);
+                    exit;
                 } else {
-                    $this->session->set_flashdata('cannot', 'jadfjajdlglajjf');
+                    echo json_encode(['gagal' => false, 'message' => 'Tidak dapat melunasi pesanan, karena stok barang kurang!']);
+                    exit;
                 }
-                redirect('dashboard/orders');
             } else {
-                // Quantity exceeds stock, show an error message or handle it accordingly
-                $this->session->set_flashdata('cannot', 'jadfjajdlglajjf');
-                redirect('dashboard/orders');
+                echo json_encode(['gagal' => false, 'message' => 'Tidak dapat melunasi pesanan, karena barang sudah dihapus!']);
+                exit;
             }
-        } else if ($status[0]['status_pesanan'] == 1) {
-            redirect('dashboard/orders');
+        } elseif ($status[0]['status_pesanan'] == 1) {
+            echo json_encode(['gagal' => false, 'message' => 'Pesanan sudah diupdate sebelumnya.']);
+            exit;
         }
     }
 

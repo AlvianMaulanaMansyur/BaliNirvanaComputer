@@ -13,7 +13,7 @@
 
                         <!-- Input Personal Info -->
                         <div class="">
-                            <h5 class="card-title pt-2">PEMBAYARAN</h5>
+                            <h5 class="card-title pt-2">INFORMASI PERSONAL</h5>
 
                             <fieldset disabled>
                                 <div class="mb-4">
