@@ -1,4 +1,4 @@
-<!-- checkout -->
+<!-- checkout1 -->
 
 <section class="bg-light py-4">
     <div class="d-flex row" style="justify-content: center;">
@@ -43,8 +43,8 @@
                                 <div class="mb-3 me-4 col-5">
                                     <label for="Category" class="form-label">Kabupaten</label>
                                     <?php
-                                    $selectedKotaKab = (!empty($cart)) ? $cart[0]['id_kota_kab'] : ''; // Variabel untuk menyimpan id_kota_kab yang ingin dipilih
-                                    $selectedKecamatan = (!empty($cart)) ? $cart[0]['id_kecamatan'] : ''; // Variabel untuk menyimpan id_kecamatan yang ingin dipilih
+                                    $selectedKotaKab = (!empty($cart)) ? $cart[0]['id_kota_kab'] : '';
+                                    $selectedKecamatan = (!empty($cart)) ? $cart[0]['id_kecamatan'] : '';
 
                                     $kotaOptions = array(); // Array asosiatif untuk menyimpan kabupaten unik
                                     $kecamatanOptions = array(); // Array asosiatif untuk menyimpan kecamatan unik berdasarkan kabupaten yang dipilih
@@ -53,14 +53,21 @@
                                         $kotaOptions[$city['id_kota_kab']] = $city['kota'];
 
                                         if ($city['id_kota_kab'] == $selectedKotaKab) {
-                                            $kecamatanOptions[$city['id_kecamatan']] = $city['kecamatan'];
+                                            $kecamatanOptions[$city['id_kecamatan']] = array(
+                                                'id_kota_kab' => $city['id_kota_kab'],
+                                                'nama_kecamatan' => $city['kecamatan']
+                                            );
+                                            
                                         }
                                     }
                                     ?>
 
                                     <select name="kota" id="Kota" class="form-select">
+                                        <?php if (empty($selectedKotaKab)) : ?>
+                                            <option value="" selected>Pilih Kabupaten</option>
+                                        <?php endif ?>
                                         <?php foreach ($kotaOptions as $id => $kotaOption) { ?>
-                                            <option value="<?php echo $id; ?>" <?php echo ($id == $selectedKotaKab) ? 'selected' : ''; ?>>
+                                            <option value="<?php echo $id; ?>" <?php echo ($id == $selectedKotaKab) ? 'selected' : ''; ?> data-kota-id="<?php echo $id ?>">
                                                 <?php echo $kotaOption; ?>
                                             </option>
                                         <?php } ?>
@@ -70,11 +77,9 @@
                                 <div class="mb-3 col-5">
                                     <label for="Category" class="form-label">Kecamatan</label>
                                     <select name="id_kecamatan" class="form-select" id="kecamatan">
-                                        <?php foreach ($kecamatanOptions as $id => $kecamatanOption) { ?>
-                                            <option value="<?php echo $id; ?>" <?php echo ($id == $selectedKecamatan) ? 'selected' : ''; ?>>
-                                                <?php echo $kecamatanOption; ?>
-                                            </option>
-                                        <?php } ?>
+                                    <?php foreach ($kota as $item) { ?>
+                                            <option value="<?php echo $item['id_kecamatan'] ?>" data-kota-id="<?php echo $item['id_kota_kab'] ?>"><?php echo $item['kecamatan'] ?></option>
+                                    <?php } ?>
                                     </select>
                                 </div>
 
@@ -89,9 +94,7 @@
                     </div>
             </div>
         </div>
-        <!-- Akhir Input Personal Info -->
 
-        <!-- Start Product Info -->
         <div class="py-3 px-3 col-lg-4 col-sm-10">
             <div class="card">
 
@@ -101,7 +104,6 @@
                     <div class="">
                         <?php $total = 0; ?>
                         <?php foreach ($cart as $key) { ?>
-
 
                             <div class="row d-flex pt-3">
                                 <div class="d-flex col-lg-7 col-md-9 col-sm-12">
@@ -124,7 +126,7 @@
                         <?php } ?>
 
                         <div class="d-flex pt-5 me-lg-5 me-sm-0" style="justify-content: end;">
-                            <h5 style="font-weight: 500;">Total Harga:  <span class="format"><?php echo $total ?></span></h5>
+                            <h5 style="font-weight: 500;">Total Harga: <span class="format"><?php echo $total ?></span></h5>
                         </div>
                         <div class="d-flex me-lg-5 me-sm-0" style="justify-content: end;">
                             <button type="submit" class="btn col-lg-4 col-sm-4" style="background: #D21312;color:white;">Buat Pesanan</button>
@@ -140,53 +142,41 @@
             </div>
 
         </div>
-        <!-- End Product Info -->
         </form>
     </div>
 </section>
-
-<!-- Script JavaScript -->
 <script>
     $(document).ready(function() {
-        // Fungsi untuk mengatur nilai default dan filter kecamatan
-        function updateKecamatanOptions(selectedKotaId) {
-            // Ambil nilai kecamatan yang sudah terpilih sebelumnya
-            var selectedKecamatanId = $('#kecamatan').val();
 
-            // Hapus opsi-opsi kecamatan yang ada
-            $('#kecamatan option:not(:first-child)').remove();
+        $('#kecamatan').prop('disabled', true);
 
-            // Tambahkan opsi default
-            var defaultOption = '<option selected value="">Pilih Kecamatan</option>';
-            $('#kecamatan').append(defaultOption);
+        var originalKecamatanOptions = $('#kecamatan option');
 
-            // Filter dan update opsi kecamatan berdasarkan kabupaten yang dipilih
-            <?php foreach ($kota as $key) { ?>
-                if ('<?php echo $key['id_kota_kab'] ?>' === selectedKotaId) {
-                    // Jika id_kecamatan sama dengan yang sudah terpilih, skip opsi tersebut
-                    if ('<?php echo $key['id_kecamatan'] ?>' !== selectedKecamatanId) {
-                        var option = '<option selected value="<?php echo $key['id_kecamatan'] ?>" data-kota="<?php echo $key['kota'] ?>"><?php echo $key['kecamatan'] ?></option>';
-                        $('#kecamatan').append(option);
-                    }
-                }
-            <?php } ?>
+        $('#kecamatan').empty();
+        $('#kecamatan').append('<option value="" selected>Pilih Kecamatan</option>');
 
-            // Pilih kembali kecamatan yang sudah terpilih sebelumnya
-            $('#kecamatan').val(selectedKecamatanId);
-        }
-
-        // Ambil nilai awal dari data yang akan diedit
-        var selectedKotaId = '<?php echo !empty($cart) ? $cart[0]['id_kota_kab'] : ''; ?>';
-        var selectedKecamatanId = '<?php echo !empty($cart) ? $cart[0]['id_kecamatan'] : ''; ?>';
-
-        // Panggil fungsi untuk mengatur nilai default dan filter
-        updateKecamatanOptions(selectedKotaId);
-
-        // Handler perubahan pada elemen <select> kabupaten
         $('#Kota').change(function() {
-            // Hapus semua opsi kecamatan dan tambahkan opsi default
-            $('#kecamatan').empty();
-            updateKecamatanOptions($(this).val());
+
+            var selectedKotaId = $(this).val();
+
+            if (selectedKotaId !== '') {
+                $('#kecamatan').prop('disabled', false);
+
+                $('#kecamatan').empty();
+                $('#kecamatan').append('<option value="" selected>Pilih Kecamatan</option>');
+
+                originalKecamatanOptions.each(function() {
+                    var optionKotaId = $(this).data('kota-id');
+                    if (optionKotaId == selectedKotaId) {
+                        $('#kecamatan').append($(this));
+                    }
+                });
+
+                $('#kecamatan').prop('selectedIndex', 0);
+            } else {
+                // If no Kabupaten is selected, disable and reset Kecamatan dropdown
+                $('#kecamatan').prop('disabled', true).val('');
+            }
         });
     });
 </script>

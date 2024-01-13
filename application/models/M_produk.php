@@ -442,6 +442,8 @@ class M_produk extends CI_Model
         $this->db->where('foto_produk.urutan_foto', 1);
         $this->db->where('category.nama_category', $nama);
         $this->db->where('produk.stok_produk != ', 0);
+        $this->db->where('produk.deleted = ', 0);
+        
         $result = $this->db->get()->result_array();
         return $result;
     }
@@ -491,6 +493,8 @@ class M_produk extends CI_Model
         $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
         $this->db->like('nama_produk', $keyword);
         $this->db->where('foto_produk.urutan_foto', 1);
+        $this->db->where('produk.deleted = ', 0);
+        
         $query = $this->db->get();
         return $query->result_array();
     }

@@ -201,7 +201,7 @@ class User extends CI_Controller
             if (!empty($personal_info)) {
                 $content = 'V_user/checkout1';
             } else {
-                $content = 'V_user/checkout';
+                $content = 'V_user/checkout1';
             }
 
             $data = [
