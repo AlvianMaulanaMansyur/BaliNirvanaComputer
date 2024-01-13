@@ -52,23 +52,36 @@ class Dashboard extends CI_Controller
 
     public function updateOrder($id_pesanan)
     {
-        $this->db->select('*');
+        $this->db->select('pesanan.*, detail_pesanan.*, produk.*');
         $this->db->from('pesanan');
-        $this->db->where('id_pesanan', $id_pesanan);
+        $this->db->join('detail_pesanan', 'pesanan.id_pesanan = pesanan.id_pesanan', 'left');
+        $this->db->join('produk', 'produk.id_produk = detail_pesanan.id_produk', 'left');
+        $this->db->where('pesanan.id_pesanan', $id_pesanan);
+
         $result = $this->db->get();
         $status = $result->result_array();
 
         if ($status[0]['status_pesanan'] == 0) {
-            $data = [
-                'status_pesanan' => '1',
-            ];
-            $this->db->where('id_pesanan', $id_pesanan);
-            $this->db->update('pesanan', $data);
-            $this->M_produk->updateStok($id_pesanan);
-
-            redirect('dashboard/orders');
-        } else if ($status[0]['status_pesanan'] == 1) {
-            redirect('dashboard/rders');
+            if ($status[0]['deleted'] == 0) {
+                if ($this->M_produk->updateStok($id_pesanan)) {
+                    $data = [
+                        'status_pesanan' => '1',
+                    ];
+                    $this->db->where('id_pesanan', $id_pesanan);
+                    $this->db->update('pesanan', $data);
+                    echo json_encode(['berhasil' => true, 'message' => 'Pesanan ini telah lunas!']);
+                    exit;
+                } else {
+                    echo json_encode(['gagal' => false, 'message' => 'Tidak dapat melunasi pesanan, karena stok barang kurang!']);
+                    exit;
+                }
+            } else {
+                echo json_encode(['gagal' => false, 'message' => 'Tidak dapat melunasi pesanan, karena barang sudah dihapus!']);
+                exit;
+            }
+        } elseif ($status[0]['status_pesanan'] == 1) {
+            echo json_encode(['gagal' => false, 'message' => 'Pesanan sudah diupdate sebelumnya.']);
+            exit;
         }
     }
 
@@ -164,16 +177,19 @@ class Dashboard extends CI_Controller
         $this->load->view('master', $data);
     }
 
-    public function addCategory() {
+    public function addCategory()
+    {
         $this->M_produk->addCategory();
         redirect('dashboard/category');
     }
-    public function editCategory() {
+    public function editCategory()
+    {
         $this->M_produk->editCategory();
         redirect('dashboard/category');
     }
 
-    public function deleteCategory($id_category) {
+    public function deleteCategory($id_category)
+    {
         $this->M_produk->deleteCategory($id_category);
         redirect('dashboard/category');
     }
@@ -274,7 +290,8 @@ class Dashboard extends CI_Controller
         redirect('dashboard/admin');
     }
 
-    public function kotaDanKecamatan() {
+    public function kotaDanKecamatan()
+    {
         $kotaKec = $this->M_personalInfo->kotaKec();
         $kota = $this->M_personalInfo->getKota();
         $kecamatan = $this->M_personalInfo->getKecamatan();
@@ -294,31 +311,37 @@ class Dashboard extends CI_Controller
         $this->load->view('master', $data);
     }
 
-    public function addKota() {
+    public function addKota()
+    {
         $this->M_personalInfo->addKota();
         redirect('dashboard/kotadankecamatan');
     }
 
-    public function editKota() {
+    public function editKota()
+    {
         $this->M_personalInfo->editKota();
         redirect('dashboard/kotadankecamatan');
     }
 
-    public function deleteKota($id_kota) {
+    public function deleteKota($id_kota)
+    {
         $this->M_personalInfo->deleteKota($id_kota);
         redirect('dashboard/kotadankecamatan');
     }
 
-    public function addKecamatan() {
+    public function addKecamatan()
+    {
         $this->M_personalInfo->addKecamatan();
         redirect('dashboard/kotadankecamatan');
     }
-    public function editKecamatan() {
+    public function editKecamatan()
+    {
         $this->M_personalInfo->editKecamatan();
         redirect('dashboard/kotadankecamatan');
     }
 
-    public function deleteKecamatan($id_kecamatan) {
+    public function deleteKecamatan($id_kecamatan)
+    {
         $this->M_personalInfo->deleteKecamatan($id_kecamatan);
         redirect('dashboard/kotadankecamatan');
     }
@@ -444,7 +467,7 @@ class Dashboard extends CI_Controller
         $this->M_pesanan->cancelOrder($idPesanan);
         echo json_encode(['sukses' => true]);
     }
-    
+
 
     public function logout()
     {
