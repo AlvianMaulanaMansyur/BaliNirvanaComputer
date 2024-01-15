@@ -1,35 +1,27 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_personalInfo extends CI_Model {
+class M_personalInfo extends CI_Model
+{
 
-    
+
     public function __construct()
     {
         parent::__construct();
         //Do your magic here
     }
 
-    public function insertPersonalInfo()
+    public function insertPersonalInfo($data_info)
     {
         $id = $this->session->userdata('customer_id');
         $existing_personal_info = $this->getPersonalInfoByIdCustomer($id);
 
-        $insert_data = array(
-            'alamat' => $this->input->post('alamat'),
-            'kodepos' => $this->input->post('kodepos'),
-            'detail_alamat' => $this->input->post('detail_alamat'),
-            'id_customer' => $id,
-            'id_kecamatan' => $this->input->post('id_kecamatan'),
-        );
-        // var_dump($insert_data);die;
-        
         if (empty($existing_personal_info)) {
-            $this->db->insert('personal_info', $insert_data);
+            $this->db->insert('personal_info', $data_info);
         } else {
             $this->db->where('id_customer', $id);
-            $this->db->update('personal_info', $insert_data);
+            $this->db->update('personal_info', $data_info);
         }
     }
 
@@ -41,8 +33,9 @@ class M_personalInfo extends CI_Model {
         $result = $this->db->get()->row_array();
         return $result;
     }
-    
-    public function getPersonalInfo() {
+
+    public function getPersonalInfo()
+    {
         $result = $this->db->get('personal_info');
         return $result->result_array();
     }
@@ -58,7 +51,8 @@ class M_personalInfo extends CI_Model {
         return $result;
     }
 
-    public function addKota() {
+    public function addKota()
+    {
         $kota = $this->input->post('kota');
         $data = [
             'kota' => $kota,
@@ -66,7 +60,8 @@ class M_personalInfo extends CI_Model {
         $this->db->insert('kota_kab', $data);
     }
 
-    public function editKota() {
+    public function editKota()
+    {
         $id_kota_kab = $this->input->post('id_kota_kab');
         $kota = $this->input->post('kota');
         $data = [
@@ -76,11 +71,12 @@ class M_personalInfo extends CI_Model {
         $this->db->update('kota_kab', $data);
     }
 
-    public function deleteKota($id_kota) {
+    public function deleteKota($id_kota)
+    {
         // Get the id_kota_kab before deleting the kota
         $this->db->where('id_kota_kab', $id_kota);
         $id_kota_kab = $this->db->get('kota_kab')->row('id_kota_kab');
-    
+
         // Delete all kecamatan associated with the obtained id_kota_kab
         $this->db->where('id_kota_kab', $id_kota_kab);
         $this->db->delete('kecamatan');
@@ -90,7 +86,8 @@ class M_personalInfo extends CI_Model {
         $this->db->delete('kota_kab');
     }
 
-    public function addKecamatan() {
+    public function addKecamatan()
+    {
         $id_kota_kab = $this->input->post('id_kota_kab');
         $kecamatan = $this->input->post('kecamatan');
 
@@ -101,7 +98,8 @@ class M_personalInfo extends CI_Model {
         $this->db->insert('kecamatan', $data);
     }
 
-    public function editKecamatan() {
+    public function editKecamatan()
+    {
         $id_kota_kab = $this->input->post('id_kota_kab');
         $kecamatan = $this->input->post('kecamatan');
         $id_kecamatan = $this->input->post('id_kecamatan');
@@ -114,12 +112,14 @@ class M_personalInfo extends CI_Model {
         $this->db->update('kecamatan', $data);
     }
 
-    public function deleteKecamatan($id_kecamatan) {
+    public function deleteKecamatan($id_kecamatan)
+    {
         $this->db->where('id_kecamatan', $id_kecamatan);
         $this->db->delete('kecamatan');
     }
-    
-    public function kotaKec() {
+
+    public function kotaKec()
+    {
         $this->db->select('kecamatan.*, kota_kab.kota');
         $this->db->from('kecamatan');
         $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
@@ -138,10 +138,6 @@ class M_personalInfo extends CI_Model {
         $result = $this->db->get('kecamatan');
         return $result->result_array();
     }
-
 }
 
 /* End of file M_personalInfo.php */
-
-
-?>

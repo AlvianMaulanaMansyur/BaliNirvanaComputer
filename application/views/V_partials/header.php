@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/pre.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/info.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/template.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/checkout.css') ?>">
 
     <script>
         var base_url = '<?php echo base_url(); ?>';

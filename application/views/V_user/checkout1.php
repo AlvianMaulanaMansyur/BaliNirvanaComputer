@@ -7,41 +7,44 @@
 
             <div class="card">
 
-                <form action="<?php echo base_url('buatpesanan') ?>" method="post" enctype="multipart/form-data" class="">
+                <form id="checkout-form" action="<?php echo base_url('checkout') ?>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 
                     <div class="row d-flex px-3 pt-2">
 
-                        <!-- Input Personal Info -->
                         <div class="">
                             <h5 class="card-title pt-2">INFORMASI PERSONAL</h5>
 
                             <fieldset disabled>
                                 <div class="mb-4">
-                                    <label for="alamat" class="form-label">Nama</label>
-                                    <input type="text" name="nama_customer" class="form-control" id="alamat" value="<?php echo $cart[0]['nama_customer'] ?>">
+                                    <label for="nama_customer" class="form-label">Nama</label>
+                                    <input type="text" name="nama_customer" class="form-control" id="nama_customer" value="<?php echo $cart[0]['nama_customer'] ?>">
                                 </div>
 
                                 <div class="mb-4">
-                                    <label for="alamat" class="form-label">No. Telepon</label>
-                                    <input type="text" name="telepon" class="form-control" id="alamat" value="<?php echo $cart[0]['telepon'] ?>">
+                                    <label for="telepon" class="form-label">No. Telepon</label>
+                                    <input type="text" name="telepon" class="form-control" id="telepon" value="<?php echo $cart[0]['telepon'] ?>">
                                 </div>
 
                                 <div class="mb-4">
-                                    <label for="alamat" class="form-label">Email</label>
-                                    <input type="text" name="email" class="form-control" id="alamat" value="<?php echo $cart[0]['email'] ?>">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" name="email" class="form-control" id="email" value="<?php echo $cart[0]['email'] ?>">
                                 </div>
                             </fieldset>
 
                             <div class="mb-4">
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Alamat Pengiriman" value="<?php echo $cart[0]['alamat'] ?>" required>
-                                <input type="text" name="detail_alamat" class="form-control" id="" placeholder="Detail Alamat, contoh: Di dekat pura" value="<?php echo $cart[0]['detail_alamat'] ?>">
+                                <label for="alamat" class="form-label required-field">Alamat</label>
+                                <div id="error-alamat"></div>
+                                <?php echo form_error('alamat', '<div class="text-danger">', '</div>'); ?>
+                                <input type="text" name="alamat" id="alamat" class="form-control" placeholder="Alamat Pengiriman" value="<?php echo $cart[0]['alamat'] ?>">
+                                <input type="text" name="detail_alamat" class="form-control" id="detail_alamat" placeholder="Detail Alamat, contoh: Di dekat pura" value="<?php echo $cart[0]['detail_alamat'] ?>">
                             </div>
-
 
                             <div class="row mb-4">
                                 <div class="mb-3 me-4 col-5">
-                                    <label for="Category" class="form-label">Kabupaten</label>
+                                    <label for="Category" class="form-label required-field">Kabupaten</label>
+                                    <div id="error-Kota"></div>
+                                    <?php echo form_error('kota', '<div class="text-danger">', '</div>'); ?>
+
                                     <?php
                                     $selectedKotaKab = (!empty($cart)) ? $cart[0]['id_kota_kab'] : '';
                                     $selectedKecamatan = (!empty($cart)) ? $cart[0]['id_kecamatan'] : '';
@@ -57,12 +60,11 @@
                                                 'id_kota_kab' => $city['id_kota_kab'],
                                                 'nama_kecamatan' => $city['kecamatan']
                                             );
-                                            
                                         }
                                     }
                                     ?>
 
-                                    <select name="kota" id="Kota" class="form-select">
+                                    <select name="kota" id="Kota" class="form-select required-field">
                                         <?php if (empty($selectedKotaKab)) : ?>
                                             <option value="" selected>Pilih Kabupaten</option>
                                         <?php endif ?>
@@ -75,18 +77,31 @@
                                 </div>
 
                                 <div class="mb-3 col-5">
-                                    <label for="Category" class="form-label">Kecamatan</label>
-                                    <select name="id_kecamatan" class="form-select" id="kecamatan">
-                                    <?php foreach ($kota as $item) { ?>
-                                            <option value="<?php echo $item['id_kecamatan'] ?>" data-kota-id="<?php echo $item['id_kota_kab'] ?>"><?php echo $item['kecamatan'] ?></option>
-                                    <?php } ?>
+
+                                    <label for="Category" class="form-label required-field">Kecamatan</label>
+                                    <div id="error-kecamatan"></div>
+                                    <?php echo form_error('kecamatan', '<div class="text-danger">', '</div>'); ?>
+
+                                    <select name="kecamatan" class="form-select" id="kecamatan">
+                                        <?php foreach ($kecamatanOptions as $id => $kecamatanOption) { ?>
+                                            <option value="<?php echo $id; ?>" <?php echo ($id == $selectedKecamatan) ? 'selected' : ''; ?>>
+                                                <?php echo $kecamatanOption['nama_kecamatan']; ?>
+                                            </option>
+                                        <?php } ?>
                                     </select>
                                 </div>
 
+
                                 <div class="mb-4 col-5">
-                                    <label for="alamat" class="form-label">Kodepos</label>
-                                    <input type="number" name="kodepos" pattern="[0-9]{5}" class="form-control" value="<?php echo $cart[0]['kodepos'] ?>" required>
+                                    <?php echo form_error('kodepos', '<div class="text-danger">', '</div>'); ?>
+
+                                    <label for="alamat" class="form-label required-field">Kodepos</label>
+                                    <div id="error-kodepos"></div>
+                                    <input type="number" name="kodepos" id="kodepos" pattern="[0-9]{5}" class="form-control" value="<?php echo $cart[0]['kodepos'] ?>">
+                                    <div id="kodepos"></div>
                                 </div>
+
+
 
                             </div>
 
@@ -129,7 +144,8 @@
                             <h5 style="font-weight: 500;">Total Harga: <span class="format"><?php echo $total ?></span></h5>
                         </div>
                         <div class="d-flex me-lg-5 me-sm-0" style="justify-content: end;">
-                            <button type="submit" class="btn col-lg-4 col-sm-4" style="background: #D21312;color:white;">Buat Pesanan</button>
+                            <!-- <button type="submit" class="btn col-lg-4 col-sm-4" style="background: #D21312;color:white;">Buat Pesanan</button> -->
+                            <button type="button" id="submitBtn" class="btn col-lg-4 col-sm-4" style="background: #D21312;color:white;">Buat Pesanan</button>
                         </div>
                         <div class="border-top mt-3 pt-4 mx-4 mb-4">
                             <p><i class="fas fa-truck text-muted fa-lg"></i> Pengiriman Akan Dilakukan 1-2 Hari Setelah Pembayaran</p>
@@ -146,37 +162,149 @@
     </div>
 </section>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // document.getElementById('checkout-form').addEventListener('submit', function (event) {
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            console.log('halo');
+            if (!validateForm()) {
+
+            } else {
+                submitFormViaAjax();
+            }
+        });
+
+        function validateForm() {
+            var alamat = document.getElementById('alamat');
+            var kota = document.getElementById('Kota');
+            var kecamatan = document.getElementById('kecamatan');
+            var kodepos = document.getElementById('kodepos');
+
+            // Check if the elements exist before trying to access their properties
+            if (!alamat || !kota || !kecamatan || !kodepos) {
+                console.error('One or more form elements not found.');
+                return false;
+            }
+
+            // Reset all error messages
+            resetErrorMessages([alamat, Kota, kecamatan, kodepos]);
+
+            var isValid = true;
+
+            // Validasi setiap input
+            if (!alamat.value || alamat.value.trim() === '' || alamat.value === null) {
+                console.log('Alamat is empty. Showing error message.');
+                displayErrorMessage('error-alamat', 'Alamat harus diisi.');
+                isValid = false;
+            }
+
+            if (!kota.value || kota.value.trim() === '') {
+                console.log('Kota is empty. Showing error message.');
+                displayErrorMessage('error-Kota', 'Kabupaten harus dipilih.');
+                isValid = false;
+            }
+
+            if (!kecamatan.value || kecamatan.value.trim() === '') {
+                console.log('Kecamatan is empty. Showing error message.');
+                displayErrorMessage('error-kecamatan', 'Kecamatan harus dipilih.');
+                isValid = false;
+            }
+
+            var kodeposValue = kodepos.value.trim();
+            if (kodeposValue === '') {
+                displayErrorMessage('error-kodepos', 'Kodepos harus diisi.');
+                isValid = false;
+            } else if (kodeposValue.length !== 5) {
+                displayErrorMessage('error-kodepos', 'Kodepos harus berupa angka 5 digit.');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                console.log('One or more fields are not valid.');
+            } else {
+                console.log('All fields are valid.');
+            }
+
+            return isValid;
+        }
+
+
+        function displayErrorMessage(elementId, message) {
+            var errorElement = document.getElementById(elementId);
+            if (errorElement) {
+                errorElement.innerText = message;
+                errorElement.classList.add('text-danger');
+                errorElement.style.display = 'block'; // Tampilkan pesan kesalahan
+            }
+        }
+
+        function resetErrorMessages(elements) {
+            elements.forEach(function(element) {
+                var errorElement = document.getElementById('error-' + element.id);
+                if (errorElement) {
+                    errorElement.innerText = '';
+                    errorElement.style.display = 'none'; // Sembunyikan pesan kesalahan
+                }
+            });
+        }
+
+        function submitFormViaAjax() {
+            // Ambil data formulir
+            var formData = new FormData(document.getElementById('checkout-form'));
+
+            // Kirim data formulir ke endpoint di server menggunakan AJAX
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url('checkout') ?>',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'JSON',
+                success: function(response) {
+                    console.log('Formulir berhasil dikirim!', response);
+                    var id_pesanan = response.id_pesanan;
+
+                    var redirectURL = base_url + 'prosespesanan/' + id_pesanan;
+                    window.location.href = redirectURL;
+                },
+                error: function(error) {
+                    console.error('Terjadi kesalahan saat mengirim formulir', error);
+                }
+            });
+        }
+    });
+
     $(document).ready(function() {
+        function updateKecamatanOptions(selectedKotaId) {
+            var selectedKecamatanId = $('#kecamatan').val();
 
-        $('#kecamatan').prop('disabled', true);
+            $('#kecamatan').prop('disabled', !selectedKotaId);
 
-        var originalKecamatanOptions = $('#kecamatan option');
+            // Hapus opsi-opsi kecamatan yang ada
+            $('#kecamatan option:not(:first-child)').remove();
 
-        $('#kecamatan').empty();
-        $('#kecamatan').append('<option value="" selected>Pilih Kecamatan</option>');
+            var defaultOption = '<option value="" selected>Pilih Kecamatan</option>';
+            $('#kecamatan').append(defaultOption);
+
+            <?php foreach ($kota as $key) { ?>
+                if ('<?php echo $key['id_kota_kab'] ?>' === selectedKotaId) {
+                    if ('<?php echo $key['id_kecamatan'] ?>' !== selectedKecamatanId) {
+                        var option = '<option value="<?php echo $key['id_kecamatan'] ?>" data-kota="<?php echo $key['kota'] ?>"><?php echo $key['kecamatan'] ?></option>';
+                        $('#kecamatan').append(option);
+                    }
+                }
+            <?php } ?>
+
+            $('#kecamatan').val(selectedKecamatanId);
+        }
+
+        var selectedKotaId = '<?php echo !empty($cart) ? $cart[0]['id_kota_kab'] : ''; ?>';
+        var selectedKecamatanId = '<?php echo !empty($cart) ? $cart[0]['id_kecamatan'] : ''; ?>';
+
+        updateKecamatanOptions(selectedKotaId);
 
         $('#Kota').change(function() {
-
-            var selectedKotaId = $(this).val();
-
-            if (selectedKotaId !== '') {
-                $('#kecamatan').prop('disabled', false);
-
-                $('#kecamatan').empty();
-                $('#kecamatan').append('<option value="" selected>Pilih Kecamatan</option>');
-
-                originalKecamatanOptions.each(function() {
-                    var optionKotaId = $(this).data('kota-id');
-                    if (optionKotaId == selectedKotaId) {
-                        $('#kecamatan').append($(this));
-                    }
-                });
-
-                $('#kecamatan').prop('selectedIndex', 0);
-            } else {
-                // If no Kabupaten is selected, disable and reset Kecamatan dropdown
-                $('#kecamatan').prop('disabled', true).val('');
-            }
+            $('#kecamatan').empty();
+            updateKecamatanOptions($(this).val());
         });
     });
 </script>

@@ -461,12 +461,15 @@ class M_produk extends CI_Model
         $stok = $result->result_array();
     
         foreach ($stok as $key) {
-            // Check if relevant data is set and quantities are valid
             if (isset($key['id_produk'], $key['qty_produk'], $key['stok_produk']) && $key['stok_produk'] >= $key['qty_produk']) {
                 $kurang = $key['stok_produk'] - $key['qty_produk'];
+                if($kurang >=0) {
                 $this->db->where('produk.id_produk', $key['id_produk']);
                 $this->db->update('produk', array('stok_produk' => $kurang));
                 return true;
+                } elseif($kurang < 0) {
+                    return false;
+                }
             }
         }
     

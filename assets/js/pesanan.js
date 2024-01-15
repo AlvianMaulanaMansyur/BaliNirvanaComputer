@@ -35,7 +35,6 @@ function confirmUpdateOrder(orderId, orderStatus) {
                             text: response.message,
                             icon: "success",
                         }).then(() => {
-                            // Redirect to orders page after successful update
                             window.location.href = base_url + "dashboard/orders";
                         });
                     } else {

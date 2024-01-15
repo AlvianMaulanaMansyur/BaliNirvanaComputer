@@ -54,11 +54,11 @@ class Dashboard extends CI_Controller
     {
         $this->db->select('pesanan.*, detail_pesanan.*, produk.*');
         $this->db->from('pesanan');
-        $this->db->join('detail_pesanan', 'pesanan.id_pesanan = pesanan.id_pesanan', 'left');
-        $this->db->join('produk', 'produk.id_produk = detail_pesanan.id_produk', 'left');
+        $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
+        $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
         $this->db->where('pesanan.id_pesanan', $id_pesanan);
-
         $result = $this->db->get();
+
         $status = $result->result_array();
 
         if ($status[0]['status_pesanan'] == 0) {

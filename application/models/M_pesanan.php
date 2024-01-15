@@ -252,16 +252,17 @@ class M_pesanan extends CI_Model
         $this->db->update('pesanan', ['status_pesanan' => 2]);
     }
 
-    public function createOrder()
+    public function createOrder($data_info)
     {
         $customer_id = $this->session->userdata('customer_id');
 
         $cart_data = $this->M_cart->getCheckout($customer_id);
-        $this->M_personalInfo->insertPersonalInfo();
+
+        $this->M_personalInfo->insertPersonalInfo($data_info);
         $personal_info = $this->M_personalInfo->getPersonalInfoByIdCustomer($customer_id);
+
         $alamat = $this->input->post('alamat');
         $detail_alamat = $this->input->post('detail_alamat');
-        // var_dump($personal_info);die;
         $order_data = array(
             'id_customer' => $customer_id,
             'alamat_pengiriman' => $alamat . ', ' . $personal_info[0]['kecamatan'] . ', ' . $personal_info[0]['kota'] . ', ' . $personal_info[0]['kodepos'],
@@ -285,6 +286,7 @@ class M_pesanan extends CI_Model
         }
         return $id_pesanan;
     }
+
 
     public function insertOrder($order_item)
     {
