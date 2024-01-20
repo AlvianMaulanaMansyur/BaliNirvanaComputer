@@ -57,7 +57,12 @@ class M_personalInfo extends CI_Model
         $data = [
             'kota' => $kota,
         ];
-        $this->db->insert('kota_kab', $data);
+        if (!$kota) {
+            return false;
+        } else {
+            $this->db->insert('kota_kab', $data);
+            return true;
+        }
     }
 
     public function editKota()
@@ -67,8 +72,13 @@ class M_personalInfo extends CI_Model
         $data = [
             'kota' => $kota,
         ];
-        $this->db->where('id_kota_kab', $id_kota_kab);
-        $this->db->update('kota_kab', $data);
+        if (!$kota) {
+            return false;
+        } else {
+            $this->db->where('id_kota_kab', $id_kota_kab);
+            $this->db->update('kota_kab', $data);
+            return true;
+        }
     }
 
     public function deleteKota($id_kota)
@@ -95,7 +105,13 @@ class M_personalInfo extends CI_Model
             'id_kota_kab' => $id_kota_kab,
             'kecamatan' => $kecamatan,
         ];
-        $this->db->insert('kecamatan', $data);
+
+        if (!$id_kota_kab || !$kecamatan) {
+            return false;
+        } else {
+            $this->db->insert('kecamatan', $data);
+            return true;
+        }
     }
 
     public function editKecamatan()
@@ -108,8 +124,14 @@ class M_personalInfo extends CI_Model
             'id_kota_kab' => $id_kota_kab,
             'kecamatan' => $kecamatan,
         ];
-        $this->db->where('id_kecamatan', $id_kecamatan);
-        $this->db->update('kecamatan', $data);
+
+        if (!$id_kota_kab || !$kecamatan) {
+            return false;
+        } else {
+            $this->db->where('id_kecamatan', $id_kecamatan);
+            $this->db->update('kecamatan', $data);
+            return true;
+        }
     }
 
     public function deleteKecamatan($id_kecamatan)

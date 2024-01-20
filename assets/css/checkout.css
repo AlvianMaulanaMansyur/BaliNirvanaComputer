@@ -1,5 +1,10 @@
 .required-field:after {
     content: "*";
     color: red;
-    margin-left: 5px; /* Sesuaikan dengan kebutuhan jarak antara label dan bintang */
+    margin-left: 5px;
 }
+
+.required-field {
+    font-weight: 600;
+}
+

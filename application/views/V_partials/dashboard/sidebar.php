@@ -22,9 +22,13 @@
                     Data Kategori
                 </a>
 
-                <a style="<?php echo ($active_tab == 'kotaDanKecamatan') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/kotaDanKecamatan') ?>">
+                <a style="<?php echo ($active_tab == 'kota') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/kota') ?>">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-                    Data Kota&Kecamatan
+                    Data Kota
+                </a>
+                <a style="<?php echo ($active_tab == 'kecamatan') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/kecamatan') ?>">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                    Data Kecamatan
                 </a>
 
                 <div class="sb-sidenav-menu-heading">Report</div>

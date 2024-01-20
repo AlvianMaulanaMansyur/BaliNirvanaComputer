@@ -77,10 +77,3 @@
     <?php } ?>
 </div>
 
-<script>
-    function redirectToOrder(orderId) {
-        var baseUrl = '<?php echo base_url('orderid/'); ?>';
-        var url = baseUrl + orderId;
-        window.location.href = url;
-    }
-</script>

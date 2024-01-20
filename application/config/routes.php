@@ -71,6 +71,10 @@ $route['prosespesanan/(:num)'] = 'user/setOrderIdToSession/$1';
 $route['error_page'] = 'landingPage/error_page';
 $route['profil'] = 'user/userprofile';
 
+$route['dashboard/produk'] = 'dashboard/getproduk';
+$route['editproduk/(:num)'] = 'produk/editproduk/$1';
+$route['tambahproduk'] = 'produk/tambahproduk';
+
 $route['hidden/BaliNirvana'] = 'auth/login';
 
 

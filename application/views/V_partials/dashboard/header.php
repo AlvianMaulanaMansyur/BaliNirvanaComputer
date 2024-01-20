@@ -8,6 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title><?= $title ?></title>
+   
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="<?= base_url('assets/backend/') ?>css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -18,6 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/pre.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/input.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/checkout.css') ?>">
     
     <script>
         var base_url = '<?php echo base_url(); ?>';

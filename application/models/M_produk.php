@@ -10,64 +10,11 @@ class M_produk extends CI_Model
         parent::__construct();
     }
 
-    public function insertProduk()
+    public function insertProduk($insert_data)
     {
-        $config['upload_path'] = './assets/foto/';
-        $config['allowed_types'] = 'jpg|png|jpeg';
-
-        $this->load->library('upload', $config);
-
-        // Check if the first photo is selected
-        if (empty($_FILES['foto_produk1']['name'])) {
-            echo "Please select a file for foto_produk1.";
-            die;
-        }
-
-        if (!$this->upload->do_upload('foto_produk1')) {
-            $error = array('error' => $this->upload->display_errors());
-            echo $error['error'];
-            die;
-        }
-
-        $gambar_paths = array();
-
-        for ($i = 1; $i <= 3; $i++) {
-            if (!empty($_FILES['foto_produk' . $i]['name'])) {
-                if ($this->upload->do_upload('foto_produk' . $i)) {
-                    $data['upload_data' . $i] = $this->upload->data();
-                    $gambar_paths[] = 'assets/foto/' . $data['upload_data' . $i]['file_name'];
-                } else {
-                    $error = array('error' => $this->upload->display_errors());
-                    var_dump($error);
-                    $gambar_paths[] = ''; // Set a default value or handle accordingly
-                }
-            } else {
-                $gambar_paths[] = ''; // Set a default value or handle accordingly
-            }
-        }
-        $harga_produk = intval($this->input->post('harga_produk'));
-        $slug = $this->generateSlug($this->input->post('nama_produk'));
-
-        $insert_data = array(
-            'nama_produk' => $this->input->post('nama_produk'),
-            'id_category' => $this->input->post('id_category'),
-            'id_admin' => $this->input->post('id_admin'),
-            'stok_produk' => $this->input->post('stok_produk'),
-            'harga_produk' => $harga_produk,
-            'deskripsi_produk' => $this->input->post('deskripsi_produk'),
-            'create_time' => date('Y-m-d H:i:s'),
-            'slug' => $slug,
-        );
-
         $result = $this->db->insert('produk', $insert_data);
         $insert_id = $this->db->insert_id();
-
-        for ($i = 1; $i <= 3; $i++) {
-            if (!empty($gambar_paths[$i - 1])) {
-                $this->saveFotoProduk($insert_id, $gambar_paths[$i - 1], $i);
-            }
-        }
-        return $result;
+        return $insert_id;
     }
 
     public function getProduk()
@@ -85,9 +32,11 @@ class M_produk extends CI_Model
 
     public function getProdukById($id_produk)
     {
-        $this->db->select('produk.*, category.nama_category');
+        $this->db->select('produk.*, category.nama_category, foto_produk.*');
         $this->db->from('produk');
         $this->db->join('category', 'produk.id_category = category.id_category');
+        $this->db->join('foto_produk', 'produk.id_produk = foto_produk.id_produk', 'left');
+
         $this->db->where('produk.id_produk', $id_produk);
         $this->db->where('produk.deleted', 0);
 
@@ -112,83 +61,10 @@ class M_produk extends CI_Model
         return $produk;
     }
 
-    public function editProduk()
+    public function editProduk($id_produk, $update_data)
     {
-        $produk = $this->getProdukById($this->input->post('id_produk'));
-
-        $config['upload_path'] = './assets/foto/';
-        $config['allowed_types'] = 'jpg|png|jpeg';
-
-        $this->load->library('upload', $config);
-
-        // Check if the first photo is selected
-        $gambar_paths = array();
-
-        for ($i = 1; $i <= 3; $i++) {
-            $data = array();
-            if (!empty($_FILES['foto_produk' . $i]['name'])) {
-                if ($this->upload->do_upload('foto_produk' . $i)) {
-                    $data['upload_data' . $i] = $this->upload->data();
-                    $gambar_paths[$i] = 'assets/foto/' . $data['upload_data' . $i]['file_name'];
-                } else {
-                    // Handle the case when the upload is not successful
-                    $error = array('error' => $this->upload->display_errors());
-                    var_dump($error);
-                    // Continue execution, as foto_produk is optional
-                    $gambar_paths[$i] = ''; // Set a default value or handle accordingly
-                }
-            } else {
-                $gambar_paths[$i] = ''; // Set a default value or handle accordingly
-            }
-        }
-
-        $id_produk = $this->input->post('id_produk');
-
-        $harga_produk = intval($this->input->post('harga_produk'));
-
-        // Periksa apakah produk sudah memiliki slug
-        $existingSlug = $this->getExistingSlug($id_produk);
-
-        // Jika produk belum memiliki slug, hasilkan slug baru
-        $slug = empty($existingSlug) ? $this->generateSlug($this->input->post('nama_produk')) : $existingSlug;
-
-        if ($produk['nama_produk'] != $this->input->post('nama_produk')) {
-            $slug = $this->generateSlug($this->input->post('nama_produk'));
-        }
-
-        $update_data = array(
-            'nama_produk' => $this->input->post('nama_produk'),
-            'id_category' => $this->input->post('id_category'),
-            'id_admin' => $this->input->post('id_admin'),
-            'stok_produk' => $this->input->post('stok_produk'),
-            'harga_produk' => $harga_produk,
-            'deskripsi_produk' => $this->input->post('deskripsi_produk'),
-            'slug' => $slug,
-        );
-
         $this->db->where('id_produk', $id_produk);
         $this->db->update('produk', $update_data);
-
-        for ($i = 1; $i <= 3; $i++) {
-            if (!empty($gambar_paths[$i])) {
-                $this->deleteOldFoto($id_produk, $i);
-                $this->saveFotoProduk($id_produk, $gambar_paths[$i], $i);
-            }
-        }
-
-        $delete_foto2 = $this->input->post('delete_foto2');
-        $delete_foto3 = $this->input->post('delete_foto3');
-        if ($delete_foto2) {
-            // Hapus foto 1 dari penyimpanan dan database
-            $this->deleteProductPhoto($id_produk, $delete_foto2);
-        }
-
-        if ($delete_foto3) {
-            // Hapus foto 1 dari penyimpanan dan database
-            $this->deleteProductPhoto($id_produk, $delete_foto3);
-        }
-
-        return $id_produk;
     }
 
     public function deleteProduk($id_produk)
@@ -295,7 +171,7 @@ class M_produk extends CI_Model
         $this->db->delete('foto_produk', ['id_produk' => $id_produk, 'urutan_foto' => $urutan_foto]);
     }
 
-    private function getExistingSlug($id_produk)
+    public function getExistingSlug($id_produk)
     {
         $this->db->select('slug');
         $this->db->where('id_produk', $id_produk);
@@ -308,7 +184,7 @@ class M_produk extends CI_Model
         return '';
     }
 
-    private function saveFotoProduk($id_produk, $gambar_path, $urutan_foto)
+    public function saveFotoProduk($id_produk, $gambar_path, $urutan_foto)
     {
         if (!empty($gambar_path)) {
             $existing_data = $this->db->get_where('foto_produk', array('id_produk' => $id_produk, 'urutan_foto' => $urutan_foto))->row();
@@ -327,7 +203,7 @@ class M_produk extends CI_Model
         }
     }
 
-    private function deleteOldFoto($id_produk, $urutan_foto)
+    public function deleteOldFoto($id_produk, $urutan_foto)
     {
         $oldFoto = $this->db->select('url_foto')->where(array('id_produk' => $id_produk, 'urutan_foto' => $urutan_foto))->get('foto_produk')->row();
 
@@ -348,12 +224,13 @@ class M_produk extends CI_Model
 
         if (empty($_FILES['foto_category']['name'])) {
             echo "Please select a file for foto_category.";
+            return false;
         }
 
         if (!$this->upload->do_upload('foto_category')) {
             $error = array('error' => $this->upload->display_errors());
             echo $error['error'];
-            die;
+            return false;
         }
 
         $data['upload_data'] = $this->upload->data();
@@ -364,8 +241,12 @@ class M_produk extends CI_Model
             'foto_category' => $gambar_path,
         );
 
-        $result = $this->db->insert('category', $insert_data);
-        return $result;
+        if (!$this->input->post('nama_category')) {
+            return false;
+        } else {
+            $this->db->insert('category', $insert_data);
+            return true;
+        }
     }
 
     public function editCategory()
@@ -382,7 +263,7 @@ class M_produk extends CI_Model
             if (!$this->upload->do_upload('foto_category')) {
                 $error = array('error' => $this->upload->display_errors());
                 echo $error['error'];
-                die;
+                return false;
             }
 
             $data['upload_data'] = $this->upload->data();
@@ -403,10 +284,13 @@ class M_produk extends CI_Model
             'foto_category' => $gambar_path,
         );
 
-        $this->db->where('id_category', $id_category);
-        $result = $this->db->update('category', $edit_data);
-
-        return $result;
+        if (!$this->input->post('nama_category')) {
+            return false;
+        } else {
+            $this->db->where('id_category', $id_category);
+            $this->db->update('category', $edit_data);
+            return true;
+        }
     }
 
     public function deleteCategory($category_id)
@@ -443,7 +327,7 @@ class M_produk extends CI_Model
         $this->db->where('category.nama_category', $nama);
         $this->db->where('produk.stok_produk != ', 0);
         $this->db->where('produk.deleted = ', 0);
-        
+
         $result = $this->db->get()->result_array();
         return $result;
     }
@@ -456,26 +340,26 @@ class M_produk extends CI_Model
         $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
         $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
         $this->db->where('pesanan.id_pesanan', $id_pesanan);
-    
+
         $result = $this->db->get();
         $stok = $result->result_array();
-    
+
         foreach ($stok as $key) {
             if (isset($key['id_produk'], $key['qty_produk'], $key['stok_produk']) && $key['stok_produk'] >= $key['qty_produk']) {
                 $kurang = $key['stok_produk'] - $key['qty_produk'];
-                if($kurang >=0) {
-                $this->db->where('produk.id_produk', $key['id_produk']);
-                $this->db->update('produk', array('stok_produk' => $kurang));
-                return true;
-                } elseif($kurang < 0) {
+                if ($kurang >= 0) {
+                    $this->db->where('produk.id_produk', $key['id_produk']);
+                    $this->db->update('produk', array('stok_produk' => $kurang));
+                    return true;
+                } elseif ($kurang < 0) {
                     return false;
                 }
             }
         }
-    
+
         return false;
     }
-    
+
     public function search_data_produk($keyword)
     {
         $this->db->select('produk. *, category.nama_category');
@@ -497,7 +381,7 @@ class M_produk extends CI_Model
         $this->db->like('nama_produk', $keyword);
         $this->db->where('foto_produk.urutan_foto', 1);
         $this->db->where('produk.deleted = ', 0);
-        
+
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -521,7 +405,7 @@ class M_produk extends CI_Model
         return $isUnique ? $newSlug : $text;
     }
 
-    private function isSlugUnique($slug)
+    public function isSlugUnique($slug)
     {
         $existingSlug = $this->db->get_where('produk', ['slug' => $slug])->row();
 

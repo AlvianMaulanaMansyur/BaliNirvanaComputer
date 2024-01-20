@@ -179,13 +179,19 @@ class Dashboard extends CI_Controller
 
     public function addCategory()
     {
-        $this->M_produk->addCategory();
-        redirect('dashboard/category');
+        $result = $this->M_produk->addCategory();
+        if ($result) {
+            echo json_encode('add-category-success');
+        }
     }
     public function editCategory()
     {
-        $this->M_produk->editCategory();
-        redirect('dashboard/category');
+        $result = $this->M_produk->editCategory();
+        if ($result) {
+            echo json_encode(['status' => 'edit-category-success']);
+        } else {
+            echo json_encode('edit-category-failed');
+        }
     }
 
     public function deleteCategory($id_category)
@@ -290,10 +296,26 @@ class Dashboard extends CI_Controller
         redirect('dashboard/admin');
     }
 
-    public function kotaDanKecamatan()
+    public function kota()
+    {
+        $kota = $this->M_personalInfo->getKota();
+        $data = [
+            'title' => 'Produck Stock',
+            'header' => 'V_partials/dashboard/header',
+            'navbar' => 'V_partials/dashboard/navbar',
+            'sidebar' => 'V_partials/dashboard/sidebar',
+            'footer' => 'V_partials/dashboard/footer',
+            'js' => 'V_partials/dashboard/js',
+            'content' => 'V_partials/dashboard/kota',
+            'kota' => $kota,
+            'active_tab' => 'kota'
+        ];
+        $this->load->view('master', $data);
+    }
+
+    public function kecamatan()
     {
         $kotaKec = $this->M_personalInfo->kotaKec();
-        $kota = $this->M_personalInfo->getKota();
         $kecamatan = $this->M_personalInfo->getKecamatan();
         $data = [
             'title' => 'Produck Stock',
@@ -302,55 +324,68 @@ class Dashboard extends CI_Controller
             'sidebar' => 'V_partials/dashboard/sidebar',
             'footer' => 'V_partials/dashboard/footer',
             'js' => 'V_partials/dashboard/js',
-            'content' => 'V_partials/dashboard/kotaDanKecamatan',
+            'content' => 'V_partials/dashboard/kecamatan',
             'kotaKec' => $kotaKec,
-            'kota' => $kota,
             'kecamatan' => $kecamatan,
-            'active_tab' => 'kotaDanKecamatan'
+            'active_tab' => 'kecamatan'
         ];
         $this->load->view('master', $data);
     }
 
     public function addKota()
     {
-        $this->M_personalInfo->addKota();
-        redirect('dashboard/kotadankecamatan');
+        $result = $this->M_personalInfo->addKota();
+        if ($result) { 
+            echo json_encode('add-kota-success');
+        } else {
+            echo json_encode('add-kota-gagal');
+        }
     }
 
     public function editKota()
     {
-        $this->M_personalInfo->editKota();
-        redirect('dashboard/kotadankecamatan');
+        $result = $this->M_personalInfo->editKota();
+        if ($result) { 
+            echo json_encode('edit-kota-success');
+        } else {
+            echo json_encode('edit-kota-gagal');
+        }
     }
 
     public function deleteKota($id_kota)
     {
         $this->M_personalInfo->deleteKota($id_kota);
-        redirect('dashboard/kotadankecamatan');
+        redirect('dashboard/kota');
     }
 
     public function addKecamatan()
     {
-        $this->M_personalInfo->addKecamatan();
-        redirect('dashboard/kotadankecamatan');
+        $result=$this->M_personalInfo->addKecamatan();
+        if ($result) { 
+            echo json_encode('add-kecamatan-success');
+        } else {
+            echo json_encode('add-kecamatan-failed');
+        }
     }
     public function editKecamatan()
     {
-        $this->M_personalInfo->editKecamatan();
-        redirect('dashboard/kotadankecamatan');
+        $result=$this->M_personalInfo->editKecamatan();
+        if ($result) { 
+            echo json_encode('edit-kecamatan-success');
+        } else {
+            echo json_encode('edit-kecamatan-failed');
+        }
     }
 
     public function deleteKecamatan($id_kecamatan)
     {
         $this->M_personalInfo->deleteKecamatan($id_kecamatan);
-        redirect('dashboard/kotadankecamatan');
+        redirect('dashboard/kecamatan');
     }
 
     public function monthlyReport()
     {
         $selectedMonth = $this->input->get('month');
-        // var_dump($selectedMonth);die;
-        // Cek apakah ada data GET
         if ($selectedMonth) {
             $selectedYear = $this->input->get('year');
 
@@ -467,8 +502,6 @@ class Dashboard extends CI_Controller
         $this->M_pesanan->cancelOrder($idPesanan);
         echo json_encode(['sukses' => true]);
     }
-
-
     public function logout()
     {
         $this->session->unset_userdata('admin_id');

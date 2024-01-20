@@ -9,3 +9,6 @@
 <script src="<?php echo base_url('assets/js/monthly_report.js')?>"></script>
 <script src="<?php echo base_url('assets/js/pesanan.js')?>"></script>
 <script src="<?php echo base_url('assets/js/dashboardProduk.js')?>"></script>
+<script src="<?php echo base_url('assets/js/kota.js')?>"></script>
+<script src="<?php echo base_url('assets/js/kecamatan.js')?>"></script>
+<script src="<?php echo base_url('assets/js/bootstrap.js')?>"></script>
