@@ -315,6 +315,7 @@ class Dashboard extends CI_Controller
 
     public function kecamatan()
     {
+        $kota = $this->M_personalInfo->getKota();
         $kotaKec = $this->M_personalInfo->kotaKec();
         $kecamatan = $this->M_personalInfo->getKecamatan();
         $data = [
@@ -325,6 +326,7 @@ class Dashboard extends CI_Controller
             'footer' => 'V_partials/dashboard/footer',
             'js' => 'V_partials/dashboard/js',
             'content' => 'V_partials/dashboard/kecamatan',
+            'kota' => $kota,
             'kotaKec' => $kotaKec,
             'kecamatan' => $kecamatan,
             'active_tab' => 'kecamatan'

@@ -88,16 +88,6 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <div class="">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                            </ul>
-                                        </div>
                                         <a href="<?php echo base_url('editproduk/') . $product['id_produk'] ?>" type="button" class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i></a>
 
                                         <button class="btn btn-danger delete-product-item" data-id="<?php echo $product['id_produk']; ?>" data-name="<?php echo $product['nama_produk']; ?>"><i class="fa-solid fa-trash"></i>

@@ -1,15 +1,15 @@
 <!-- checkout1 -->
 
-<section class="bg-light py-4">
+<!-- <section class="bg-light py-4"> -->
     <div class="d-flex row" style="justify-content: center;">
-        <h1 class="col-10 pt-2" style="margin-left: 300px;">Checkout</h1>
-        <div class="pt-3 pb-2 px-3 col-lg-4 col-sm-10">
+        <h1 class="col-10 pt-2" style="margin-left: 30px;">Checkout</h1>
+        <div class="pt-3 pb-2 px-3 col-lg-5 col-sm-10">
 
             <div class="card">
 
                 <form id="checkout-form" action="<?php echo base_url('checkout') ?>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 
-                    <div class="row d-flex px-3 pt-2">
+                    <div class="d-flex px-3 pt-2">
 
                         <div class="">
                             <h5 class="card-title pt-2">INFORMASI PERSONAL</h5>
@@ -64,7 +64,7 @@
                                     }
                                     ?>
 
-                                    <select name="kota" id="Kota" class="form-select required-field">
+                                    <select name="kota" id="Kota" class="form-select">
                                         <?php if (empty($selectedKotaKab)) : ?>
                                             <option value="" selected>Pilih Kabupaten</option>
                                         <?php endif ?>
@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <div class="py-3 px-3 col-lg-4 col-sm-10">
+        <div class="py-3 px-3 col-lg-5 col-sm-10">
             <div class="card">
 
                 <div class="card-body">
@@ -136,15 +136,14 @@
                                     <h6 class="mb-0"><span class="format"><?php echo $key['harga_produk'] ?></span></h6>
                                 </div>
                             </div>
-
-                            <?php $total += $key['harga_produk'] * $key['qty_produk'] ?>
                         <?php } ?>
+                        <div class="border mt-3"></div>
 
-                        <div class="d-flex pt-5 me-lg-5 me-sm-0" style="justify-content: end;">
-                            <h5 style="font-weight: 500;">Total Harga: <span class="format"><?php echo $total ?></span></h5>
+                        <div class="d-flex pt-4 pb-3 me-lg-5 me-sm-0" style="justify-content: space-between;">
+                            <h6 style="font-weight: 500;">Total Harga (termasuk PPN): </h6>
+                            <span class="format fw-2"><?php echo $total_harga ?></span>
                         </div>
                         <div class="d-flex me-lg-5 me-sm-0" style="justify-content: end;">
-                            <!-- <button type="submit" class="btn col-lg-4 col-sm-4" style="background: #D21312;color:white;">Buat Pesanan</button> -->
                             <button type="button" id="submitBtn" class="btn col-lg-4 col-sm-4" style="background: #D21312;color:white;">Buat Pesanan</button>
                         </div>
                         <div class="border-top mt-3 pt-4 mx-4 mb-4">
@@ -293,8 +292,8 @@
                     }
                 }
             <?php } ?>
-
             $('#kecamatan').val(selectedKecamatanId);
+            
         }
 
         var selectedKotaId = '<?php echo !empty($cart) ? $cart[0]['id_kota_kab'] : ''; ?>';

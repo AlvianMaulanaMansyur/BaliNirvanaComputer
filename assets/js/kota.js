@@ -19,7 +19,7 @@ $(document).ready(function () {
 					// SweetAlert for success
 					Swal.fire({
 						title: "Sukses!",
-						text: "Data berhasil ditambahkan.",
+						text: "Data kota berhasil ditambahkan.",
 						icon: "success",
 						confirmButtonColor: "#3085d6",
 						confirmButtonText: "OK",
@@ -32,7 +32,7 @@ $(document).ready(function () {
 				} else {
 					Swal.fire({
 						title: "Gagal!",
-						text: "Gagal menambahkan data.",
+						text: "Gagal menambahkan data kota.",
 						icon: "error",
 						confirmButtonColor: "#3085d6",
 						confirmButtonText: "OK",
@@ -46,7 +46,7 @@ $(document).ready(function () {
 				// SweetAlert for failure
 				Swal.fire({
 					title: "Gagal!",
-					text: "Gagal menambahkan data.",
+					text: "Gagal menambahkan data kota.",
 					icon: "error",
 					confirmButtonColor: "#3085d6",
 					confirmButtonText: "OK",
@@ -74,7 +74,7 @@ $(document).ready(function () {
 					// SweetAlert for success
 					Swal.fire({
 						title: "Sukses!",
-						text: "Data berhasil ditambahkan.",
+						text: "Data berhasil diedit.",
 						icon: "success",
 						confirmButtonColor: "#3085d6",
 						confirmButtonText: "OK",
@@ -86,7 +86,7 @@ $(document).ready(function () {
 				} else if (response === "edit-kota-failed") {
 					Swal.fire({
 						title: "Gagal!",
-						text: "Gagal menambahkan data.",
+						text: "Gagal mengedit data.",
 						icon: "error",
 						confirmButtonColor: "#3085d6",
 						confirmButtonText: "OK",
@@ -99,7 +99,7 @@ $(document).ready(function () {
 
 				Swal.fire({
 					title: "Gagal!",
-					text: "Gagal menambahkan data.",
+					text: "Gagal sistem.",
 					icon: "error",
 					confirmButtonColor: "#3085d6",
 					confirmButtonText: "OK",
