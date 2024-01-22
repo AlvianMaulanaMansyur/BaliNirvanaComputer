@@ -35,9 +35,29 @@ class M_pesanan extends CI_Model
         }
     }
 
+    public function getTotalPriceOrder($id_pesanan)
+    {
+        $PPN = 0.11;
+        $this->db->select('SUM((produk.harga_produk * detail_pesanan.qty_produk) + ('.$PPN.' * produk.harga_produk * detail_pesanan.qty_produk)) as total_checked_price');
+        $this->db->from('pesanan');
+        $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
+        $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
+        $this->db->where('pesanan.id_pesanan', $id_pesanan);
+        $this->db->where('produk.stok_produk > ', 0);
+        $this->db->where('produk.deleted = ', 0);
+
+        $result = $this->db->get();
+    
+        if ($result->num_rows() > 0) {
+            $total_checked_price = $result->row()->total_checked_price;
+            return $total_checked_price ? $total_checked_price : 0;
+        } else {
+            return 0;
+        }
+    }
+
     public function searchOrder($keyword)
     {
-
         $this->db->select('pesanan.*, detail_pesanan.*, produk.nama_produk, produk.harga_produk, foto_produk.url_foto, foto_produk.urutan_foto, customer.nama_customer, customer.email,customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, kota_kab.kota, kecamatan.kecamatan');
         $this->db->from('pesanan');
         $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');

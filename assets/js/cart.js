@@ -101,8 +101,7 @@
         }
 
     }
-
-
+    
     function updateIsCheck(checkbox) {
         var id_cart = $(checkbox).data('id');
         var is_check = checkbox.checked ? 1 : 0;

@@ -25,6 +25,8 @@
         var base_url = '<?php echo base_url(); ?>';
     </script>
 
+    <?php const PPN = 0.11; ?>
+
     <style>
         .disabled-link {
             pointer-events: none;

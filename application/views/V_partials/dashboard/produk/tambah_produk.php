@@ -81,7 +81,7 @@
             if (!validateFormTambahProduk()) {
 
             } else {
-                submitFormViaAjax();
+                submitTambahProduk();
             }
         });
 
@@ -168,7 +168,7 @@
             });
         }
 
-        function submitFormViaAjax() {
+        function submitTambahProduk() {
             // Ambil data formulir
             var formData = new FormData($('#tambah-produk-form')[0]);
             // Kirim data formulir ke endpoint di server menggunakan AJAX
@@ -182,7 +182,6 @@
                 success: function(response) {
                     console.log('Formulir berhasil dikirim!', response);
 
-                    // Cek apakah respons memiliki properti 'data'
                     if (response.hasOwnProperty('data')) {
                         // Tampilkan SweetAlert dengan pesan dari respons
                         Swal.fire({

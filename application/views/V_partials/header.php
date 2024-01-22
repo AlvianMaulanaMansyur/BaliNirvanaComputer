@@ -39,4 +39,8 @@
     <script>
         var base_url = '<?php echo base_url(); ?>';
     </script>
+
+    <?php
+    const PPN = 0.11;
+    ?>
 </head>
