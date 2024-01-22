@@ -71,7 +71,8 @@
                     </table>
 
                     <div class="pt-3" style="text-align: end;">
-                        <h5>Total harga(termasuk PPN): <span class="format"><?php echo $total_harga ?></span></h1>
+                        <h5 class="m-0">Total harga: <span class="format"><?php echo $total_harga ?></span></h5>
+                        <small class="text-danger" style="font-size: 70%;">*harga sudah termasuk PPN 11%</small>
                     </div>
                 </div>
             </div>

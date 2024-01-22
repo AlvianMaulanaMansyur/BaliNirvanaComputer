@@ -100,10 +100,13 @@
         <h4 class="p-3">Ringkasan Belanja</h4>
 
         <div class="d-flex flex-column pt- px-4" style="justify-content: sp;">
-           
-            <div class="" style="justify-content: space-between;">
-                <h6 class="pe-3">Total Harga(termasuk PPN)</h6>
-                <p class="mb-2 fw-bold" id="total_checked_price"></p>
+
+            <div class="d-flex flex-column" style="justify-content: space-between;">
+                <div class="d-flex">
+                    <h6 class="pe-3">Total Harga</h6>
+                    <p class="mb-0 fw-bold" id="total_checked_price"></p>
+                </div>
+                <small class="text-danger" style="font-size: 70%;">*harga sudah termasuk PPN 11%</small>
             </div>
         </div>
 

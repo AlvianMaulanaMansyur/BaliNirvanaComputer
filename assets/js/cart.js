@@ -21,15 +21,12 @@
         // Menangani klik pada tautan hapus
         $('.delete-cart-item').on('click', function(e) {
             e.preventDefault();
-
             var deleteUrl = $(this).attr('href');
-            var parentContainer = $(this).closest('.d-flex');
             window.location.href = deleteUrl;
         });
         updateTotalCheckedPrice();
     });
 
-    // Fungsi untuk mengupdate kuantitas
     function updateQuantity(id_cart, newQuantity) {
         $.ajax({
             url: base_url + 'user/updateQuantity/' + id_cart,

@@ -57,6 +57,7 @@ class M_personalInfo extends CI_Model
         $data = [
             'kota' => $kota,
         ];
+        
         if (!$kota) {
             return false;
         } else {
