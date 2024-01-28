@@ -12,7 +12,7 @@
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-users-line"></i></div>
                     Data Customer
                 </a>
-                <a style="<?php echo ($active_tab == 'getProduk') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/getproduk') ?>">
+                <a style="<?php echo ($active_tab == 'getProduk') ? 'background-color: #3f3f3f; font-weight: bold;' : ''; ?>" class="nav-link" href="<?php echo base_url('dashboard/produk') ?>">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
                     Data Barang
                 </a>

@@ -1,17 +1,18 @@
 <div class="container-fluid px-2 mt-2 ">
     <div class="card mb-4">
-        <div class="pt-3 container d-flex flex-column">
-            <h1 class="h3 mb-0 text-gray-800 ">Data Pesanan</h1>
+        <div class="pt-3 container d-flex">
+            <h1 class="h3 mb-0 text-gray-800 me-3">Daftar Pesanan</h1>
             <?php echo form_open('Dashboard/search_pesanan', 'class=""'); ?>
             <div class="input-group" style="width: 230px;">
                 <?php echo form_input('keyword', '', 'class="form-control" placeholder="Search for..." aria-label="Search for..."'); ?>
                 <!-- <button class="btn btn-danger"  type="submit"><i class="fas fa-search"></i></button> -->
                 <button class="btn" type="submit" style="background: white;color: #D21312;border-color:#D21312"><i class="fas fa-search"></i></button>
-
             </div>
             <?php echo form_close(); ?>
         </div>
+        
         <div class="card-body container d-flex flex-column align-items-center ">
+           
             <?php if (empty($orders)) : ?>
                 <p class="pt-3">
                     pesanan tidak ditemukan!
@@ -53,7 +54,7 @@
                                             </div>
 
                                             <div>
-                                                
+
                                                 <h6 class="mb-0"><?php echo $detail['nama_produk'] ?></h6>
                                                 <small class="mb-0 text-muted text-nowrap">Jumlah: <?php echo $detail['qty_produk'] ?></small><br>
                                                 <?php if ($detail['deleted'] == 1) : ?>
@@ -73,7 +74,9 @@
                                 <?php } ?>
 
                                 <div class="d-flex flex-column me-3 mb-2" style="align-items: end;">
-                                    <h5 class="pt-3">Total harga: <span class="format"><?php echo $order['total'] ?></span></h5>
+                                    <h5 class="pt-3 m-0">Total harga: <span class="format"><?php echo $order['total_ppn'] ?></span></h5>
+                                    <small class="text-danger mb-2" style="font-size: 70%;">*harga sudah termasuk PPN 11%</small>
+
                                     <div class="d-flex">
                                         <?php if ($order['status'] == 0) : ?>
                                             <a href="javascript:void(0);" class="btn btn-danger btn-sm me-2" onclick="confirmCancelOrder(<?php echo $order['id_pesanan']; ?>)">
@@ -81,7 +84,7 @@
                                             </a>
                                         <?php else : ?>
                                         <?php endif ?>
-                                        
+
                                         <a href="javascript:void(0);" class="btn btn-sm <?php
                                                                                         if ($order['status'] == 0) {
                                                                                             echo 'btn-warning';
@@ -120,29 +123,52 @@
 
 <script>
     function confirmCancelOrder(idPesanan) {
-        if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
-            // Lakukan permintaan AJAX untuk memperbarui status pesanan
-            $.ajax({
-                url: '<?php echo base_url('Dashboard/cancelOrder'); ?>',
-                type: 'POST',
-                data: {
-                    idPesanan: idPesanan
-                },
-                dataType: 'JSON',
-                success: function(response) {
-                    if (response.sukses) {
-                        // Opsional, perbarui antarmuka pengguna untuk menunjukkan pembatalan pesanan
-                        alert('Pesanan berhasil dibatalkan.');
-                        // Muat ulang atau perbarui daftar pesanan
-                        location.reload();
-                    } else {
-                        alert('Gagal membatalkan pesanan. Silakan coba lagi.');
+        Swal.fire({
+            title: 'Apakah Anda yakin ingin membatalkan pesanan ini?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, batalkan pesanan!',
+            cancelButtonText: 'Tidak, batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Lakukan permintaan AJAX untuk memperbarui status pesanan
+                $.ajax({
+                    url: '<?php echo base_url('Dashboard/cancelOrder'); ?>',
+                    type: 'POST',
+                    data: {
+                        idPesanan: idPesanan
+                    },
+                    dataType: 'JSON',
+                    success: function(response) {
+                        if (response.sukses) {
+                            Swal.fire(
+                                'Dibatalkan!',
+                                'Pesanan berhasil dibatalkan.',
+                                'success'
+                            ).then(() => {
+                                // Muat ulang atau perbarui daftar pesanan
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire(
+                                'Gagal!',
+                                'Gagal membatalkan pesanan. Silakan coba lagi.',
+                                'error'
+                            );
+                        }
+                    },
+                    error: function() {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan. Silakan coba lagi nanti.',
+                            'error'
+                        );
                     }
-                },
-                error: function() {
-                    alert('Terjadi kesalahan. Silakan coba lagi nanti.');
-                }
-            });
-        }
+                });
+            }
+        });
     }
 </script>
