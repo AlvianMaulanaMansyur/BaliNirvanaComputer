@@ -75,14 +75,14 @@
                                         <td><?php echo $order['id_pesanan']; ?></td>
                                         <td><?php echo $order['nama_produk']; ?></td>
                                         <td><?php echo $order['qty_produk']; ?></td>
-                                        <?php $sub = $order['harga_produk'] * $order['qty_produk']; ?>
+                                        <?php $sub = ($order['harga_produk']*$order['qty_produk']) + ($order['harga_produk'] * $order['qty_produk'] * PPN); ?>
                                         <td><?php echo $dateWithoutTime; ?></td>
                                         <td class="format"><?php echo $sub ?></td>
                                     </tr>
                                     <?php $total += $sub; ?>
                                 <?php endforeach; ?>
                                 <tr>
-                                    <td colspan="5" align="right"><strong class="h6">Total Penjualan:</strong></td>
+                                    <td colspan="5" align="right"><strong class="h6">Total Penjualan(termasuk PPN):</strong></td>
                                     <td class="format"><strong><?php echo $total; ?></strong></td>
                                 </tr>
                             </tbody>

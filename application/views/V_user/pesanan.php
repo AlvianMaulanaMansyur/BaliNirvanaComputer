@@ -3,7 +3,7 @@
         <h2 class=""> Pesanan</h2>
     </div>
     <div class="container col-sm-12 col-md-7 col-lg-5 p border border-1 border-dark p-4 mb-2" style="border-radius: 15px;">
-        <div id="invoice" style="background-color: white;">
+        <div id="invoice" style="background-color: white;padding: 10px;">
 
             <div class="d-flex mb-2" style="justify-content: space-between; border-radius: 10px;">
                 <h2 style="font-family: 'Poppins', sans-serif; font-weight: 400;">INVOICE</h2>
@@ -34,7 +34,7 @@
                     </p>
 
                     <div>
-                        <h6>No. Pesanan:</h6>
+                        <h6>No.Pesanan:</h6>
                         <?php echo $order[0]['id_pesanan'] ?>
                     </div>
                 </div>
@@ -71,13 +71,12 @@
                     </table>
 
                     <div class="pt-3" style="text-align: end;">
-                        <h5>Total harga: <span class="format"><?php echo $total ?></span></h1>
+                        <h5 class="m-0">Total harga: <span class="format"><?php echo $total_harga ?></span></h5>
+                        <small class="text-danger" style="font-size: 70%;">*harga sudah termasuk PPN 11%</small>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <div class="container col-sm-12 col-md-7 col-lg-5 border border-1 border-dark p-4" style="border-radius: 15px;">

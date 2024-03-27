@@ -39,15 +39,17 @@ class M_cart extends CI_Model
     // Tambahkan fungsi berikut di dalam model M_cart.php
     public function calculateTotalCheckedPrice($id_customer)
     {
-        $this->db->select('SUM(produk.harga_produk * produk_has_cart.qty_produk) as total_checked_price');
+        $PPN = 0.11;
+        
+        $this->db->select('SUM((produk.harga_produk * produk_has_cart.qty_produk) + ('.$PPN.' * produk.harga_produk * produk_has_cart.qty_produk)) as total_checked_price');
         $this->db->from('cart');
         $this->db->join('produk_has_cart', 'cart.id_cart = produk_has_cart.id_cart', 'left');
         $this->db->join('produk', 'produk_has_cart.id_produk = produk.id_produk', 'left');
         $this->db->where('cart.id_customer', $id_customer);
         $this->db->where('produk_has_cart.is_check', 1);
-
+    
         $result = $this->db->get();
-
+    
         if ($result->num_rows() > 0) {
             $total_checked_price = $result->row()->total_checked_price;
             return $total_checked_price ? $total_checked_price : 0;
@@ -55,6 +57,7 @@ class M_cart extends CI_Model
             return 0;
         }
     }
+    
 
     public function insertCart($slug)
     {

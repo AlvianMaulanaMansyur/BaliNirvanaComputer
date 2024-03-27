@@ -55,9 +55,10 @@
 
 
                     <div class="d-flex flex-column mb-4 pt-3" style="justify-content: center;align-items: end;">
-                        <h5 class="">Total : <span class="format"><?php echo $order['total'] ?></span></h5>
+                        <h6 class="m-0">Total harga: <span class="format"><?php echo ($order['total'] * PPN) + $order['total'] ?></span></h6>
+                        <small class="text-danger" style="font-size: 70%;">*harga sudah termasuk PPN 11%</small>
 
-                        <h6>Status : <?php
+                        <h6 class="mt-2">Status : <?php
                                         if ($order['status_pesanan'] == 1) {
                                             echo 'Selesai';
                                         ?>

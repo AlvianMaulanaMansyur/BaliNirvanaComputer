@@ -2,7 +2,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800 ">Data Kota & Kecamatan</h1>
+                <h1 class="h3 mb-0 text-gray-800 ">Data Kota</h1>
             </div>
 
             <button type="button" class="btn" style="margin-bottom:30px;background: #D21312;color: white;" data-bs-toggle="modal" data-bs-target="#tambahKotaModal">

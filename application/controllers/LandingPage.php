@@ -29,40 +29,6 @@ class LandingPage extends CI_Controller
         $this->load->view('template', $data);
     }
 
-    // public function index($page = 1)
-    // {
-    //     $this->load->library('pagination');
-
-    //     // Set the number of products per page
-    //     // $config['total_rows'] = $this->M_produk->getTotalProductsForCustomer();
-    //     // $config['per_page'] = 9;
-
-    //     $config['total_rows'] = 200;
-    //     $config['per_page'] = 20;
-
-
-    //     // Get total number of products from your model
-    //     // var_dump($config['total_rows']);die;
-    //     $config['base_url'] = base_url('home/');
-
-    //     // Initialize pagination config
-    //     $this->pagination->initialize($config);
-    //     echo $this->pagination->create_links();
-    //     die;
-
-    //     // Get products for the current page
-    //     $data['produk'] = $this->M_produk->getProductsPerPageForCustomer($config['per_page'], $page);
-    //     $data['category'] = $this->M_produk->getCategory();
-
-    //     // Pass pagination links to the view
-    //     // print_r($data['pagination_links']);die;
-    //     // Load your view
-    //     $data['content'] = 'V_user/home';
-    //     $data['title'] = 'Home';
-    //     $this->load->view('template', $data);
-    // }
-
-
     public function shop()
     {
         $produk = $this->M_produk->getProdukForCustomer();

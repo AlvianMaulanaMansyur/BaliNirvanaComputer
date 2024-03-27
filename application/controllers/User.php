@@ -183,6 +183,7 @@ class User extends CI_Controller
         $id = $this->session->userdata('customer_id');
         $checkout = $this->M_cart->getCheckout($id);
         $kota = $this->M_personalInfo->kotaKec();
+        $total_harga = $this->M_cart->calculateTotalCheckedPrice($id);
         $personal_info = $this->M_personalInfo->getPersonalInfoByIdCustomer($id);
 
         if (!empty($checkout)) {
@@ -202,11 +203,13 @@ class User extends CI_Controller
             $this->form_validation->set_rules('kodepos', 'Kodepos', 'required|numeric|exact_length[5]');
 
             if ($this->form_validation->run() == FALSE) {
+
                 $data = [
                     'content' => 'V_user/checkout1',
                     'title' => 'Checkout',
                     'cart' => $checkout,
                     'kota' => $kota,
+                    'total_harga' => $total_harga,
                 ];
                 $this->load->view('template', $data);
             } else {
@@ -239,12 +242,14 @@ class User extends CI_Controller
         $customer_id_login = $this->session->userdata('customer_id');
 
         $order = $this->M_pesanan->getOrder($id_pesanan);
+        $total_harga = $this->M_pesanan->getTotalPriceOrder($id_pesanan);
 
         if (!empty($order) && $order[0]['id_customer'] == $customer_id_login) {
             $data = [
                 'title' => 'Pesanan',
                 'content' => 'V_user/pesanan',
                 'order' => $order,
+                'total_harga' => $total_harga,
             ];
 
             $this->load->view('template', $data);

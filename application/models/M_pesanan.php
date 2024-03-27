@@ -35,10 +35,31 @@ class M_pesanan extends CI_Model
         }
     }
 
+    public function getTotalPriceOrder($id_pesanan)
+    {
+        $PPN = 0.11;
+        $this->db->select('SUM((produk.harga_produk * detail_pesanan.qty_produk) + ('.$PPN.' * produk.harga_produk * detail_pesanan.qty_produk)) as total_checked_price');
+        $this->db->from('pesanan');
+        $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
+        $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
+        $this->db->where('pesanan.id_pesanan', $id_pesanan);
+        $this->db->where('produk.stok_produk > ', 0);
+        $this->db->where('produk.deleted = ', 0);
+
+        $result = $this->db->get();
+    
+        if ($result->num_rows() > 0) {
+            $total_checked_price = $result->row()->total_checked_price;
+            return $total_checked_price ? $total_checked_price : 0;
+        } else {
+            return 0;
+        }
+    }
+
     public function searchOrder($keyword)
     {
-
-        $this->db->select('pesanan.*, detail_pesanan.*, produk.nama_produk, produk.harga_produk, foto_produk.url_foto, foto_produk.urutan_foto, customer.nama_customer, customer.email,customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, kota_kab.kota, kecamatan.kecamatan');
+        $ppn = 0.11;
+        $this->db->select('pesanan.*, detail_pesanan.*, produk.nama_produk, produk.harga_produk,produk.stok_produk,produk.deleted, foto_produk.url_foto, foto_produk.urutan_foto, customer.nama_customer, customer.email,customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, kota_kab.kota, kecamatan.kecamatan');
         $this->db->from('pesanan');
         $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
         $this->db->join('produk', 'detail_pesanan.id_produk = produk.id_produk', 'left');
@@ -48,6 +69,8 @@ class M_pesanan extends CI_Model
         $this->db->join('kecamatan', 'personal_info.id_kecamatan = kecamatan.id_kecamatan', 'left');
         $this->db->join('kota_kab', 'kecamatan.id_kota_kab = kota_kab.id_kota_kab', 'left');
         $this->db->where('foto_produk.urutan_foto', 1);
+        $this->db->order_by('pesanan.status_pesanan', 'asc');
+        $this->db->order_by('pesanan.create_time', 'desc');
 
         if (!empty($keyword)) {
             $this->db->group_start();
@@ -56,10 +79,10 @@ class M_pesanan extends CI_Model
             $this->db->or_like('personal_info.alamat', $keyword);
             $this->db->group_end();
         }
-
+    
         $this->db->order_by('pesanan.status_pesanan', 'asc');
         $this->db->order_by('pesanan.create_time', 'asc');
-
+    
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
@@ -72,10 +95,11 @@ class M_pesanan extends CI_Model
                 if (!isset($orders[$nomor_pesanan])) {
                     $orders[$nomor_pesanan] = array(
                         'details' => array(),
-                        'total' => 0
+                        'total' => 0,
+                        'total_ppn' => 0
                     );
                 }
-
+                $subtotal = $row['harga_produk'] * $row['qty_produk'];
                 $orders[$nomor_pesanan]['details'][] = array(
                     'nama_customer' => $row['nama_customer'],
                     'telepon' => $row['telepon'],
@@ -85,14 +109,19 @@ class M_pesanan extends CI_Model
                     'nama_produk' => $row['nama_produk'],
                     'harga_produk' => $row['harga_produk'],
                     'qty_produk' => $row['qty_produk'],
-                    'subtotal' => $row['harga_produk'] * $row['qty_produk'],
+                    'subtotal' => $subtotal,
                     'url_foto' => $row['url_foto'],
-                );
+                    'stok_produk' => $row['stok_produk'],
+                    'deleted' => $row['deleted']
 
+                );
                 $orders[$nomor_pesanan]['id_pesanan'] = $nomor_pesanan;
                 $orders[$nomor_pesanan]['status'] = $row['status_pesanan'];
-                $orders[$nomor_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
+                $orders[$nomor_pesanan]['total'] += $subtotal;
+                $ppn_pesanan = $subtotal * $ppn;
+                $orders[$nomor_pesanan]['total_ppn'] += $ppn_pesanan + $subtotal;
                 $orders[$nomor_pesanan]['create_time'] = $row['create_time'];
+
             }
             return $orders;
         } else {
@@ -180,6 +209,7 @@ class M_pesanan extends CI_Model
 
     public function getAllOrderForAdmin()
     {
+        $ppn = 0.11;
         $this->db->select('pesanan.*, detail_pesanan.*, produk.nama_produk, produk.harga_produk,produk.stok_produk,produk.deleted, foto_produk.url_foto, foto_produk.urutan_foto, customer.nama_customer, customer.email,customer.telepon, personal_info.id_personal_info, personal_info.id_kecamatan, personal_info.kodepos, kota_kab.kota, kecamatan.kecamatan');
         $this->db->from('pesanan');
         $this->db->join('detail_pesanan', 'pesanan.id_pesanan = detail_pesanan.id_pesanan', 'left');
@@ -205,20 +235,11 @@ class M_pesanan extends CI_Model
                 if (!isset($orders[$nomor_pesanan])) {
                     $orders[$nomor_pesanan] = array(
                         'details' => array(),
-                        'total' => 0
+                        'total' => 0,
+                        'total_ppn' => 0
                     );
                 }
-
-                // if ($row['status_pesanan'] == 0) {
-                //     if ($row['stok_produk'] <= 0 || $row['deleted'] == 1) {
-                //         $harga = 0;
-                //     } else {
-                //         $harga = $row['harga_produk'];
-                //     }
-                // } else {
-                //     $harga = $row['harga_produk'];
-                // }
-
+                $subtotal = $row['harga_produk'] * $row['qty_produk'];
                 $orders[$nomor_pesanan]['details'][] = array(
                     'nama_customer' => $row['nama_customer'],
                     'telepon' => $row['telepon'],
@@ -228,7 +249,7 @@ class M_pesanan extends CI_Model
                     'nama_produk' => $row['nama_produk'],
                     'harga_produk' => $row['harga_produk'],
                     'qty_produk' => $row['qty_produk'],
-                    'subtotal' => $row['harga_produk'] * $row['qty_produk'],
+                    'subtotal' => $subtotal,
                     'url_foto' => $row['url_foto'],
                     'stok_produk' => $row['stok_produk'],
                     'deleted' => $row['deleted']
@@ -236,8 +257,11 @@ class M_pesanan extends CI_Model
                 );
                 $orders[$nomor_pesanan]['id_pesanan'] = $nomor_pesanan;
                 $orders[$nomor_pesanan]['status'] = $row['status_pesanan'];
-                $orders[$nomor_pesanan]['total'] += $row['harga_produk'] * $row['qty_produk'];
+                $orders[$nomor_pesanan]['total'] += $subtotal;
+                $ppn_pesanan = $subtotal * $ppn;
+                $orders[$nomor_pesanan]['total_ppn'] += $ppn_pesanan + $subtotal;
                 $orders[$nomor_pesanan]['create_time'] = $row['create_time'];
+
             }
             return $orders;
         } else {
