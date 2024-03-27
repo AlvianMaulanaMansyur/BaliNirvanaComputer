@@ -8,6 +8,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title><?= $title ?></title>
+    <link href="<?php echo base_url('assets/foto/balinirvanalogo.png') ?>" rel="icon">
+
    
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="<?= base_url('assets/backend/') ?>css/styles.css" rel="stylesheet" />

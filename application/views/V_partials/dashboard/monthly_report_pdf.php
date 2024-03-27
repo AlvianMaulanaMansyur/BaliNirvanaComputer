@@ -60,9 +60,19 @@
         margin-right: 220px;
         padding-left: 20px;
     }
+
+    .watermark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.5;
+    }
 </style>
 
 <body>
+<img class="watermark" src="<?php echo base_url('assets/foto/balinirvanalogo.png'); ?>" alt="Watermark">
+
     <div class="header-container" style="border-bottom: 1px;">
         <h2 class="bulan-laporan-bulanan">Laporan Bulanan</h2>
         <h2 class="brand"><span class="bali-nirvana">Bali Nirvana</span> <span class="computer">Computer</span></h2>
@@ -70,7 +80,7 @@
             <?php echo $selected_month ?>
         </h3>
     </div>
-        
+
     <table>
         <thead>
             <tr>

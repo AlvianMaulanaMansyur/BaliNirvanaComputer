@@ -2,6 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?></title>
+    <link href="<?php echo base_url('assets/foto/balinirvanalogo.png') ?>" rel="icon">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
@@ -35,6 +36,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/info.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/template.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/css/checkout.css') ?>">
+    
 
     <script>
         var base_url = '<?php echo base_url(); ?>';
