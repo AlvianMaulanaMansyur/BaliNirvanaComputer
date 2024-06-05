@@ -11,7 +11,7 @@ class AuthCustomer extends CI_Controller
         $this->load->model('Customer_model');
         $this->load->library('session');
         $this->load->library('form_validation');
-    }
+    }                                         
 
     public function login()
     {
@@ -30,7 +30,6 @@ class AuthCustomer extends CI_Controller
 
     public function process_login()
     {
-
         $email_or_username = $this->input->post('email_or_username');
         $password = $this->input->post('password_customer');
 
@@ -81,7 +80,7 @@ class AuthCustomer extends CI_Controller
             'required' => 'phone number cannot be empty!'
         ));
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == False) {
 
             $data = [
                 'header' => 'V_partials/loginRegister/header',
@@ -90,8 +89,7 @@ class AuthCustomer extends CI_Controller
             ];
             $this->load->view('customer/registerCustomer', $data);
         } else {
-            
-            htmlspecialchars($username = $this->input->post('username', true))      ;
+            htmlspecialchars($username = $this->input->post('username', true));
             $password_customer = password_hash($this->input->post('password_customer'), PASSWORD_DEFAULT);
             htmlspecialchars($nama_customer = $this->input->post('nama_customer'));
             htmlspecialchars($email = $this->input->post('email'));

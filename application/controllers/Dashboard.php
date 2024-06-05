@@ -89,7 +89,7 @@ class Dashboard extends CI_Controller
     {
         $customer = $this->admin_model->get_all_customers();
         $data = [
-            'title' => 'Dashboard Admin ',
+            'title' => 'Dashboard Admin',
             'header' => 'V_partials/dashboard/header',
             'navbar' => 'V_partials/dashboard/navbar',
             'sidebar' => 'V_partials/dashboard/sidebar',
