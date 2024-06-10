@@ -1,4 +1,4 @@
-document.getElementById('downloadAsImage').addEventListener('click', function() {
+    document.getElementById('downloadAsImage').addEventListener('click', function() {
     // Tentukan dimensi canvas
     var canvasWidth = 800; // Ganti sesuai kebutuhan Anda
     var canvasHeight = 600; // Ganti sesuai kebutuhan Anda
